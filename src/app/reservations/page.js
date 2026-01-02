@@ -1,50 +1,79 @@
 "use client";
+import { useState, useEffect } from 'react';
+import { budget } from '@/data/budget';
+import StatsDashboard from '@/components/StatsDashboard';
 export default function ReservationsPage() {
-    const checklist = [
-        { item: 'Voli (Andata/Ritorno)', status: 'done' },
-        { item: 'Hotel Osaka', status: 'done' },
-        { item: 'Hotel Kyoto', status: 'done' },
-        { item: 'Hotel Tokyo', status: 'done' },
-        { item: 'JR Kansai-Hiroshima Pass', status: 'todo' },
-        { item: 'USJ Express Pass', status: 'todo' },
-        { item: 'Disney Tickets', status: 'todo' },
-        { item: 'Shinkansen Kyoto-Tokyo', status: 'todo' },
-        { item: 'Pocket Wifi / eSIM', status: 'todo' },
-        { item: 'Assicurazione Viaggio', status: 'todo' },
-    ];
+  const [checklist, setChecklist] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    return (
-        <div className="section container">
-            <h1>Prenotazioni & Mappa</h1>
+  useEffect(() => {
+    fetch('/api/reservations')
+      .then(res => res.json())
+      .then(data => {
+        setChecklist(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load checklist", err);
+        setLoading(false);
+      });
+  }, []);
 
-            <div className="grid grid-2">
-                <div className="checklist-section">
-                    <h2>Checklist</h2>
-                    <div className="checklist">
-                        {checklist.map((c) => (
-                            <div key={c.item} className={`check-item ${c.status}`}>
-                                <span className="icon">{c.status === 'done' ? '✅' : '⭕'}</span>
-                                <span className="label">{c.item}</span>
-                                <span className="status-badge">{c.status === 'done' ? 'Prenotato' : 'Da fare'}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+  const toggleStatus = async (itemLabel) => {
+    const newChecklist = checklist.map(item => {
+      if (item.item === itemLabel) {
+        return { ...item, status: item.status === 'done' ? 'todo' : 'done' };
+      }
+      return item;
+    });
 
-                <div className="map-section">
-                    <h2>Mappa del Viaggio</h2>
-                    <div className="map-placeholder">
-                        <p>🗺️ Google Maps Embed</p>
-                        <p style={{ fontSize: '0.8rem', color: '#666' }}>Qui andrà la mappa interattiva con i pin.</p>
-                        {/* 
-              Per embeddare Google Maps:
-              <iframe src="LINK_EMBED" width="100%" height="100%" loading="lazy"></iframe>
-            */}
-                    </div>
-                </div>
-            </div>
+    // Optimistic UI update
+    setChecklist(newChecklist);
 
-            <style jsx>{`
+    try {
+      await fetch('/api/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newChecklist)
+      });
+    } catch (error) {
+      console.error("Failed to save change", error);
+      // Optionally revert state here if save fails
+    }
+  };
+
+  // Calcoliamo il totale basato SOLO sugli elementi presenti nella lista
+  const totalBookable = checklist.reduce((acc, curr) => acc + (curr.cost || 0), 0);
+
+  return (
+    <div className="section container">
+      <h1>Prenotazioni & Mappa</h1>
+
+      <div className="grid grid-2">
+        <div className="checklist-section">
+          <h2>Checklist</h2>
+          <div className="checklist">
+            {loading ? <p style={{ padding: '1rem' }}>Caricamento...</p> : checklist.map((c) => (
+              <div
+                key={c.item}
+                className={`check-item ${c.status}`}
+                onClick={() => toggleStatus(c.item)}
+                style={{ cursor: 'pointer' }}
+              >
+                <span className="icon">{c.status === 'done' ? '✅' : '⭕'}</span>
+                <span className="label">{c.item}</span>
+                <span className="status-badge">{c.status === 'done' ? 'Prenotato' : 'Da fare'}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="map-section">
+          <StatsDashboard checklist={checklist} totalBudget={totalBookable} />
+        </div>
+      </div>
+
+      <style jsx>{`
         .checklist {
           background: white;
           border: 1px solid var(--border);
@@ -83,6 +112,6 @@ export default function ReservationsPage() {
           color: #888;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }
