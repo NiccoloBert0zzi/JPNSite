@@ -1,6 +1,6 @@
 export const budget = {
     totalNoFood: 4175.61,
-    totalSafe: 4825.61,
+    totalSafe: 5000.00,
     breakdown: [
         { category: 'Voli', amount: 1632.00, note: 'Andata/Ritorno x2' },
         { category: 'Hotel', amount: 986.31, note: 'Osaka, Kyoto, Tokyo' },
