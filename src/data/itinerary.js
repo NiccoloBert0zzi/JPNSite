@@ -6,8 +6,15 @@ export const itinerary = [
     location: 'Osaka',
     title: 'Arrivo a Osaka',
     highlights: ['Arrivo KIX', 'Umeda', 'Hep Five'],
-    image: '/images/osaka-hero.png',
+    highlights: ['Arrivo KIX', 'Umeda', 'Hep Five'],
+    image: '/images/osaka-neon.png',
     description: "Il primo impatto con il Giappone. Osaka è vibrante, caotica e famosa per il cibo. La zona di Umeda (Kita) è il cuore moderno, pieno di grattacieli e shopping.",
+    coordinates: [
+      { lat: 34.4320024, lng: 135.2303939, title: "Kansai Airport (KIX)" },
+      { lat: 34.702485, lng: 135.495951, title: "The Rise Osaka Kitashinchi" },
+      { lat: 34.702485, lng: 135.495951, title: "Umeda District" },
+      { lat: 34.706346, lng: 135.503468, title: "Hep Five Ferris Wheel" }
+    ],
     curiosities: [
       "La stazione di Osaka/Umeda è considerata uno dei labirinti più complessi al mondo.",
       "Hep Five ha una ruota panoramica rossa brillante integrata direttamente nel centro commerciale."
