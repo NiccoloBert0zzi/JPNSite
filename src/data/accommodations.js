@@ -1,0 +1,50 @@
+export const accommodations = [
+    {
+        id: "osaka",
+        name: "Ark Hotel Osaka Shinsaibashi",
+        city: "Osaka",
+        checkIn: "2026-10-03",
+        checkOut: "2026-10-07",
+        nights: 4,
+        price: 264.60,
+        curr: "€",
+        status: "booked",
+        address: "1-19-18 Shimanouchi, Chuo Ward, Osaka, 542-0082",
+        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ark+Hotel+Osaka+Shinsaibashi",
+        image: "/images/osaka-neon.png",
+        features: ["Vicino Metro", "Check-in 15:00", "Colazione Inclusa"],
+        website: "https://www.booking.com/hotel/jp/ark-osaka.it.html?label=gen173nr-10CAEoggI46AdIFFgEaHGIAQGYATO4ARfIAQzYAQPoAQH4AQGIAgGoAgG4Atnu5MoGwAIB0gIkYzM1MTBkNGItMGFhOC00MGFlLThlZDAtNmI4OWM3MWYzNTI12AIB4AIB&sid=9f63b298c58de2fe8583e569265872ec&aid=304142"
+    },
+    {
+        id: "kyoto",
+        name: "Hotel Tavinos Kyoto",
+        city: "Kyoto",
+        checkIn: "2026-10-07",
+        checkOut: "2026-10-10",
+        nights: 3,
+        price: 224.19,
+        curr: "€",
+        status: "booked",
+        address: "Kyoto, Shimogyo Ward, Kawaramachi-dori",
+        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Hotel+Tavinos+Kyoto",
+        image: "/images/kyoto-hero.png",
+        features: ["Design Manga", "Centrale", "Moderno"],
+        website: "https://www.booking.com/hotel/jp/tavinos-kyoto.it.html?label=gen173nr-10CAEoggI46AdIFFgEaHGIAQGYATO4ARfIAQzYAQPoAQH4AQGIAgGoAgG4Atnu5MoGwAIB0gIkYzM1MTBkNGItMGFhOC00MGFlLThlZDAtNmI4OWM3MWYzNTI12AIB4AIB&sid=9f63b298c58de2fe8583e569265872ec&aid=304142"
+    },
+    {
+        id: "tokyo",
+        name: "Hotel Tavinos Asakusa",
+        city: "Tokyo",
+        checkIn: "2026-10-10",
+        checkOut: "2026-10-16",
+        nights: 6,
+        price: 497.52,
+        curr: "€",
+        status: "booked",
+        address: "2 Chome-18-8 Asakusa, Taito City, Tokyo",
+        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Hotel+Tavinos+Asakusa",
+        image: "/images/hero.png",
+        features: ["Design Manga", "Vicino Senso-ji", "Laundry"],
+        website: "https://www.booking.com/hotel/jp/tavinos-asakusa.it.html?label=gen173nr-10CAEoggI46AdIFFgEaHGIAQGYATO4ARfIAQzYAQPoAQH4AQGIAgGoAgG4Atnu5MoGwAIB0gIkYzM1MTBkNGItMGFhOC00MGFlLThlZDAtNmI4OWM3MWYzNTI12AIB4AIB&sid=9f63b298c58de2fe8583e569265872ec&aid=304142"
+    }
+];

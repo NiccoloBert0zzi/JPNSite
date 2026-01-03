@@ -32,6 +32,7 @@ export default function Navbar() {
         { name: 'Home', path: '/' },
         { name: 'Itinerario', path: '/itinerary' },
         { name: 'Budget', path: '/budget' },
+        { name: 'Alloggi', path: '/accommodations' },
         { name: 'Trasporti', path: '/transport' },
         { name: 'Prenotazioni', path: '/reservations' },
     ];
