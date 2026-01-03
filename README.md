@@ -1,38 +1,100 @@
-# JPNSite
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏯 Japan Trip Planner
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15.1-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+<br />
+
+**Un compagno di viaggio digitale per gestire l'avventura in Giappone.**  
+Pianificazione itinerario, gestione budget e logistica in un'unica app moderna.
+
+[🚀 Demo Live](https://jpn-site.vercel.app) · [🐛 Segnala Bug](https://github.com/NiccoloBert0zzi/JPNSite/issues)
+
+</div>
+
+---
+
+## ✨ Features
+
+### 💸 Budget Manager
+Gestisci le spese in tempo reale con un'interfaccia intuitiva.
+- **Dynamic Tracking**: Aggiungi, rimuovi e rinomina voci di spesa al volo.
+- **Visual Analytics**: Grafici a torta (Recharts) per visualizzare la ripartizione dei costi.
+- **Real-time Updates**: Calcolo automatico del budget rimanente e speso.
+
+### 📍 Itinerary & Logistics
+Pianifica ogni dettaglio del viaggio.
+- **Interactive Maps**: Integrazione mappa dinamica per visualizzare le tappe (Leaflet).
+- **Day-by-Day**: Cronologia dettagliata delle attività giornaliere.
+- **Transport**: Gestione pass treni (Shinkansen, JR Pass) e trasporti locali.
+
+### 🏨 Reservations
+Tieni traccia di tutte le prenotazioni.
+- **Status Tracking**: Monitora cosa è stato prenotato, pagato o ancora da fare.
+- **Digital Wallet**: (Feature pianificata) Archiviazione rapida di biglietti e conferme.
+
+---
+
+## 🛠️ Tech Stack
+
+Built with the modern T3-inspired stack:
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + Custom Design System
+- **Database**: [Vercel Postgres](https://vercel.com/postgres) (SQL)
+- **Charts**: [Recharts](https://recharts.org/)
+- **Maps**: [React Leaflet](https://react-leaflet.js.org/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+
+---
+
+## 🚀 Getting Started
+
+Clona il repository e installa le dipendenze per avviare il progetto in locale.
+
+### Prerequisites
+- Node.js 18+
+- npm / yarn / pnpm
+
+### Installation
 
 ```bash
+# 1. Clone repo
+git clone https://github.com/NiccoloBert0zzi/JPNSite.git
+cd JPNSite
+
+# 2. Install dependencies
+npm install
+
+# 3. Setup Environment
+# Crea un file .env.local e aggiungi le credenziali del database (Postgres)
+cp .env.example .env.local
+
+# 4. Run Development Server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Apri [http://localhost:3000](http://localhost:3000) per vedere l'app in azione.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📸 Screenshots
 
-## Learn More
+| Budget Overview | Itinerary Map |
+|:---:|:---:|
+| *Gestione spese dettagliata* | *Mappa interattiva del viaggio* |
+| ![Budget](https://placehold.co/600x400/EEE/31343C?text=Budget+UI) | ![Map](https://placehold.co/600x400/EEE/31343C?text=Map+UI) |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<div align="center">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Made with ❤️ by Niccolo Bertozzi for the Japan 2026 Trip 🇯🇵
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</div>
