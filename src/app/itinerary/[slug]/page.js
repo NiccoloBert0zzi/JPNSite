@@ -70,7 +70,7 @@ export default function ItineraryDetail({ params }) {
                                 <span>TORNA ALL'ITINERARIO</span>
                             </Link>
 
-                            <div className="location-badge">OSAKA</div>
+                            <div className="location-badge">{day.location}</div>
                         </div>
 
                         <h1>{day.title}</h1>

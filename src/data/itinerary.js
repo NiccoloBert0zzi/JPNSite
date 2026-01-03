@@ -4,31 +4,33 @@ export const itinerary = [
     date: '2026-10-03',
     day: 'Sabato',
     location: 'Osaka',
-    title: 'Arrivo a Osaka',
-    highlights: ['Arrivo KIX', 'Umeda', 'Hep Five'],
+    title: 'Arrivo Osaka + Shitennō-ji',
+    highlights: ['Arrivo KIX', 'Shitennō-ji', 'Umeda'],
     image: '/images/osaka-neon.png',
-    description: "Il primo impatto con il Giappone. Osaka è vibrante, caotica e famosa per il cibo. La zona di Umeda (Kita) è il cuore moderno, pieno di grattacieli e shopping.",
+    description: "Arrivo in Giappone e primo impatto con Osaka. Dal caos ordinato dell'aeroporto alla quiete mistica di Shitennō-ji, uno dei templi più antichi del Giappone.",
     coordinates: [
       { lat: 34.432002, lng: 135.230393, title: "Kansai Airport (KIX)" },
       { lat: 34.702485, lng: 135.495951, title: "The Rise Osaka Kitashinchi" },
-      { lat: 34.702485, lng: 135.495951, title: "Umeda District" },
-      { lat: 34.706346, lng: 135.503468, title: "Hep Five Ferris Wheel" }
+      { lat: 34.653347, lng: 135.516492, title: "Shitennō-ji Temple" },
+      { lat: 34.706346, lng: 135.503468, title: "Hep Five" }
     ],
     curiosities: [
-      "La stazione di Osaka/Umeda è considerata uno dei labirinti più complessi al mondo.",
-      "Hep Five ha una ruota panoramica rossa brillante integrata direttamente nel centro commerciale."
+      "Shitennō-ji è stato fondato nel 593 d.C. dal principe Shotoku, è il primo tempio buddista e statale del Giappone.",
+      "La stazione di Umeda è un enorme labirinto sotterraneo: segui sempre i cartelli per 'Midosuji Line' o l'uscita che ti serve."
     ],
     info: [
-      "Trasporto KIX -> Osaka: Coperto da JR Pass (Haruka Express non coperto da Kansai-Hiroshima, usare Rapid o pagare supplemento, verifica in loco).",
-      "Check-in hotel solitamente dalle 15:00."
+      "🔥 DECISION POINT (Ore 15:00): Guarda l'orologio all'uscita dall'hotel.",
+      "✅ PIANO A (Metro entro le 15:00): Corri a Shitennō-ji per la visita interna (chiude alle 16:00).",
+      "🟡 PIANO B (Dopo le 15:30): Goditi passeggiata Zen nell'area esterna gratuita e suggestiva al tramonto."
     ],
     details: [
-      { time: '12:10', activity: 'Arrivo all\'aeroporto Kansai (KIX).', type: 'transport' },
-      { time: '13:30', activity: 'Ritiro JR Kansai–Hiroshima Area Pass e treno per Osaka Station.', type: 'transport' },
-      { time: '15:00', activity: 'Check-in Hotel: The Rise Osaka Kitashinchi.', type: 'hotel' },
-      { time: '16:30', activity: 'Esplorazione zona Umeda.', type: 'activity' },
-      { time: '18:00', activity: 'Ruota panoramica Hep Five al tramonto.', type: 'activity' },
-      { time: '20:00', activity: 'Cena in zona Umeda.', type: 'food' }
+      { time: '12:10', activity: '🛬 Arrivo KIX, Immigrazione e Bagagli.', type: 'transport' },
+      { time: '13:15', activity: '🎫 Ritiro JR Kansai–Hiroshima Pass.', type: 'ticket' },
+      { time: '13:45', activity: '🚄 Treno KIX → Osaka / Umeda.', type: 'transport' },
+      { time: '15:00', activity: '🏨 Arrivo Hotel / Deposito bagagli veloce.', type: 'hotel' },
+      { time: '15:30', activity: '🛕 Shitennō-ji (Decision Point: Interno o Esterno).', type: 'activity' },
+      { time: '17:00', activity: '🌇 Umeda: Passeggiata relax e HEP Five.', type: 'activity' },
+      { time: '19:30', activity: '🍜 Cena libera in zona Umeda (Rientro presto).', type: 'food' }
     ]
   },
   {
@@ -55,13 +57,13 @@ export const itinerary = [
       "Okonomiyaki: A Hiroshima si prepara a strati (Hiroshima-style), diverso da quello di Osaka."
     ],
     details: [
-      { time: '08:00', activity: 'Shinkansen per Hiroshima (coperto da pass).', type: 'transport' },
-      { time: '10:00', activity: 'Traghetto per Miyajima (coperto da pass).', type: 'transport' },
-      { time: '10:30', activity: 'Visita Itsukushima Shrine e Torii galleggiante.', type: 'activity' },
-      { time: '13:00', activity: 'Pranzo a Miyajima.', type: 'food' },
-      { time: '14:30', activity: 'Ritorno a Hiroshima City: Peace Memorial Park e Museo.', type: 'activity' },
-      { time: '18:00', activity: 'Rientro a Osaka.', type: 'transport' },
-      { time: '20:00', activity: 'Cena: Okonomiyaki.', type: 'food' }
+      { time: '08:00', activity: '🚅 Shinkansen per Hiroshima (coperto da pass).', type: 'transport' },
+      { time: '10:00', activity: '🚢 Traghetto per Miyajima (coperto da pass).', type: 'transport' },
+      { time: '10:30', activity: '⛩️ Visita Itsukushima Shrine e Torii galleggiante.', type: 'activity' },
+      { time: '13:00', activity: '🍱 Pranzo a Miyajima.', type: 'food' },
+      { time: '14:30', activity: '☮️ Ritorno a Hiroshima City: Peace Memorial Park e Museo.', type: 'activity' },
+      { time: '18:00', activity: '🚅 Rientro a Osaka.', type: 'transport' },
+      { time: '20:00', activity: '🥞 Cena: Okonomiyaki (Hiroshima Style).', type: 'food' }
     ]
   },
   {
@@ -87,12 +89,12 @@ export const itinerary = [
       "Cibo: Assaggiare Takoyaki (polpette di polpo) a Dotonbori."
     ],
     details: [
-      { time: '09:00', activity: 'Castello di Osaka.', type: 'activity' },
-      { time: '12:00', activity: 'Pranzo in zona.', type: 'food' },
-      { time: '14:00', activity: 'Umeda Sky Building.', type: 'activity' },
-      { time: '16:00', activity: 'Tsutenkaku / Shinsekai.', type: 'activity' },
-      { time: '19:00', activity: 'Crociera sul fiume a Dotonbori (serale).', type: 'activity' },
-      { time: '20:30', activity: 'Street food a Dotonbori.', type: 'food' }
+      { time: '09:00', activity: '🏯 Castello di Osaka.', type: 'activity' },
+      { time: '12:00', activity: '🍱 Pranzo in zona.', type: 'food' },
+      { time: '14:00', activity: '🌇 Umeda Sky Building.', type: 'activity' },
+      { time: '16:00', activity: '🗼 Tsutenkaku / Shinsekai.', type: 'activity' },
+      { time: '19:00', activity: '🚤 Crociera sul fiume a Dotonbori (serale).', type: 'activity' },
+      { time: '20:30', activity: '🐙 Street food a Dotonbori.', type: 'food' }
     ]
   },
   {
@@ -116,11 +118,11 @@ export const itinerary = [
       "Scaricare l'app USJ ufficiale per le mappe e i tempi di attesa."
     ],
     details: [
-      { time: '07:30', activity: 'Trasferimento con JR Loop Line.', type: 'transport' },
-      { time: '08:30', activity: 'Ingresso USJ con Express Pass 8.', type: 'activity' },
-      { time: 'Matin', activity: 'Priorità Super Nintendo World.', type: 'activity' },
-      { time: 'Pomer', activity: 'Harry Potter e altre attrazioni.', type: 'activity' },
-      { time: '20:00', activity: 'Rientro in hotel.', type: 'transport' }
+      { time: '07:30', activity: '🚃 Trasferimento con JR Loop Line.', type: 'transport' },
+      { time: '08:30', activity: '🎢 Ingresso USJ con Express Pass 8.', type: 'activity' },
+      { time: 'Matin', activity: '🍄 Priorità Super Nintendo World.', type: 'activity' },
+      { time: 'Pomer', activity: '🏰 Harry Potter e altre attrazioni.', type: 'activity' },
+      { time: '20:00', activity: '🏨 Rientro in hotel.', type: 'transport' }
     ]
   },
   {
@@ -128,33 +130,29 @@ export const itinerary = [
     date: '2026-10-07',
     day: 'Mercoledì',
     location: 'Osaka -> Kyoto',
-    title: 'Daruma & Kyoto Arrivo',
-    highlights: ['Tempio Katsuoji', 'Spostamento a Kyoto', 'Kinkaku-ji', 'Pontocho'],
+    title: 'Arrivo + Kyoto Iconica & Gion',
+    highlights: ['Kinkaku-ji', 'Gion', 'Pontocho'],
     image: '/images/kyoto-hero.png',
-    description: "Trasferimento verso l'antica capitale, con una tappa mistica al tempio dei Daruma.",
+    description: "Benvenuti nell'antica capitale. Pomeriggio dedicato al Padiglione d'Oro e serata magica nel quartiere delle Geisha.",
     coordinates: [
-      { lat: 34.702485, lng: 135.495951, title: "Osaka (Check-out)" },
-      { lat: 34.862419, lng: 135.490457, title: "Katsuoji (Daruma Temple)" },
       { lat: 34.985849, lng: 135.758767, title: "Kyoto Station" },
       { lat: 35.039370, lng: 135.729243, title: "Kinkaku-ji (Golden Pavilion)" },
-      { lat: 35.005524, lng: 135.770951, title: "Pontocho Alley" }
+      { lat: 35.003656, lng: 135.776657, title: "Gion / Hanamikoji" }
     ],
     curiosities: [
-      "Katsuoji è pieno di migliaia di bambole Daruma lasciate dai fedeli in segno di vittoria o fortuna.",
-      "Il Padiglione d'Oro (Kinkaku-ji) è ricoperto di vere foglie d'oro."
+      "Il Kinkaku-ji (Padiglione d'Oro) è ricoperto da veri fogli d'oro puro.",
+      "A Gion, se vedi una Geisha (o Maiko), non inseguirla per foto: è considerata maleducazione."
     ],
     info: [
-      "Taxi per Katsuoji: Indispensabile, i bus sono rari.",
-      "Pontocho: Vicolo stretto pieno di ristoranti, spesso si avvistano Geisha o Maiko."
+      "💡 Gion Tip: Il quartiere rende al massimo solo di sera. Hanamikoji è la via principale."
     ],
     details: [
-      { time: '08:00', activity: 'Check-out e deposito bagagli a Osaka Station.', type: 'logistics' },
-      { time: '09:00', activity: 'Taxi per Tempio Katsuoji (Daruma).', type: 'transport' },
-      { time: '11:00', activity: 'Rientro a Osaka Station in taxi.', type: 'transport' },
-      { time: '12:00', activity: 'JR Special Rapid per Kyoto (30 min).', type: 'transport' },
-      { time: '13:00', activity: 'Arrivo a Kyoto e check-in.', type: 'hotel' },
-      { time: '15:00', activity: 'Visita Kinkaku-ji (Padiglione d\'Oro).', type: 'activity' },
-      { time: '19:00', activity: 'Serata a Pontocho.', type: 'activity' }
+      { time: '13:00', activity: '🚄 Arrivo a Kyoto Station e deposito bagagli.', type: 'transport' },
+      { time: '14:30', activity: '🛕 Kinkaku-ji (Padiglione d\'Oro).', type: 'activity' },
+      { time: '16:00', activity: '🏨 Check-in Hotel e relax.', type: 'hotel' },
+      { time: '18:00', activity: '🏮 Passeggiata a Gion (Hanamikoji Street).', type: 'activity' },
+      { time: '19:30', activity: '🍜 Cena a Gion o Pontocho.', type: 'food' },
+      { time: '20:30', activity: '🌑 Shirakawa Canal (Optional: passeggiata post-cena).', type: 'activity' }
     ]
   },
   {
@@ -162,28 +160,29 @@ export const itinerary = [
     date: '2026-10-08',
     day: 'Giovedì',
     location: 'Kyoto / Nara',
-    title: 'Tour Nara & Fushimi Inari',
+    title: 'Tour Nara, Inari & Arashiyama',
     highlights: ['Nara Park', 'Fushimi Inari', 'Arashiyama'],
-    description: "I tre giganti di Kyoto/Nara in un giorno. Cervi, portali rossi infiniti e bambù.",
+    description: "La giornata dei giganti. Un tour intenso per vedere i tre luoghi più famosi di Kyoto e Nara in un colpo solo.",
     coordinates: [
-      { lat: 34.685087, lng: 135.843012, title: "Nara Park / Todai-ji" },
+      { lat: 34.685087, lng: 135.843012, title: "Nara Park" },
       { lat: 34.967140, lng: 135.772671, title: "Fushimi Inari Taisha" },
       { lat: 35.009440, lng: 135.677598, title: "Arashiyama Bamboo Grove" }
     ],
     curiosities: [
-      "Fushimi Inari ha più di 10.000 torii rossi. La camminata completa fino alla cima dura 2-3 ore.",
-      "Nel parco di Nara ci sono oltre 1000 cervi selvatici considerati messaggeri divini."
+      "I cervi di Nara inchinano la testa per chiedere biscotti (ma attenzione, mordono anche!).",
+      "Fushimi Inari ha migliaia di Torii donati da aziende giapponesi in cerca di prosperità."
     ],
     info: [
-      "Nara: Attenzione ai cervi se avete cibo in mano, possono essere insistenti.",
-      "Arashiyama: La foresta di bambù è molto affollata, il momento migliore è... presto o tardi."
+      "⚠️ GIORNO BLOCCATO: Il tour 8:00-18:00 è stancante, non aggiungere altro di giorno.",
+      "🔥 SERA DECISION: Opzione A (Gion Night - Consigliata), B (Relax Kamogawa), C (Inari Night - Suggestiva)."
     ],
     details: [
-      { time: '08:00', activity: 'Partenza Tour Organizzato.', type: 'activity' },
-      { time: 'Mattina', activity: 'Nara: Parco dei cervi e Todai-ji.', type: 'activity' },
-      { time: 'Primo Pom', activity: 'Fushimi Inari (Torii rossi).', type: 'activity' },
-      { time: 'Tardo Pom', activity: 'Arashiyama: Foresta di bambù.', type: 'activity' },
-      { time: '18:00', activity: 'Rientro a Kyoto.', type: 'transport' }
+      { time: '08:00', activity: '🚌 Partenza Tour Organizzato (Nara, Inari, Arashiyama).', type: 'activity' },
+      { time: 'Mattina', activity: '🦌 Nara Park & Tōdai-ji.', type: 'activity' },
+      { time: 'Pranzo', activity: '⛩️ Fushimi Inari (parte bassa) & Arashiyama.', type: 'activity' },
+      { time: '18:00', activity: '🏁 Rientro a Kyoto Centro (Fine Tour).', type: 'transport' },
+      { time: '18:30', activity: '🏮 SERA: Gion Night (Opzione Consigliata) o Relax.', type: 'activity' },
+      { time: '19:30', activity: '🍱 Cena meritata.', type: 'food' }
     ]
   },
   {
@@ -191,29 +190,28 @@ export const itinerary = [
     date: '2026-10-09',
     day: 'Venerdì',
     location: 'Kyoto',
-    title: 'Higashiyama & Cerimonia del Tè',
-    highlights: ['Otagi Nenbutsu-ji', 'Kiyomizu-dera', 'Cerimonia del Tè'],
-    description: "Kyoto tradizionale al suo meglio. Templi nascosti, stradine lastricate e il rito del tè.",
+    title: 'Kyoto Autentica + Nishiki Market',
+    highlights: ['Otagi Nenbutsu-ji', 'Kiyomizu-dera', 'Nishiki Market'],
+    description: "Dalle statue di muschio di Otagi alla vivacità del mercato di Nishiki. Una giornata che mixa spiritualità e cibo.",
     coordinates: [
       { lat: 35.026365, lng: 135.660995, title: "Otagi Nenbutsu-ji" },
-      { lat: 34.996168, lng: 135.782522, title: "Sannenzaka Path" },
       { lat: 34.994856, lng: 135.785046, title: "Kiyomizu-dera" },
-      { lat: 34.998379, lng: 135.760773, title: "Jotokuji ( Tea Ceremony)" }
+      { lat: 35.005008, lng: 135.764906, title: "Nishiki Market" }
     ],
     curiosities: [
-      "Otagi Nenbutsu-ji ha 1200 statue di Rakan, ognuna con una faccia diversa (e buffa).",
-      "Kiyomizu-dera ha una terrazza di legno costruita senza usare un solo chiodo."
+      "Otagi Nenbutsu-ji ha 1200 statue Rakan scolpite da amatori, ognuna con espressioni buffe.",
+      "Nishiki Market è soprannominato 'la cucina di Kyoto'."
     ],
     info: [
-      "Tea Ceremony: Essere puntuali e indossare calzini puliti (si tolgono le scarpe).",
-      "Ninenzaka/Sannenzaka: Attenzione a non cadere, la leggenda dice che porta sfortuna!"
+      "💡 TIP: Nishiki Market alle 13:00 è l'orario perfetto per pranzo/snack.",
+      "🍵 TEA CEREMONY: Optional intelligente alle 15:30, solo se non siete stanchi."
     ],
     details: [
-      { time: '09:00', activity: 'Otagi Nenbutsu-ji (taxi consigliato).', type: 'activity' },
-      { time: '11:00', activity: 'Passeggiata Higashiyama (Sannenzaka/Ninenzaka).', type: 'activity' },
-      { time: '12:30', activity: 'Kiyomizu-dera.', type: 'activity' },
-      { time: '14:00', activity: 'Cerimonia del Tè al Tempio Jotokuji (prenotare).', type: 'activity' },
-      { time: '19:00', activity: 'Cena libera.', type: 'food' }
+      { time: '08:30', activity: '🚕 Otagi Nenbutsu-ji (Taxi consigliato per arrivo presto).', type: 'activity' },
+      { time: '10:30', activity: '🏯 Higashiyama Sud & Kiyomizu-dera.', type: 'activity' },
+      { time: '13:00', activity: '🍣 Nishiki Market: Pranzo Street Food (Orario Top).', type: 'food' },
+      { time: '15:30', activity: '🍵 Cerimonia del Tè (Optional).', type: 'activity' },
+      { time: '19:00', activity: '🌃 Serata Libera: Kamogawa o ultima passeggiata.', type: 'activity' }
     ]
   },
   {
@@ -223,28 +221,28 @@ export const itinerary = [
     location: 'Kyoto -> Tokyo',
     title: 'Shinkansen & Tokyo Asakusa',
     highlights: ['Shinkansen', 'Asakusa', 'Skytree'],
-    description: "Il viaggio verso il futuro. Dalla storica Kyoto alla metropoli infinita di Tokyo.",
+    description: "Il viaggio verso il futuro. Arrivo a Tokyo e primo impatto 'soft' con la tradizione di Asakusa e la modernità della Skytree.",
     coordinates: [
-      { lat: 34.985849, lng: 135.758767, title: "Kyoto Station" },
       { lat: 35.681236, lng: 139.767125, title: "Tokyo Station" },
       { lat: 35.714765, lng: 139.796655, title: "Hotel Tavinos Asakusa" },
       { lat: 35.714725, lng: 139.796739, title: "Senso-ji Temple" },
       { lat: 35.710063, lng: 139.810700, title: "Tokyo Skytree" }
     ],
     curiosities: [
-      "Sul Shinkansen, se sedete a sinistra (verso Tokyo), potreste vedere il Monte Fuji (meteo permettendo).",
-      "Asakusa conserva l'atmosfera della vecchia Edo."
+      "La Tokyo Skytree è la torre più alta del mondo (634m).",
+      "Asakusa conserva l'atmosfera della 'Shitamachi', la città bassa di epoca Edo."
     ],
     info: [
-      "Bagagli Shinkansen: Prenotare posto con 'Baggage Area' per valigie grandi.",
-      "Skytree: Consigliato prenotare i biglietti online per evitare code."
+      "💡 TIP: La sera Asakusa è molto più piacevole e meno affollata.",
+      "🌇 Skytree: Prenotare assolutamente l'orario del tramonto in anticipo."
     ],
     details: [
-      { time: '09:00', activity: 'Check-out e Shinkansen per Tokyo.', type: 'transport' },
-      { time: '12:00', activity: 'Arrivo Tokyo Station.', type: 'transport' },
-      { time: '13:00', activity: 'Check-in: Hotel Tavinos Asakusa.', type: 'hotel' },
-      { time: '14:30', activity: 'Esplorazione Asakusa e Senso-ji.', type: 'activity' },
-      { time: '17:00', activity: 'Tokyo Skytree al tramonto.', type: 'activity' }
+      { time: '12:30', activity: '🚄 Arrivo a Tokyo Station.', type: 'transport' },
+      { time: '13:30', activity: '🏨 Transfer & Check-in Asakusa.', type: 'hotel' },
+      { time: '15:00', activity: '⏸️ Pausa relax / Unpacking.', type: 'activity' },
+      { time: '16:30', activity: '🏮 Asakusa: Sensō-ji & Nakamise al tramonto.', type: 'activity' },
+      { time: '18:00', activity: '🌇 Tokyo Skytree (Vista notturna).', type: 'activity' },
+      { time: '20:00', activity: '🍜 Cena rilassata ad Asakusa.', type: 'food' }
     ]
   },
   {
@@ -252,9 +250,9 @@ export const itinerary = [
     date: '2026-10-11',
     day: 'Domenica',
     location: 'Tokyo',
-    title: 'Modern Tokyo',
+    title: 'Tsukiji, TeamLab & Odaiba',
     highlights: ['Tsukiji', 'TeamLab Planets', 'Odaiba', 'Akihabara'],
-    description: "Arte digitale, robot giganti e cultura pop.",
+    description: "Una giornata sensoriale. Dal sushi più fresco del mondo all'arte digitale immersiva, fino ai robot giganti di Odaiba.",
     coordinates: [
       { lat: 35.665486, lng: 139.770667, title: "Tsukiji Outer Market" },
       { lat: 35.646549, lng: 139.787162, title: "TeamLab Planets Toyosu" },
@@ -262,18 +260,19 @@ export const itinerary = [
       { lat: 35.698383, lng: 139.773072, title: "Akihabara Electric Town" }
     ],
     curiosities: [
-      "TeamLab Planets si visita a piedi nudi e si cammina nell'acqua.",
-      "Il Gundam Unicorn a Odaiba si 'trasforma' in orari specifici con luci e suoni."
+      "Al TeamLab Planets si cammina nell'acqua, portate pantaloni arrotolabili!",
+      "Il Gundam di Odaiba si muove e si illumina in orari specifici."
     ],
     info: [
-      "TeamLab: Indossare pantaloni arrotolabili (acqua fino al ginocchio).",
-      "Tsukiji: Molti negozi chiudono nel primo pomeriggio, andare presto."
+      "🍣 Tsukiji: Arrivare presto (8:00) per evitare la folla eccessiva.",
+      "👣 TeamLab: Si entra scalzi. Prenotare lo slot 10:30-12:00."
     ],
     details: [
-      { time: '08:30', activity: 'Colazione/Sushi a Tsukiji Outer Market.', type: 'food' },
-      { time: '10:30', activity: 'TeamLab Planets (Toyosu).', type: 'activity' },
-      { time: '13:00', activity: 'Odaiba (Gundam Unicorn).', type: 'activity' },
-      { time: '18:00', activity: 'Akihabara: Anime, Manga, Elettronica.', type: 'activity' }
+      { time: '08:00', activity: '🍣 Colazione/Pranzo a Tsukiji Outer Market.', type: 'food' },
+      { time: '10:30', activity: '🎨 TeamLab Planets (Toyosu) [STANDARD].', type: 'activity' },
+      { time: '13:00', activity: '🤖 Odaiba: Gundam & Seaside.', type: 'activity' },
+      { time: '18:00', activity: '⚡ Akihabara: Anime & Arcade [OPTIONAL].', type: 'activity' },
+      { time: '20:00', activity: '🍛 Cena a tema o libera.', type: 'food' }
     ]
   },
   {
@@ -281,30 +280,30 @@ export const itinerary = [
     date: '2026-10-12',
     day: 'Lunedì',
     location: 'Tokyo',
-    title: 'Shibuya & Harajuku',
-    highlights: ['Meiji Shrine', 'Shibuya Crossing', 'Shibuya Sky', 'Shinjuku'],
-    description: "Il cuore pulsante della moda e della gioventù tokyoita.",
+    title: 'Shibuya, Harajuku & Meiji',
+    highlights: ['Meiji Shrine', 'Harajuku', 'Shibuya Crossing', 'Shibuya Sky'],
+    description: "Il cuore pulsante della Tokyo giovane. Dalla quiete del Meiji Shrine al caos organizzato di Shibuya Crossing.",
     coordinates: [
       { lat: 35.676398, lng: 139.699326, title: "Meiji Jingu Shrine" },
       { lat: 35.671569, lng: 139.703463, title: "Takeshita Street (Harajuku)" },
       { lat: 35.659520, lng: 139.700572, title: "Shibuya Crossing" },
       { lat: 35.658514, lng: 139.701330, title: "Shibuya Scramble Square (Sky)" },
-      { lat: 35.693840, lng: 139.699447, title: "Omoide Yokocho (Shinjuku)" }
+      { lat: 35.693840, lng: 139.699447, title: "Shinjuku (Sera)" }
     ],
     curiosities: [
-      "Shibuya Crossing è l'incrocio più affollato del mondo (fino a 2500 persone per verde).",
-      "Takeshita Street è il centro della cultura Kawaii."
+      "Il Meiji Shrine è un'oasi di pace di 700.000 metri quadri nel centro città.",
+      "Shibuya Crossing vede passare fino a 3000 persone ogni volta che scatta il verde."
     ],
     info: [
-      "Shibuya Sky: Prenotare slot orario per il tramonto con un mese di anticipo.",
-      "Omoide Yokocho: Vicolo stretto famoso per gli spiedini (Yakitori)."
+      "🌇 Shibuya Sky: Prenotare un mese prima per l'orario del tramonto (16:40-17:40).",
+      "🛍️ Harajuku: Takeshita Street è piena, esplorate le vie laterali per negozi più cool."
     ],
     details: [
-      { time: '09:00', activity: 'Meiji Shrine (Yoyogi Park).', type: 'activity' },
-      { time: '11:00', activity: 'Harajuku & Takeshita Street.', type: 'activity' },
-      { time: '14:00', activity: 'Shibuya Crossing.', type: 'activity' },
-      { time: '16:40', activity: 'Shibuya Sky (tramonto).', type: 'activity' },
-      { time: '19:00', activity: 'Cena a Shinjuku (Omoide Yokocho).', type: 'food' }
+      { time: '09:00', activity: '🌳 Meiji Shrine: Passeggiata Zen.', type: 'activity' },
+      { time: '10:30', activity: '🍭 Harajuku & Takeshita Street.', type: 'activity' },
+      { time: '12:30', activity: '🚶 Shibuya Crossing & Pranzo.', type: 'activity' },
+      { time: '16:40', activity: '🌇 Shibuya Sky al Tramonto [STANDARD].', type: 'activity' },
+      { time: '19:00', activity: '🌃 Shinjuku: Omoide Yokocho & Luci Kabukicho.', type: 'activity' }
     ]
   },
   {
@@ -313,25 +312,27 @@ export const itinerary = [
     day: 'Martedì',
     location: 'Monte Fuji',
     title: 'Tour Monte Fuji',
-    highlights: ['Lago Kawaguchiko', 'Vista Fuji'],
-    description: "Escursione per ammirare il simbolo del Giappone.",
+    highlights: ['Lago Kawaguchiko', 'Vista Fuji', 'Pagoda Chureito'],
+    description: "Una giornata intera dedicata al simbolo del Giappone. Sperando nella clemenza delle nuvole.",
     coordinates: [
-      { lat: 35.691656, lng: 139.696879, title: "Partenza bus (Shinjuku)" },
+      { lat: 35.691656, lng: 139.696879, title: "Partenza Tour (Shinjuku)" },
       { lat: 35.530397, lng: 138.751590, title: "Oishi Park (Lake Kawaguchiko)" },
       { lat: 35.501170, lng: 138.801657, title: "Chureito Pagoda" }
     ],
     curiosities: [
-      "Il Fuji è un vulcano ancora attivo (anche se dormiente dal 1707).",
-      "È considerato sacro e fonte di ispirazione artistica da secoli."
+      "La Pagoda Chureito con il Fuji sullo sfondo è una delle foto più famose del Giappone.",
+      "Il Monte Fuji è timido: spesso si nasconde tra le nuvole nel pomeriggio."
     ],
     info: [
-      "Meteo: Il Fuji è timido, spesso coperto da nuvole. In autunno (ottobre) le probabilità di vederlo sono buone.",
-      "Abbigliamento: Vestirsi a strati, può fare più fresco che a Tokyo."
+      "🚌 GIORNO IMPEGNATIVO: Tour guidato dalle 8:00 alle 18:30.",
+      "💡 TIP: Se è nuvoloso, godetevi comunque l'atmosfera del lago e dei santuari."
     ],
     details: [
-      { time: '08:00', activity: 'Partenza Bus Tour Monte Fuji.', type: 'activity' },
-      { time: 'Tutto il giorno', activity: 'Visita aree panoramiche (Oishi Park, Pagoda Chureito).', type: 'activity' },
-      { time: '18:30', activity: 'Rientro a Tokyo.', type: 'transport' }
+      { time: '08:00', activity: '🚌 Partenza Tour Organizzato da Shinjuku.', type: 'activity' },
+      { time: 'Mattina', activity: '🗻 Lago Kawaguchiko & Oishi Park.', type: 'activity' },
+      { time: 'Pomer', activity: '⛩️ Chureito Pagoda & Oshino Hakkai.', type: 'activity' },
+      { time: '18:30', activity: '🏁 Rientro a Tokyo (Probabilmente stanchi!).', type: 'transport' },
+      { time: '20:00', activity: '🍲 Cena calda vicino all\'hotel.', type: 'food' }
     ]
   },
   {
@@ -340,22 +341,24 @@ export const itinerary = [
     day: 'Mercoledì',
     location: 'Tokyo',
     title: 'Tokyo Disneyland',
-    highlights: ['Disneyland'],
-    description: "Il regno della magia in stile classico.",
+    highlights: ['Disneyland', 'Beauty and the Beast', 'Splash Mountain'],
+    description: "Il regno della magia. Tokyo Disneyland è famoso per la sua pulizia impeccabile e l'ospitalità unica.",
     coordinates: [
       { lat: 35.632896, lng: 139.880394, title: "Tokyo Disneyland" }
     ],
     curiosities: [
-      "Tokyo Disneyland è stato il primo parco Disney fuori dagli USA (1983).",
-      "Il livello di servizio e pulizia è leggendario, superiore agli altri parchi Disney."
+      "I cast member (staff) salutano con entrambe le mani per essere più accoglienti.",
+      "La 'Beauty and the Beast' ride è un'esclusiva tecnologica incredibile."
     ],
     info: [
-      "Biglietti: Comprare online in anticipo, non vendono in cassa.",
-      "Parate: I giapponesi si siedono ordinatamente ore prima per vederle."
+      "🎫 Premier Access: Usatelo strategicamente per 'Beauty and the Beast' se la coda supera i 100 min.",
+      "⏰ Arrivate ai cancelli almeno 45-60 min prima dell'apertura ufficiale."
     ],
     details: [
-      { time: '08:00', activity: 'Trasferimento (Metro + JR Keiyo Line).', type: 'transport' },
-      { time: '09:00', activity: 'Intera giornata a Tokyo Disneyland.', type: 'activity' }
+      { time: '07:30', activity: '🚃 Trasferimento a Maihama Station.', type: 'transport' },
+      { time: '08:30', activity: '🏰 Ingresso a Tokyo Disneyland.', type: 'activity' },
+      { time: 'Giorno', activity: '🎢 Attrazioni, Parate e Magia.', type: 'activity' },
+      { time: '20:30', activity: '🎆 Spettacolo serale / Rientro.', type: 'activity' }
     ]
   },
   {
@@ -364,21 +367,24 @@ export const itinerary = [
     day: 'Giovedì',
     location: 'Tokyo',
     title: 'Tokyo DisneySea',
-    highlights: ['DisneySea'],
-    description: "Unico al mondo, ispirato ai miti e alle leggende del mare.",
+    highlights: ['DisneySea', 'Fantasy Springs', 'Journey to the Center of the Earth'],
+    description: "Il parco Disney più bello e unico al mondo. Un viaggio attraverso i sette mari e oltre.",
     coordinates: [
       { lat: 35.626779, lng: 139.885093, title: "Tokyo DisneySea" }
     ],
     curiosities: [
-      "Viene spesso votato come il miglior parco a tema del mondo per tematizzazione.",
-      "Al centro c'è un vulcano 'attivo' che erutta fuoco regolarmente."
+      "Il vulcano Prometheus erutta fuoco vero periodicamente!",
+      "È l'unico parco Disney al mondo a tema nautico/esplorazione."
     ],
     info: [
-      "Fantasy Springs: La nuova area (Frozen, Peter Pan, Rapunzel) richiede pass speciali (Standby Pass o DPA).",
-      "Snack: Provare i popcorn ai gusti strani (curry, tè al latte, pepe nero)."
+      "🌋 Fantasy Springs: La nuova area richiede pianificazione (Standby Pass/DPA).",
+      "🍿 Snack: Non perdetevi i popcorn (Curry, Black Pepper, Garlic Shrimp...)."
     ],
     details: [
-      { time: '09:00', activity: 'Intera giornata a Tokyo DisneySea.', type: 'activity' }
+      { time: '08:30', activity: '🌋 Ingresso a Tokyo DisneySea.', type: 'activity' },
+      { time: 'Mattina', activity: '⚓ Fantasy Springs / Soaring.', type: 'activity' },
+      { time: 'Pomer', activity: '🎢 Journey to the Center of the Earth & Show.', type: 'activity' },
+      { time: '21:00', activity: '🏨 Rientro in hotel (Ultima notte!).', type: 'transport' }
     ]
   },
   {
@@ -387,24 +393,26 @@ export const itinerary = [
     day: 'Venerdì',
     location: 'Tokyo -> Partenza',
     title: 'Ueno & Rientro',
-    highlights: ['Ueno Park', 'Volo di rientro'],
-    description: "Ultimi momenti in terra nipponica prima del volo.",
+    highlights: ['Ueno Park', 'Keisei Skyliner', 'Volo'],
+    description: "Ultimi saluti al Giappone. Una passeggiata rilassante a Ueno prima di volare verso casa.",
     coordinates: [
       { lat: 35.714073, lng: 139.774092, title: "Ueno Park" },
       { lat: 35.771987, lng: 140.392850, title: "Narita Airport (NRT)" }
     ],
     curiosities: [
-      "Ueno Park è famoso per i ciliegi (non in fiore a ottobre) e per i musei nazionali.",
-      "Ameyoko Market a Ueno era un mercato nero nel dopoguerra."
+      "Ueno Park ospita panda giganti allo zoo e moli templi storici.",
+      "Ameyoko Market, lungo i binari, è perfetto per souvenir last-minute (tè, kitkat, spezie)."
     ],
     info: [
-      "Keisei Skyliner/Access: È il modo più veloce per Narita.",
-      "Aeroporto: Arrivare almeno 3 ore prima, i controlli possono essere lunghi."
+      "🚄 Keisei Skyliner: Il treno più veloce per Narita (40 min).",
+      "🛫 Aeroporto: Arrivare 3 ore prima. I controlli sicurezza possono essere lenti."
     ],
     details: [
-      { time: '09:00', activity: 'Ueno Park (ultima passeggiata/shopping).', type: 'activity' },
-      { time: '12:00', activity: 'Keisei Access Express Asakusa -> Narita.', type: 'transport' },
-      { time: '16:00', activity: 'Volo di partenza da Narita.', type: 'transport' }
+      { time: '09:00', activity: '🌳 Ueno Park: Passeggiata rilassata [STANDARD].', type: 'activity' },
+      { time: '10:30', activity: '🛍️ Ultimo shopping veloce (Ameyoko/Stazione).', type: 'activity' },
+      { time: '12:00', activity: '🚄 Keisei Access/Skyliner per Narita.', type: 'transport' },
+      { time: '13:00', activity: '🛂 Check-in e Controlli in Aeroporto.', type: 'logistics' },
+      { time: '16:00', activity: '✈️ Volo di Rientro. Sayonara!', type: 'transport' }
     ]
   }
 ];
