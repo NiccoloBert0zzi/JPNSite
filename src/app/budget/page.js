@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { budget } from "@/data/budget";
 import BudgetChart from "@/components/BudgetChart";
 
+// Helper for debounced updates could be useful, but for now simple onBlur or aggressive save is okay
+// We'll stick to the existing pattern: update local state immediately, then optimistic save (or debounced).
+
 const CATEGORY_COLORS = {
   Voli: "#3B82F6",
   Hotel: "#10B981",
@@ -28,7 +31,15 @@ export default function BudgetPage() {
   const [loading, setLoading] = useState(true);
   const [isSinglePerson, setIsSinglePerson] = useState(false);
 
+  // Allow "raw" input for cost to avoid fighting the user
+  // However, managing input state for many rows is tricky.
+  // We'll trust that removing .toFixed(2) fixes the jumpiness.
+
   useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const fetchItems = () => {
     fetch("/api/reservations")
       .then((res) => res.json())
       .then((data) => {
@@ -36,30 +47,106 @@ export default function BudgetPage() {
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  }, []);
+  };
 
-  const updateCost = async (itemLabel, displayedCost) => {
-    const multiplier = isSinglePerson ? 2 : 1;
-    const realCost = (parseFloat(displayedCost) || 0) * multiplier;
-
-    const updatedItems = items.map((i) =>
-      i.item === itemLabel ? { ...i, cost: realCost } : i
-    );
-    setItems(updatedItems);
-
+  const saveItems = async (updatedItems) => {
     try {
-      await fetch("/api/reservations", {
+      // Prepare items for save: remove temporary IDs if they shouldn't go to DB?
+      // Actually backend ignores unknown fields usually, but let's be clean.
+      // But we need to send the whole object. The backend looks for 'id' to UPDATE.
+      // If no 'id', it INSERTS. '_tempId' will be ignored by backend logic assuming strict SQL but 
+      // the backend does: `values (${item.item}, ...)` so extra fields in object are fine.
+
+      const res = await fetch("/api/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedItems),
       });
+      const data = await res.json();
+      if (data.success && data.data) {
+        // If the backend returns the updated list with new IDs (for new items)
+        // we should merge or replace. 
+        // For simplicity, let's just silently accept if successful, 
+        // or replace if we think IDs might have changed (e.g. new item created).
+        // Since we are sending the Whole State, the backend might return the process results.
+        // Actually, to get the new IDs for newly created items, we should probably reload 
+        // OR rely on the backend response.
+        // Our backend returns `processedItems`.
+
+        // Strategy: We can just setItems(data.data) to sync IDs 
+        // but that might clear focus if the user is typing.
+        // So we only update if we added a new item (which has no ID locally).
+
+        // For now, let's keep it simple: background save.
+        // But if we added a NEW item, we need its ID.
+        const hasNewItems = updatedItems.some(i => !i.id);
+        if (hasNewItems) {
+          setItems(data.data); // sync to get IDs
+        }
+      }
     } catch (error) {
-      console.error("Failed to save cost", error);
+      console.error("Failed to save", error);
+    }
+  };
+
+  // Generic update function
+  const updateItem = (uniqueKey, field, value) => {
+    // Identify by ID or _tempId
+    // uniqueKey is what we used to render.
+
+    const updatedItems = items.map((i) => {
+      const key = i.id || i._tempId;
+      if (key === uniqueKey) {
+        return { ...i, [field]: value };
+      }
+      return i;
+    });
+
+    setItems(updatedItems);
+  };
+
+  const persistChanges = () => {
+    saveItems(items);
+  };
+
+  const handleAddItem = async (category) => {
+    const newItem = {
+      item: "Nuova voce",
+      cost: 0,
+      category: category,
+      status: "todo",
+      _tempId: `temp-${Date.now()}-${Math.random()}`
+    };
+
+    // We push to state first
+    const newItems = [...items, newItem];
+    setItems(newItems);
+
+    // Save immediately to get ID
+    await saveItems(newItems);
+  };
+
+  const handleDeleteItem = async (uniqueKey) => {
+    // Helper to find ID if needed
+    if (confirm("Sei sicuro di voler eliminare questa voce?")) {
+      const itemToDelete = items.find(i => (i.id || i._tempId) === uniqueKey);
+      const newItems = items.filter(i => (i.id || i._tempId) !== uniqueKey);
+      setItems(newItems);
+
+      if (itemToDelete && itemToDelete.id) {
+        try {
+          await fetch(`/api/reservations?id=${itemToDelete.id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error(e);
+          items.push(itemToDelete); // Revert
+          setItems([...items]);
+        }
+      }
     }
   };
 
   const displayMultiplier = isSinglePerson ? 0.5 : 1;
-  const totalDynamic = items.reduce((acc, curr) => acc + (curr.cost || 0), 0);
+  const totalDynamic = items.reduce((acc, curr) => acc + (Number(curr.cost) || 0), 0);
   const budgetLimit = budget.totalSafe;
   const remaining = budgetLimit - totalDynamic;
   const percentageUsed = Math.min((totalDynamic / budgetLimit) * 100, 100);
@@ -78,18 +165,18 @@ export default function BudgetPage() {
     .map((cat) => {
       const catItems = items.filter((i) => i.category === cat);
       const catTotal = catItems.reduce(
-        (acc, curr) => acc + (curr.cost || 0),
+        (acc, curr) => acc + (Number(curr.cost) || 0),
         0
       );
       return { category: cat, items: catItems, total: catTotal };
     })
-    .filter((g) => g.items.length > 0);
+  // .filter((g) => g.items.length > 0); // Removed to show empty categories where we can add items
 
-  // Chart data should also reflect the view mode
+  // Chart data
   const chartData = groupedItems.map((g) => ({
     ...g,
     total: g.total * displayMultiplier,
-  }));
+  })).filter(g => g.items.length > 0); // Chart needs real data
 
   return (
     <div className="section container">
@@ -182,35 +269,71 @@ export default function BudgetPage() {
                         <span className="icon">{icon}</span>
                         <h2>{group.category}</h2>
                       </div>
-                      <span className="category-total" style={{ color }}>
-                        €{(group.total * displayMultiplier).toLocaleString(
-                          "it-IT",
-                          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                        )}
-                      </span>
+                      <div className="header-actions">
+                        <span className="category-total" style={{ color }}>
+                          €{(group.total * displayMultiplier).toLocaleString(
+                            "it-IT",
+                            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                          )}
+                        </span>
+                        <button
+                          className="add-btn"
+                          onClick={() => handleAddItem(group.category)}
+                          title="Aggiungi voce"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
 
                     <div className="card-body">
-                      {group.items.map((item) => (
-                        <div key={item.item} className="budget-row">
-                          <span className="row-label">{item.item}</span>
-                          <div className="input-group">
-                            <span className="currency">€</span>
+                      {group.items.map((item, index) => {
+                        const safeKey = item.id || item._tempId || `idx-${index}`;
+                        return (
+                          <div key={safeKey} className="budget-row">
+                            {/* Item Name Input */}
                             <input
-                              type="number"
-                              value={
-                                item.cost
-                                  ? (item.cost * displayMultiplier).toFixed(2)
-                                  : ""
-                              }
-                              onChange={(e) =>
-                                updateCost(item.item, e.target.value)
-                              }
-                              placeholder="0"
+                              className="row-label-input"
+                              value={item.item}
+                              onChange={(e) => updateItem(safeKey, 'item', e.target.value)}
+                              onBlur={persistChanges}
                             />
+
+                            <div className="row-right">
+                              <div className="input-group">
+                                <span className="currency">€</span>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  // Use raw value or empty string. DO NOT use toFixed here to avoid input jumping.
+                                  value={
+                                    item.cost === 0 ? "" : (
+                                      isSinglePerson ? item.cost / 2 : item.cost
+                                    )
+                                  }
+                                  onChange={(e) => {
+                                    const newVal = parseFloat(e.target.value);
+                                    const realCost = isNaN(newVal) ? 0 : (isSinglePerson ? newVal * 2 : newVal);
+                                    updateItem(safeKey, 'cost', realCost);
+                                  }}
+                                  onBlur={persistChanges}
+                                  placeholder="0"
+                                />
+                              </div>
+                              <button
+                                className="delete-btn"
+                                onClick={() => handleDeleteItem(safeKey)}
+                                title="Elimina"
+                              >
+                                🗑️
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
+                      {group.items.length === 0 && (
+                        <div className="empty-category-msg">Nessuna voce</div>
+                      )}
                     </div>
                   </div>
                 );
@@ -377,6 +500,31 @@ export default function BudgetPage() {
           justify-content: space-between;
           align-items: center;
         }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .add-btn {
+            background: #f3f4f6;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+        .add-btn:hover {
+            background: #e5e7eb;
+            color: #111;
+        }
 
         .header-title {
           display: flex;
@@ -412,15 +560,34 @@ export default function BudgetPage() {
           align-items: center;
           padding: 1rem 2rem;
           border-bottom: 1px solid #f7f7f7;
+          gap: 1rem;
         }
         .budget-row:last-child {
           border-bottom: none;
         }
+        
+        .row-right {
+             display: flex;
+             align-items: center;
+             gap: 0.5rem;
+        }
 
-        .row-label {
+        /* Replaced span with input */
+        .row-label-input {
           font-size: 0.95rem;
           font-weight: 500;
           color: #4b5563;
+          border: none;
+          background: transparent;
+          width: 100%;
+          outline: none;
+          padding: 0.2rem 0;
+          border-bottom: 1px solid transparent;
+          transition: border-color 0.2s;
+        }
+        .row-label-input:focus {
+            border-bottom: 1px solid #ddd;
+            color: #111;
         }
 
         .input-group {
@@ -459,6 +626,26 @@ export default function BudgetPage() {
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;
           margin: 0;
+        }
+        
+        .delete-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: opacity 0.2s;
+            font-size: 1rem;
+            padding: 4px;
+        }
+        .delete-btn:hover {
+            opacity: 1;
+        }
+        
+        .empty-category-msg {
+            padding: 1rem 2rem;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            font-style: italic;
         }
 
         .loading {
