@@ -4,165 +4,223 @@ import { budget } from "@/data/budget";
 import BudgetChart from "@/components/BudgetChart";
 
 const CATEGORY_COLORS = {
-    Voli: "#3B82F6",
-    Hotel: "#10B981",
-    Trasporti: "#F59E0B",
-    Attrazioni: "#F97316",
-    Assicurazione: "#8B5CF6",
-    Servizi: "#EF4444",
-    Cibo: "#6366F1",
+  Voli: "#3B82F6",
+  Hotel: "#10B981",
+  Trasporti: "#F59E0B",
+  Attrazioni: "#F97316",
+  Assicurazione: "#8B5CF6",
+  Servizi: "#EF4444",
+  Cibo: "#6366F1",
 };
 
 const CATEGORY_ICONS = {
-    Voli: "✈️",
-    Hotel: "🏨",
-    Trasporti: "🚆",
-    Attrazioni: "⛩️",
-    Assicurazione: "🛡️",
-    Servizi: "📱",
-    Cibo: "🍱",
+  Voli: "✈️",
+  Hotel: "🏨",
+  Trasporti: "🚆",
+  Attrazioni: "⛩️",
+  Assicurazione: "🛡️",
+  Servizi: "📱",
+  Cibo: "🍱",
 };
 
 export default function BudgetPage() {
-    const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isSinglePerson, setIsSinglePerson] = useState(false);
 
-    useEffect(() => {
-        fetch("/api/reservations")
-            .then((res) => res.json())
-            .then((data) => {
-                setItems(data);
-                setLoading(false);
-            })
-            .catch((err) => console.error(err));
-    }, []);
+  useEffect(() => {
+    fetch("/api/reservations")
+      .then((res) => res.json())
+      .then((data) => {
+        setItems(data);
+        setLoading(false);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
-    const updateCost = async (itemLabel, newCost) => {
-        const updatedItems = items.map((i) =>
-            i.item === itemLabel ? { ...i, cost: parseFloat(newCost) || 0 } : i
-        );
-        setItems(updatedItems);
+  const updateCost = async (itemLabel, displayedCost) => {
+    const multiplier = isSinglePerson ? 2 : 1;
+    const realCost = (parseFloat(displayedCost) || 0) * multiplier;
 
-        try {
-            await fetch("/api/reservations", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updatedItems),
-            });
-        } catch (error) {
-            console.error("Failed to save cost", error);
-        }
-    };
+    const updatedItems = items.map((i) =>
+      i.item === itemLabel ? { ...i, cost: realCost } : i
+    );
+    setItems(updatedItems);
 
-    const totalDynamic = items.reduce((acc, curr) => acc + (curr.cost || 0), 0);
-    const budgetLimit = budget.totalSafe;
-    const remaining = budgetLimit - totalDynamic;
-    const percentageUsed = Math.min((totalDynamic / budgetLimit) * 100, 100);
+    try {
+      await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedItems),
+      });
+    } catch (error) {
+      console.error("Failed to save cost", error);
+    }
+  };
 
-    const categories = [
-        "Voli",
-        "Hotel",
-        "Trasporti",
-        "Attrazioni",
-        "Assicurazione",
-        "Servizi",
-        "Cibo",
-    ];
+  const displayMultiplier = isSinglePerson ? 0.5 : 1;
+  const totalDynamic = items.reduce((acc, curr) => acc + (curr.cost || 0), 0);
+  const budgetLimit = budget.totalSafe;
+  const remaining = budgetLimit - totalDynamic;
+  const percentageUsed = Math.min((totalDynamic / budgetLimit) * 100, 100);
 
-    const groupedItems = categories
-        .map((cat) => {
-            const catItems = items.filter((i) => i.category === cat);
-            const catTotal = catItems.reduce((acc, curr) => acc + (curr.cost || 0), 0);
-            return { category: cat, items: catItems, total: catTotal };
-        })
-        .filter((g) => g.items.length > 0);
+  const categories = [
+    "Voli",
+    "Hotel",
+    "Trasporti",
+    "Attrazioni",
+    "Assicurazione",
+    "Servizi",
+    "Cibo",
+  ];
 
-    return (
-        <div className="section container">
-            <header className="page-header">
-                <h1>Budget Planner</h1>
-                <p>Gestione spese in tempo reale.</p>
-            </header>
+  const groupedItems = categories
+    .map((cat) => {
+      const catItems = items.filter((i) => i.category === cat);
+      const catTotal = catItems.reduce(
+        (acc, curr) => acc + (curr.cost || 0),
+        0
+      );
+      return { category: cat, items: catItems, total: catTotal };
+    })
+    .filter((g) => g.items.length > 0);
 
-            <div className="sticky-summary">
-                <div className="summary-card">
-                    <span className="label">Totale Speso</span>
-                    <span className="value">€{totalDynamic.toLocaleString("it-IT")}</span>
-                </div>
-                <div className="summary-card highlight">
-                    <span className="label">Rimante</span>
-                    <span className="value">€{remaining.toLocaleString("it-IT")}</span>
-                </div>
-                <div className="summary-card">
-                    <span className="label">Budget</span>
-                    <span className="value">€{budgetLimit.toLocaleString("it-IT")}</span>
-                </div>
+  // Chart data should also reflect the view mode
+  const chartData = groupedItems.map((g) => ({
+    ...g,
+    total: g.total * displayMultiplier,
+  }));
 
-                <div className="progress-bar">
-                    <div className="fill" style={{ width: `${percentageUsed}%` }}></div>
-                </div>
-            </div>
+  return (
+    <div className="section container">
+      <header className="page-header">
+        <h1>Budget Planner</h1>
+        <p>Gestione spese in tempo reale.</p>
+      </header>
 
-            <div className="dashboard-grid">
-                <div className="chart-section">
-                    <div className="chart-card">
-                        <h3>Ripartizione</h3>
-                        <BudgetChart data={groupedItems} />
+      <div className="sticky-summary">
+        <div className="summary-card">
+          <span className="label">Totale Speso</span>
+          <span className="value">
+            €{(totalDynamic * displayMultiplier).toLocaleString("it-IT", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
+        </div>
+        <div className="summary-card highlight">
+          <span className="label">Rimanente</span>
+          <span className="value">
+            €{(remaining * displayMultiplier).toLocaleString("it-IT", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
+        </div>
+        <div className="summary-card">
+          <span className="label">Budget Massimo</span>
+          <span className="value">
+            €{(budgetLimit * displayMultiplier).toLocaleString("it-IT", {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
+          </span>
+        </div>
+
+        <div className="toggle-container">
+          <div className="toggle-bg">
+            <button
+              className={`toggle-btn ${!isSinglePerson ? "active" : ""}`}
+              onClick={() => setIsSinglePerson(false)}
+            >
+              2 Persone
+            </button>
+            <button
+              className={`toggle-btn ${isSinglePerson ? "active" : ""}`}
+              onClick={() => setIsSinglePerson(true)}
+            >
+              1 Persona
+            </button>
+          </div>
+        </div>
+
+        <div className="progress-bar-container">
+          <div className="progress-bar">
+            <div
+              className="fill"
+              style={{ width: `${percentageUsed}%` }}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="dashboard-grid">
+        <div className="chart-section">
+          <div className="chart-card">
+            <h3>Ripartizione</h3>
+            <BudgetChart data={chartData} />
+          </div>
+        </div>
+
+        <div className="planner-section">
+          {loading ? (
+            <div className="loading">Caricamento budget...</div>
+          ) : (
+            <div className="planner-grid">
+              {groupedItems.map((group) => {
+                const color = CATEGORY_COLORS[group.category] || "#999";
+                const icon = CATEGORY_ICONS[group.category] || "📦";
+
+                return (
+                  <div
+                    key={group.category}
+                    className="planner-card"
+                    style={{ borderTop: `6px solid ${color}` }}
+                  >
+                    <div className="card-header">
+                      <div className="header-title">
+                        <span className="icon">{icon}</span>
+                        <h2>{group.category}</h2>
+                      </div>
+                      <span className="category-total" style={{ color }}>
+                        €{(group.total * displayMultiplier).toLocaleString(
+                          "it-IT",
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                        )}
+                      </span>
                     </div>
-                </div>
 
-                <div className="planner-section">
-                    {loading ? (
-                        <div className="loading">Caricamento budget...</div>
-                    ) : (
-                        <div className="planner-grid">
-                            {groupedItems.map((group) => {
-                                const color = CATEGORY_COLORS[group.category] || "#999";
-                                const icon = CATEGORY_ICONS[group.category] || "📦";
-
-                                return (
-                                    <div
-                                        key={group.category}
-                                        className="planner-card"
-                                        style={{ borderTop: `6px solid ${color}` }}
-                                    >
-                                        <div className="card-header">
-                                            <div className="header-title">
-                                                <span className="icon">{icon}</span>
-                                                <h2>{group.category}</h2>
-                                            </div>
-                                            <span className="category-total" style={{ color }}>
-                                                €{group.total.toLocaleString("it-IT")}
-                                            </span>
-                                        </div>
-
-                                        <div className="card-body">
-                                            {group.items.map((item) => (
-                                                <div key={item.item} className="budget-row">
-                                                    <span className="row-label">{item.item}</span>
-                                                    <div className="input-group">
-                                                        <span className="currency">€</span>
-                                                        <input
-                                                            type="number"
-                                                            value={item.cost || ""}
-                                                            onChange={(e) =>
-                                                                updateCost(item.item, e.target.value)
-                                                            }
-                                                            placeholder="0"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                    <div className="card-body">
+                      {group.items.map((item) => (
+                        <div key={item.item} className="budget-row">
+                          <span className="row-label">{item.item}</span>
+                          <div className="input-group">
+                            <span className="currency">€</span>
+                            <input
+                              type="number"
+                              value={
+                                item.cost
+                                  ? (item.cost * displayMultiplier).toFixed(2)
+                                  : ""
+                              }
+                              onChange={(e) =>
+                                updateCost(item.item, e.target.value)
+                              }
+                              placeholder="0"
+                            />
+                          </div>
                         </div>
-                    )}
-                </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+          )}
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .page-header {
           text-align: center;
           margin-bottom: 2rem;
@@ -175,9 +233,9 @@ export default function BudgetPage() {
         }
 
         .sticky-summary {
-          position: sticky;
-          top: 80px;
-          z-index: 90;
+          /* position: sticky; removed to let it scroll */
+          /* top: 80px; */
+          /* z-index: 90; */
           background: rgba(255, 255, 255, 0.95);
           backdrop-filter: blur(10px);
           border: 1px solid rgba(0, 0, 0, 0.05);
@@ -195,7 +253,7 @@ export default function BudgetPage() {
         .summary-card {
           display: flex;
           flex-direction: column;
-          min-width: 150px;
+          min-width: 140px;
         }
         .summary-card.highlight .value {
           color: ${remaining < 0 ? "#EF4444" : "#10B981"};
@@ -213,6 +271,12 @@ export default function BudgetPage() {
           color: #333;
         }
 
+        .progress-bar-container {
+          width: 100%;
+          flex-basis: 100%;
+          margin-top: 1rem;
+        }
+
         .progress-bar {
           width: 100%;
           height: 10px;
@@ -224,6 +288,38 @@ export default function BudgetPage() {
           height: 100%;
           background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
           border-radius: 999px;
+        }
+
+        /* Toggle Styles */
+        .toggle-container {
+          display: flex;
+          align-items: center;
+        }
+        .toggle-bg {
+          background: #f3f4f6;
+          padding: 4px;
+          border-radius: 12px;
+          display: flex;
+          gap: 4px;
+        }
+        .toggle-btn {
+          background: transparent;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: #6b7280;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .toggle-btn:hover {
+          color: #374151;
+        }
+        .toggle-btn.active {
+          background: white;
+          color: #111;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .dashboard-grid {
@@ -254,28 +350,24 @@ export default function BudgetPage() {
           min-width: 0;
         }
 
-.planner-grid {
-  column-count: 2;
-  column-gap: 1.5rem;
-}
+        .planner-grid {
+          column-count: 2;
+          column-gap: 1.5rem;
+        }
 
-.planner-card {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 1.5rem;
-
-  background: #ffffff;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.12);
-
-  overflow: hidden;
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-
+        .planner-card {
+          display: inline-block;
+          width: 100%;
+          margin-bottom: 1.5rem;
+          background: #ffffff;
+          border-radius: 20px;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.12);
+          overflow: hidden;
+          break-inside: avoid;
+          -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+        }
 
         .card-header {
           padding: 1.25rem 2rem;
@@ -385,11 +477,11 @@ export default function BudgetPage() {
             top: 0;
           }
 
-  .planner-grid {
-    column-count: 1;
-  }
+          .planner-grid {
+            column-count: 1;
+          }
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }

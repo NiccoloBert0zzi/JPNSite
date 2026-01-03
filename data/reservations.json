@@ -38,7 +38,7 @@
   {
     "item": "Spostamenti Locali",
     "status": "todo",
-    "cost": 100,
+    "cost": 120,
     "category": "Trasporti"
   },
   {
@@ -56,7 +56,7 @@
   {
     "item": "TeamLab / Altri Ingressi",
     "status": "todo",
-    "cost": 100,
+    "cost": 12,
     "category": "Attrazioni"
   },
   {
@@ -74,7 +74,7 @@
   {
     "item": "Cibo & Extra",
     "status": "todo",
-    "cost": 650,
+    "cost": 600,
     "category": "Cibo"
   }
 ]
