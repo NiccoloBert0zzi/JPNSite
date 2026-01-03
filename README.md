@@ -13,7 +13,7 @@
 **Un compagno di viaggio digitale per gestire l'avventura in Giappone.**  
 Pianificazione itinerario, gestione budget e logistica in un'unica app moderna.
 
-[🚀 Demo Live](https://jpn-site.vercel.app) · [🐛 Segnala Bug](https://github.com/NiccoloBert0zzi/JPNSite/issues)
+[🚀 Demo Live](https://jpn-indol.vercel.app) · [🐛 Segnala Bug](https://github.com/NiccoloBert0zzi/JPNSite/issues)
 
 </div>
 
