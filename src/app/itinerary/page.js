@@ -1,12 +1,12 @@
 "use client";
-import { itinerary } from '@/data/itinerary';
+import { itinerary, currentTrip } from '@/data';
 import Link from 'next/link';
 
 export default function ItineraryPage() {
   return (
     <div className="section container">
       <h1>Itinerario di Viaggio</h1>
-      <p>Dal 3 al 16 Ottobre 2026</p>
+      <p>{currentTrip.dates}</p>
 
       <div className="timeline">
         {itinerary.map((day, index) => (

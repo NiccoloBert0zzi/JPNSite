@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { budget } from "@/data/budget";
+import { budget } from "@/data";
 import BudgetChart from "@/components/BudgetChart";
 
 // Helper for debounced updates could be useful, but for now simple onBlur or aggressive save is okay

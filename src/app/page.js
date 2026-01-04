@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Map, Wallet, Train, CheckSquare, ArrowRight, Utensils, Landmark, Zap } from 'lucide-react';
-import { budget } from '@/data/budget';
+import { currentTrip, budget } from '@/data';
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -18,7 +18,7 @@ export default function Home() {
   const features = [
     {
       title: "Itinerario Completo",
-      desc: "Osaka, Kyoto, Hiroshima, Tokyo e Fuji. Dettagli giorno per giorno.",
+      desc: "Dettagli giorno per giorno del tuo viaggio.",
       icon: <Map className="w-6 h-6" />,
       href: "/itinerary",
       color: "bg-blue-50 text-blue-600"
@@ -31,8 +31,8 @@ export default function Home() {
       color: "bg-green-50 text-green-600"
     },
     {
-      title: "Logistica & Treni",
-      desc: "JR Pass, Shinkansen, Suica e strategie di spostamento.",
+      title: "Logistica & Spostamenti",
+      desc: "Strategie di spostamento e dettagli trasporti.",
       icon: <Train className="w-6 h-6" />,
       href: "/transport",
       color: "bg-orange-50 text-orange-600"
@@ -47,9 +47,9 @@ export default function Home() {
   ];
 
   const highlights = [
-    { title: "Cultura Millenaria", img: "/images/culture.png", icon: <Landmark className="w-5 h-5" /> },
+    { title: "Cultura", img: "/images/culture.png", icon: <Landmark className="w-5 h-5" /> },
     { title: "Gastronomia", img: "/images/food.png", icon: <Utensils className="w-5 h-5" /> },
-    { title: "Futuro & Neon", img: "/images/modern.png", icon: <Zap className="w-5 h-5" /> },
+    { title: "Esperienze", img: "/images/modern.png", icon: <Zap className="w-5 h-5" /> },
   ];
 
   return (
@@ -64,8 +64,8 @@ export default function Home() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/images/hero.png')",
-              filter: "brightness(0.7)"
+              backgroundImage: `url('${currentTrip.heroImage}')`,
+              filter: currentTrip.heroFilter
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent via-70% to-white" />
@@ -79,13 +79,13 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium tracking-wider mb-6">
-              VIAGGIO DI COPPIA
+              {currentTrip.label}
             </span>
             <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 text-white drop-shadow-lg">
-              Giappone 2026
+              {currentTrip.title}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8 font-light tracking-wide">
-              03 Ottobre — 16 Ottobre
+              {currentTrip.dates}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

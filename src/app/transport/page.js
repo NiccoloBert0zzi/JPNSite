@@ -1,5 +1,5 @@
 "use client";
-import { transport } from '@/data/transport';
+import { transport } from '@/data';
 
 export default function TransportPage() {
   return (

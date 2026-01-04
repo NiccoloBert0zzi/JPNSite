@@ -1,0 +1,15 @@
+export const reservations = [
+    { item: 'Voli (Andata/Ritorno)', status: 'done', cost: 1632.00, category: 'Voli' },
+    { item: 'Hotel Osaka', status: 'done', cost: 264.60, category: 'Hotel' },
+    { item: 'Hotel Kyoto', status: 'done', cost: 224.19, category: 'Hotel' },
+    { item: 'Hotel Tokyo', status: 'done', cost: 497.52, category: 'Hotel' },
+    { item: 'JR Kansai-Hiroshima Pass', status: 'done', cost: 135.00, category: 'Trasporti' },
+    { item: 'Shinkansen Kyoto-Tokyo', status: 'todo', cost: 100.00, category: 'Trasporti' },
+    { item: 'Spostamenti Locali', status: 'todo', cost: 100.00, category: 'Trasporti' },
+    { item: 'USJ Express Pass', status: 'todo', cost: 200.00, category: 'Attrazioni' },
+    { item: 'Disney Tickets', status: 'todo', cost: 160.00, category: 'Attrazioni' },
+    { item: 'TeamLab / Altri Ingressi', status: 'todo', cost: 100.00, category: 'Attrazioni' },
+    { item: 'Pocket Wifi / eSIM', status: 'todo', cost: 50.00, category: 'Servizi' },
+    { item: 'Assicurazione Viaggio', status: 'todo', cost: 126.00, category: 'Assicurazione' },
+    { item: 'Cibo & Extra', status: 'todo', cost: 650.00, category: 'Cibo' },
+];
