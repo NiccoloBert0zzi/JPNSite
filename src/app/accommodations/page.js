@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { accommodations } from '@/data/accommodations';
+import { accommodations } from '@/data';
 import { MapPin, Calendar, CreditCard, ExternalLink } from 'lucide-react';
 
 export default function AccommodationsPage() {

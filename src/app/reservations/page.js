@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { budget } from '@/data/budget';
+import { budget } from '@/data';
 import StatsDashboard from '@/components/StatsDashboard';
 export default function ReservationsPage() {
   const [checklist, setChecklist] = useState([]);

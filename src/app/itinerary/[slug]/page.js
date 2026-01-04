@@ -2,7 +2,7 @@
 import React, { use } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { itinerary } from "@/data/itinerary";
+import { itinerary } from "@/data";
 import { notFound } from "next/navigation";
 
 // Dynamically import the Map component to avoid SSR issues with Leaflet
