@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:japan": "copy /Y .env.japan .env.local && next dev",
+    "dev:budapest": "copy /Y .env.budapest .env.local && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
