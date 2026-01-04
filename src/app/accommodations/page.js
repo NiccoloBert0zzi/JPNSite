@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { accommodations } from '@/data';
+import { accommodations, currentTrip } from '@/data';
 import { MapPin, Calendar, CreditCard, ExternalLink } from 'lucide-react';
 
 export default function AccommodationsPage() {
@@ -13,7 +13,7 @@ export default function AccommodationsPage() {
             <div
                 className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
                 style={{
-                    backgroundImage: "url('/images/hero.png')",
+                    backgroundImage: `url('${currentTrip.heroImage}')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}

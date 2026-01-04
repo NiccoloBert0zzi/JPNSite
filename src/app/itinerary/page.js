@@ -4,45 +4,64 @@ import Link from 'next/link';
 
 export default function ItineraryPage() {
   return (
-    <div className="section container">
-      <h1>Itinerario di Viaggio</h1>
-      <p>{currentTrip.dates}</p>
-
-      <div className="timeline">
-        {itinerary.map((day, index) => (
-          <Link href={`/itinerary/${day.slug}`} key={day.date} className="day-card-link">
-            <div className="day-card">
-              <div className="date-badge">
-                <span className="day-name">{day.day}</span>
-                <span className="day-date">{day.date.split('-').reverse().join('/')}</span>
-              </div>
-              <div className="day-content">
-                <div className="day-header">
-                  <h2>{day.title}</h2>
-                  <span className="location-tag">{day.location}</span>
-                </div>
-
-                <div className="highlights">
-                  {day.highlights.map(h => (
-                    <span key={h} className="highlight-pill">{h}</span>
-                  ))}
-                </div>
-
-                <div className="activities">
-                  {day.details.map((detail, i) => (
-                    <div key={i} className={`activity-row type-${detail.type}`}>
-                      <span className="time">{detail.time}</span>
-                      <span className="description">{detail.activity}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* HERO SECTION */}
+      <div
+        className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
+        style={{
+          backgroundImage: `url('${currentTrip.heroImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative container mx-auto max-w-5xl z-10 text-center">
+          <Link href="/" className="text-gray-300 hover:text-white text-sm uppercase tracking-wider font-semibold mb-6 inline-flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
+            Torna alla Home
           </Link>
-        ))}
+          <h1 className="text-gray-200 text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-lg font-display">Itinerario di Viaggio</h1>
+          <p className="text-gray-200 text-xl font-light max-w-xl mx-auto text-shadow-sm">{currentTrip.dates}</p>
+        </div>
       </div>
 
-      <style jsx>{`
+      <div className="container mx-auto max-w-5xl px-6 relative z-10 -mt-10">
+
+        <div className="timeline">
+          {itinerary.map((day, index) => (
+            <Link href={`/itinerary/${day.slug}`} key={day.date} className="day-card-link">
+              <div className="day-card">
+                <div className="date-badge">
+                  <span className="day-name">{day.day}</span>
+                  <span className="day-date">{day.date.split('-').reverse().join('/')}</span>
+                </div>
+                <div className="day-content">
+                  <div className="day-header">
+                    <h2>{day.title}</h2>
+                    <span className="location-tag">{day.location}</span>
+                  </div>
+
+                  <div className="highlights">
+                    {day.highlights.map(h => (
+                      <span key={h} className="highlight-pill">{h}</span>
+                    ))}
+                  </div>
+
+                  <div className="activities">
+                    {day.details.map((detail, i) => (
+                      <div key={i} className={`activity-row type-${detail.type}`}>
+                        <span className="time">{detail.time}</span>
+                        <span className="description">{detail.activity}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <style jsx>{`
         .timeline {
           display: flex;
           flex-direction: column;
@@ -159,6 +178,7 @@ export default function ItineraryPage() {
           }
         }
       `}</style>
+      </div>
     </div>
   );
 }

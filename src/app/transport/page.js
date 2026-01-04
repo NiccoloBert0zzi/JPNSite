@@ -1,49 +1,67 @@
 "use client";
-import { transport } from '@/data';
+import { transport, currentTrip } from '@/data';
+import Link from 'next/link';
 
 export default function TransportPage() {
   return (
-    <div className="section container">
-      <header className="page-header">
-        <h1>Trasporti & Pass</h1>
-        <p>Strategia ottimizzata per muoversi in Giappone.</p>
-      </header>
-
-      <div className="grid grid-2 transport-grid">
-        {transport.map((item) => (
-          <div key={item.name} className="card transport-card">
-            <div className="card-image" style={{ backgroundImage: `url(${item.image})` }}>
-              <div className="overlay"></div>
-              <div className="cost-badge">{item.cost}</div>
-            </div>
-
-            <div className="card-content">
-              <div className="header-row">
-                <h3>{item.name}</h3>
-                <span className="duration-tag">{item.duration}</span>
-              </div>
-              <p className="dates">📅 {item.dates}</p>
-
-              <div className="coverage-section">
-                <h4>Copertura</h4>
-                <ul>
-                  {item.coverage.map((c, i) => (
-                    <li key={i}>{c}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        ))}
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* HERO SECTION */}
+      <div
+        className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
+        style={{
+          backgroundImage: `url('${currentTrip.heroImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative container mx-auto max-w-5xl z-10 text-center">
+          <Link href="/" className="text-gray-300 hover:text-white text-sm uppercase tracking-wider font-semibold mb-6 inline-flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
+            Torna alla Home
+          </Link>
+          <h1 className="text-gray-200 text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-lg font-display">Trasporti & Pass</h1>
+          <p className="text-gray-200 text-xl font-light max-w-xl mx-auto text-shadow-sm">Strategia ottimizzata per muoversi.</p>
+        </div>
       </div>
 
-      <div className="info-box">
-        <h3>📌 Note Importanti</h3>
-        <ul>
-          <li><strong>IC Card (Suica/Pasmo):</strong> Indispensabile per tratti brevi non coperti. Ricaricare su iPhone (Wallet).</li>
-          <li><strong>Taxi:</strong> Usare solo quando strettamente necessario (es. Katsuoji). In città preferire metro e piedi.</li>
-          <li><strong>Shinkansen:</strong> Prenotare posto riservato (incluso nel pass Kansai-Hiroshima per le tratte ovest).</li>
-        </ul>
+      <div className="container mx-auto max-w-5xl px-6 relative z-10 -mt-10">
+        <div className="grid grid-2 transport-grid">
+          {transport.map((item) => (
+            <div key={item.name} className="card transport-card">
+              <div className="card-image" style={{ backgroundImage: `url(${item.image})` }}>
+                <div className="overlay"></div>
+                <div className="cost-badge">{item.cost}</div>
+              </div>
+
+              <div className="card-content">
+                <div className="header-row">
+                  <h3>{item.name}</h3>
+                  <span className="duration-tag">{item.duration}</span>
+                </div>
+                <p className="dates">📅 {item.dates}</p>
+
+                <div className="coverage-section">
+                  <h4>Copertura</h4>
+                  <ul>
+                    {item.coverage.map((c, i) => (
+                      <li key={i}>{c}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="info-box mt-16">
+          <h3>📌 Note Importanti</h3>
+          <ul>
+            <li><strong>IC Card (Suica/Pasmo):</strong> Indispensabile per tratti brevi non coperti. Ricaricare su iPhone (Wallet).</li>
+            <li><strong>Taxi:</strong> Usare solo quando strettamente necessario (es. Katsuoji). In città preferire metro e piedi.</li>
+            <li><strong>Shinkansen:</strong> Prenotare posto riservato (incluso nel pass Kansai-Hiroshima per le tratte ovest).</li>
+          </ul>
+        </div>
       </div>
 
       <style jsx>{`
@@ -183,7 +201,6 @@ export default function TransportPage() {
                 }
 
                 .info-box {
-                    margin-top: 4rem;
                     background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%);
                     border: 1px solid #fde68a;
                     padding: 2rem;

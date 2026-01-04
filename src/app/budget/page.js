@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { budget } from "@/data";
+import { budget, currentTrip } from "@/data";
+import Link from 'next/link';
 import BudgetChart from "@/components/BudgetChart";
 
 // Helper for debounced updates could be useful, but for now simple onBlur or aggressive save is okay
@@ -179,171 +180,188 @@ export default function BudgetPage() {
   })).filter(g => g.items.length > 0); // Chart needs real data
 
   return (
-    <div className="section container">
-      <header className="page-header">
-        <h1>Budget Planner</h1>
-        <p>Gestione spese in tempo reale.</p>
-      </header>
-
-      <div className="sticky-summary">
-        <div className="summary-card">
-          <span className="label">Totale Speso</span>
-          <span className="value">
-            €{(totalDynamic * displayMultiplier).toLocaleString("it-IT", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-          </span>
-        </div>
-        <div className="summary-card highlight">
-          <span className="label">Rimanente</span>
-          <span className="value">
-            €{(remaining * displayMultiplier).toLocaleString("it-IT", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-          </span>
-        </div>
-        <div className="summary-card">
-          <span className="label">Budget Massimo</span>
-          <span className="value">
-            €{(budgetLimit * displayMultiplier).toLocaleString("it-IT", {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })}
-          </span>
-        </div>
-
-        <div className="toggle-container">
-          <div className="toggle-bg">
-            <button
-              className={`toggle-btn ${!isSinglePerson ? "active" : ""}`}
-              onClick={() => setIsSinglePerson(false)}
-            >
-              2 Persone
-            </button>
-            <button
-              className={`toggle-btn ${isSinglePerson ? "active" : ""}`}
-              onClick={() => setIsSinglePerson(true)}
-            >
-              1 Persona
-            </button>
-          </div>
-        </div>
-
-        <div className="progress-bar-container">
-          <div className="progress-bar">
-            <div
-              className="fill"
-              style={{ width: `${percentageUsed}%` }}
-            ></div>
-          </div>
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* HERO SECTION */}
+      <div
+        className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
+        style={{
+          backgroundImage: `url('${currentTrip.heroImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative container mx-auto max-w-5xl z-10 text-center">
+          <Link href="/" className="text-gray-300 hover:text-white text-sm uppercase tracking-wider font-semibold mb-6 inline-flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
+            Torna alla Home
+          </Link>
+          <h1 className="text-gray-200 text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-lg font-display">Budget Planner</h1>
+          <p className="text-gray-200 text-xl font-light max-w-xl mx-auto text-shadow-sm">Gestione spese in tempo reale.</p>
         </div>
       </div>
 
-      <div className="dashboard-grid">
-        <div className="chart-section">
-          <div className="chart-card">
-            <h3>Ripartizione</h3>
-            <BudgetChart data={chartData} />
-          </div>
-        </div>
+      <div className="container mx-auto max-w-5xl px-6 relative z-10 -mt-10">
 
-        <div className="planner-section">
-          {loading ? (
-            <div className="loading">Caricamento budget...</div>
-          ) : (
-            <div className="planner-grid">
-              {groupedItems.map((group) => {
-                const color = CATEGORY_COLORS[group.category] || "#999";
-                const icon = CATEGORY_ICONS[group.category] || "📦";
-
-                return (
-                  <div
-                    key={group.category}
-                    className="planner-card"
-                    style={{ borderTop: `6px solid ${color}` }}
-                  >
-                    <div className="card-header">
-                      <div className="header-title">
-                        <span className="icon">{icon}</span>
-                        <h2>{group.category}</h2>
-                      </div>
-                      <div className="header-actions">
-                        <span className="category-total" style={{ color }}>
-                          €{(group.total * displayMultiplier).toLocaleString(
-                            "it-IT",
-                            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                          )}
-                        </span>
-                        <button
-                          className="add-btn"
-                          onClick={() => handleAddItem(group.category)}
-                          title="Aggiungi voce"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="card-body">
-                      {group.items.map((item, index) => {
-                        const safeKey = item.id || item._tempId || `idx-${index}`;
-                        return (
-                          <div key={safeKey} className="budget-row">
-                            {/* Item Name Input */}
-                            <input
-                              className="row-label-input"
-                              value={item.item}
-                              onChange={(e) => updateItem(safeKey, 'item', e.target.value)}
-                              onBlur={persistChanges}
-                            />
-
-                            <div className="row-right">
-                              <div className="input-group">
-                                <span className="currency">€</span>
-                                <input
-                                  type="number"
-                                  step="0.01"
-                                  // Use raw value or empty string. DO NOT use toFixed here to avoid input jumping.
-                                  value={
-                                    item.cost === 0 ? "" : (
-                                      isSinglePerson ? item.cost / 2 : item.cost
-                                    )
-                                  }
-                                  onChange={(e) => {
-                                    const newVal = parseFloat(e.target.value);
-                                    const realCost = isNaN(newVal) ? 0 : (isSinglePerson ? newVal * 2 : newVal);
-                                    updateItem(safeKey, 'cost', realCost);
-                                  }}
-                                  onBlur={persistChanges}
-                                  placeholder="0"
-                                />
-                              </div>
-                              <button
-                                className="delete-btn"
-                                onClick={() => handleDeleteItem(safeKey)}
-                                title="Elimina"
-                              >
-                                🗑️
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                      {group.items.length === 0 && (
-                        <div className="empty-category-msg">Nessuna voce</div>
-                      )}
-                    </div>
-                  </div>
-                );
+        <div className="sticky-summary">
+          <div className="summary-card">
+            <span className="label">Totale Speso</span>
+            <span className="value">
+              €{(totalDynamic * displayMultiplier).toLocaleString("it-IT", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
               })}
-            </div>
-          )}
-        </div>
-      </div>
+            </span>
+          </div>
+          <div className="summary-card highlight">
+            <span className="label">Rimanente</span>
+            <span className="value">
+              €{(remaining * displayMultiplier).toLocaleString("it-IT", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
+          </div>
+          <div className="summary-card">
+            <span className="label">Budget Massimo</span>
+            <span className="value">
+              €{(budgetLimit * displayMultiplier).toLocaleString("it-IT", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
+            </span>
+          </div>
 
-      <style jsx>{`
+          <div className="toggle-container">
+            <div className="toggle-bg">
+              <button
+                className={`toggle-btn ${!isSinglePerson ? "active" : ""}`}
+                onClick={() => setIsSinglePerson(false)}
+              >
+                2 Persone
+              </button>
+              <button
+                className={`toggle-btn ${isSinglePerson ? "active" : ""}`}
+                onClick={() => setIsSinglePerson(true)}
+              >
+                1 Persona
+              </button>
+            </div>
+          </div>
+
+          <div className="progress-bar-container">
+            <div className="progress-bar">
+              <div
+                className="fill"
+                style={{ width: `${percentageUsed}%` }}
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard-grid">
+          <div className="chart-section">
+            <div className="chart-card">
+              <h3>Ripartizione</h3>
+              <BudgetChart data={chartData} />
+            </div>
+          </div>
+
+          <div className="planner-section">
+            {loading ? (
+              <div className="loading">Caricamento budget...</div>
+            ) : (
+              <div className="planner-grid">
+                {groupedItems.map((group) => {
+                  const color = CATEGORY_COLORS[group.category] || "#999";
+                  const icon = CATEGORY_ICONS[group.category] || "📦";
+
+                  return (
+                    <div
+                      key={group.category}
+                      className="planner-card"
+                      style={{ borderTop: `6px solid ${color}` }}
+                    >
+                      <div className="card-header">
+                        <div className="header-title">
+                          <span className="icon">{icon}</span>
+                          <h2>{group.category}</h2>
+                        </div>
+                        <div className="header-actions">
+                          <span className="category-total" style={{ color }}>
+                            €{(group.total * displayMultiplier).toLocaleString(
+                              "it-IT",
+                              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                            )}
+                          </span>
+                          <button
+                            className="add-btn"
+                            onClick={() => handleAddItem(group.category)}
+                            title="Aggiungi voce"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="card-body">
+                        {group.items.map((item, index) => {
+                          const safeKey = item.id || item._tempId || `idx-${index}`;
+                          return (
+                            <div key={safeKey} className="budget-row">
+                              {/* Item Name Input */}
+                              <input
+                                className="row-label-input"
+                                value={item.item}
+                                onChange={(e) => updateItem(safeKey, 'item', e.target.value)}
+                                onBlur={persistChanges}
+                              />
+
+                              <div className="row-right">
+                                <div className="input-group">
+                                  <span className="currency">€</span>
+                                  <input
+                                    type="number"
+                                    step="0.01"
+                                    // Use raw value or empty string. DO NOT use toFixed here to avoid input jumping.
+                                    value={
+                                      item.cost === 0 ? "" : (
+                                        isSinglePerson ? item.cost / 2 : item.cost
+                                      )
+                                    }
+                                    onChange={(e) => {
+                                      const newVal = parseFloat(e.target.value);
+                                      const realCost = isNaN(newVal) ? 0 : (isSinglePerson ? newVal * 2 : newVal);
+                                      updateItem(safeKey, 'cost', realCost);
+                                    }}
+                                    onBlur={persistChanges}
+                                    placeholder="0"
+                                  />
+                                </div>
+                                <button
+                                  className="delete-btn"
+                                  onClick={() => handleDeleteItem(safeKey)}
+                                  title="Elimina"
+                                >
+                                  🗑️
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                        {group.items.length === 0 && (
+                          <div className="empty-category-msg">Nessuna voce</div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <style jsx>{`
         .page-header {
           text-align: center;
           margin-bottom: 2rem;
@@ -366,6 +384,7 @@ export default function BudgetPage() {
           padding: 1.5rem 2.5rem;
           box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
           margin-bottom: 3rem;
+          margin-top: 3rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -669,6 +688,7 @@ export default function BudgetPage() {
           }
         }
       `}</style>
+      </div>
     </div>
   );
 }

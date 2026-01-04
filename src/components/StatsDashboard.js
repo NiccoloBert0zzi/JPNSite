@@ -1,6 +1,7 @@
 "use client";
 import { useMemo, useEffect } from 'react';
 import confetti from 'canvas-confetti';
+import { currentTrip } from '@/data';
 
 export default function StatsDashboard({ checklist, totalBudget }) {
     const stats = useMemo(() => {
@@ -8,8 +9,8 @@ export default function StatsDashboard({ checklist, totalBudget }) {
         const spent = booked.reduce((acc, curr) => acc + (curr.cost || 0), 0);
         const progress = Math.round((booked.length / checklist.length) * 100) || 0;
 
-        // Countdown to October 3rd, 2026
-        const tripDate = new Date('2026-10-03');
+        // Countdown
+        const tripDate = new Date(currentTrip.startDate);
         const today = new Date();
         const diffTime = Math.abs(tripDate - today);
         const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -34,8 +35,8 @@ export default function StatsDashboard({ checklist, totalBudget }) {
 
                 const particleCount = 50 * (timeLeft / duration);
                 // since particles fall down, start a bit higher than random
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, shapes: ['circle', 'square', 'emoji'], scalar: 2, emoji: ['🎉', '🇯🇵'] });
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, shapes: ['circle', 'square', 'emoji'], scalar: 2, emoji: ['🎉', '🇯🇵'] });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, shapes: ['circle', 'square', 'emoji'], scalar: 2, emoji: ['🎉', currentTrip.emoji] });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, shapes: ['circle', 'square', 'emoji'], scalar: 2, emoji: ['🎉', currentTrip.emoji] });
             }, 250);
         }
     }, [stats.progress]);
@@ -44,7 +45,7 @@ export default function StatsDashboard({ checklist, totalBudget }) {
         <div className="dashboard">
             {/* Countdown Card */}
             <div className="card countdown-card">
-                <h3>🇯🇵 Manca poco!</h3>
+                <h3>{currentTrip.emoji} Manca poco!</h3>
                 <div className="countdown-number">{stats.daysLeft}</div>
                 <div className="countdown-label">Giorni alla partenza</div>
             </div>

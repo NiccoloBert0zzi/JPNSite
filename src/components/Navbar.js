@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { currentTrip } from '@/data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
@@ -19,8 +20,9 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const isHome = pathname === '/';
-    const isTransparent = isHome && !scrolled && !isOpen;
+    // Enable transparent effect on all pages that have a hero banner (which is now all of them)
+    // const isHome = pathname === '/';
+    const isTransparent = !scrolled && !isOpen;
 
     // Text color classes based on state
     const textColor = isTransparent ? 'text-white/90 hover:text-white' : 'text-gray-600 hover:text-[var(--primary)]';
@@ -45,7 +47,7 @@ export default function Navbar() {
             <div className="container mx-auto px-6 h-20 flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className={`font-display font-bold text-2xl tracking-tight z-50 transition-colors ${logoColor}`}>
-                    JAPAN <span className={`text-sm align-top ${isTransparent ? 'text-white/80' : 'text-[var(--primary)]'}`}>2026</span>
+                    {currentTrip.title}
                 </Link>
 
                 {/* Desktop Navigation */}

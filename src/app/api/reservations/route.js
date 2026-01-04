@@ -4,6 +4,8 @@ import { reservations as defaultChecklist } from '@/data';
 
 export const dynamic = 'force-dynamic';
 
+const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
+
 async function ensureTableAndData() {
     try {
         await sql`
@@ -16,20 +18,24 @@ async function ensureTableAndData() {
             );
         `;
 
-        // Attempt to remove unique constraint if it exists (migration step)
+        // Migration: Add trip_id column if it doesn't exist
         try {
-            await sql`ALTER TABLE reservations DROP CONSTRAINT IF EXISTS reservations_item_key;`;
+            await sql`ALTER TABLE reservations ADD COLUMN IF NOT EXISTS trip_id TEXT;`;
+            // Backfill existing data as 'japan' if NULL (Migration for existing production data)
+            await sql`UPDATE reservations SET trip_id = 'japan' WHERE trip_id IS NULL;`;
         } catch (e) {
-            // constraint might not exist or other error, ignore safely
-            console.log('Constraint drop skipped or failed (non-critical):', e.message);
+            console.log('Migration note:', e.message);
         }
 
-        const { rows } = await sql`SELECT count(*) FROM reservations`;
+        // Check data for THIS specific trip
+        const { rows } = await sql`SELECT count(*) FROM reservations WHERE trip_id = ${TRIP_ID}`;
+
         if (rows[0].count == 0) {
+            console.log(`No data found for trip ${TRIP_ID}. Seeding defaults...`);
             for (const item of defaultChecklist) {
                 await sql`
-                    INSERT INTO reservations (item, status, cost, category)
-                    VALUES (${item.item}, ${item.status}, ${item.cost}, ${item.category})
+                    INSERT INTO reservations (item, status, cost, category, trip_id)
+                    VALUES (${item.item}, ${item.status}, ${item.cost}, ${item.category}, ${TRIP_ID})
                 `;
             }
         }
@@ -42,8 +48,8 @@ async function ensureTableAndData() {
 export async function GET() {
     try {
         await ensureTableAndData();
-        const { rows } = await sql`SELECT * FROM reservations ORDER BY id ASC`;
-        // Convert cost to number
+        const { rows } = await sql`SELECT * FROM reservations WHERE trip_id = ${TRIP_ID} ORDER BY id ASC`;
+
         const data = rows.map(row => ({
             ...row,
             cost: Number(row.cost)
@@ -60,35 +66,24 @@ export async function POST(request) {
         const body = await request.json();
         await ensureTableAndData();
 
-        // The body can be a single item (for update/create) or list. 
-        // For simplicity based on previous code, let's assume the frontend sends the whole list 
-        // OR we can switch to handling single items which is more efficient. 
-        // The previous code sent the whole list "JSON.stringify(updatedItems)".
-
-        // Let's optimize: The frontend will likely send the whole updated list or specific items.
-        // But to support "Add" and "Rename" properly with IDs, we should probably handle upserts carefully.
-
-        // Re-aligning with plan: The frontend sends the *entire modified array*. 
-        // We will loop through them.
-
         const itemsToProcess = Array.isArray(body) ? body : [body];
         const processedItems = [];
 
         for (const item of itemsToProcess) {
             if (item.id) {
-                // Update existing
+                // Update existing (Ensure we only update items belonging to this trip, for safety)
                 const result = await sql`
                     UPDATE reservations 
                     SET item = ${item.item}, status = ${item.status}, cost = ${item.cost}, category = ${item.category}
-                    WHERE id = ${item.id}
+                    WHERE id = ${item.id} AND trip_id = ${TRIP_ID}
                     RETURNING *;
                 `;
                 if (result.rows[0]) processedItems.push(result.rows[0]);
             } else {
-                // Insert new
+                // Insert new with current TRIP_ID
                 const result = await sql`
-                    INSERT INTO reservations (item, status, cost, category)
-                    VALUES (${item.item}, ${item.status}, ${item.cost}, ${item.category})
+                    INSERT INTO reservations (item, status, cost, category, trip_id)
+                    VALUES (${item.item}, ${item.status}, ${item.cost}, ${item.category}, ${TRIP_ID})
                     RETURNING *;
                 `;
                 if (result.rows[0]) processedItems.push(result.rows[0]);

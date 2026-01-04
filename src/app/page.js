@@ -2,8 +2,8 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Map, Wallet, Train, CheckSquare, ArrowRight, Utensils, Landmark, Zap } from 'lucide-react';
-import { currentTrip, budget } from '@/data';
+import { ArrowRight } from 'lucide-react';
+import { currentTrip, homeData } from '@/data';
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -14,43 +14,6 @@ export default function Home() {
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  const features = [
-    {
-      title: "Itinerario Completo",
-      desc: "Dettagli giorno per giorno del tuo viaggio.",
-      icon: <Map className="w-6 h-6" />,
-      href: "/itinerary",
-      color: "bg-blue-50 text-blue-600"
-    },
-    {
-      title: "Budget Tracker",
-      desc: "Analisi dei costi: Voli, Hotel, Cibo e Attrazioni. Budget Safe: €" + budget.totalSafe.toLocaleString('it-IT'),
-      icon: <Wallet className="w-6 h-6" />,
-      href: "/budget",
-      color: "bg-green-50 text-green-600"
-    },
-    {
-      title: "Logistica & Spostamenti",
-      desc: "Strategie di spostamento e dettagli trasporti.",
-      icon: <Train className="w-6 h-6" />,
-      href: "/transport",
-      color: "bg-orange-50 text-orange-600"
-    },
-    {
-      title: "Prenotazioni",
-      desc: "Checklist di cose da prenotare e mappa del viaggio.",
-      icon: <CheckSquare className="w-6 h-6" />,
-      href: "/reservations",
-      color: "bg-purple-50 text-purple-600"
-    }
-  ];
-
-  const highlights = [
-    { title: "Cultura", img: "/images/culture.png", icon: <Landmark className="w-5 h-5" /> },
-    { title: "Gastronomia", img: "/images/food.png", icon: <Utensils className="w-5 h-5" /> },
-    { title: "Esperienze", img: "/images/modern.png", icon: <Zap className="w-5 h-5" /> },
-  ];
 
   return (
     <div className="home" ref={containerRef}>
@@ -108,11 +71,7 @@ export default function Home() {
       <section className="relative z-20 -mt-20 px-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { label: "Giorni", value: "14" },
-              { label: "Città Principali", value: "3" },
-              { label: "Budget Stimato", value: "€" + budget.totalSafe.toLocaleString('it-IT') }
-            ].map((stat, i) => (
+            {homeData.stats.map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -135,13 +94,13 @@ export default function Home() {
         <div className="container">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-4xl font-bold mb-2">Highlights</h2>
-              <p className="max-w-xl text-gray-500">Un mix perfetto di tradizione millenaria, natura mozzafiato e innovazione futuristica.</p>
+              <h2 className="text-4xl font-bold mb-2">{homeData.texts.highlightsTitle}</h2>
+              <p className="max-w-xl text-gray-500">{homeData.texts.highlightsDesc}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {highlights.map((item, i) => (
+            {homeData.highlights.map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -158,7 +117,7 @@ export default function Home() {
 
                 <div className="absolute bottom-0 left-0 p-6 text-white">
                   <div className="flex items-center gap-2 mb-2 text-white/80">
-                    {item.icon}
+                    <item.icon className="w-5 h-5" />
                     <span className="text-sm font-medium uppercase tracking-wider">Esperienza</span>
                   </div>
                   <h3 className="text-2xl font-bold text-white group-hover:text-[var(--primary-light)] transition-colors">{item.title}</h3>
@@ -173,12 +132,12 @@ export default function Home() {
       <section className="py-24 bg-[var(--background)]">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Pianificazione Viaggio</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Tutto quello che serve per organizzare il viaggio perfetto, dal budget agli spostamenti.</p>
+            <h2 className="text-4xl font-bold mb-4">{homeData.texts.planningTitle}</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">{homeData.texts.planningDesc}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, i) => (
+            {homeData.features.map((feature, i) => (
               <Link href={feature.href} key={i} className="block h-full">
                 <motion.div
                   whileHover={{ y: -5 }}
@@ -186,7 +145,7 @@ export default function Home() {
                 >
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6`}>
                     <div className="p-3 bg-gray-50 rounded-lg text-[var(--primary)]">
-                      {feature.icon}
+                      <feature.icon className="w-6 h-6" />
                     </div>
                   </div>
                   <h3 className="text-xl font-bold mb-3">{feature.title}</h3>

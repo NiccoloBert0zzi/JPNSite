@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { budget } from '@/data';
+import { budget, currentTrip } from '@/data';
+import Link from 'next/link';
 import StatsDashboard from '@/components/StatsDashboard';
 export default function ReservationsPage() {
   const [checklist, setChecklist] = useState([]);
@@ -46,34 +47,54 @@ export default function ReservationsPage() {
   const totalBookable = checklist.reduce((acc, curr) => acc + (curr.cost || 0), 0);
 
   return (
-    <div className="section container">
-      <h1>Prenotazioni & Mappa</h1>
-
-      <div className="grid grid-2">
-        <div className="checklist-section">
-          <h2>Checklist</h2>
-          <div className="checklist">
-            {loading ? <p style={{ padding: '1rem' }}>Caricamento...</p> : checklist.map((c) => (
-              <div
-                key={c.item}
-                className={`check-item ${c.status}`}
-                onClick={() => toggleStatus(c.item)}
-                style={{ cursor: 'pointer' }}
-              >
-                <span className="icon">{c.status === 'done' ? '✅' : '⭕'}</span>
-                <span className="label">{c.item}</span>
-                <span className="status-badge">{c.status === 'done' ? 'Prenotato' : 'Da fare'}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="map-section">
-          <StatsDashboard checklist={checklist} totalBudget={totalBookable} />
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* HERO SECTION */}
+      <div
+        className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
+        style={{
+          backgroundImage: `url('${currentTrip.heroImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative container mx-auto max-w-5xl z-10 text-center">
+          <Link href="/" className="text-gray-300 hover:text-white text-sm uppercase tracking-wider font-semibold mb-6 inline-flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
+            Torna alla Home
+          </Link>
+          <h1 className="text-gray-200 text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-lg font-display">Prenotazioni & Mappa</h1>
+          <p className="text-gray-200 text-xl font-light max-w-xl mx-auto text-shadow-sm">Checklist e posizione stay.</p>
         </div>
       </div>
 
-      <style jsx>{`
+      <div className="container mx-auto max-w-5xl px-6 relative z-10 -mt-10">
+
+        <div className="grid grid-2">
+          <div className="checklist-section">
+            <h2>Checklist</h2>
+            <div className="checklist">
+              {loading ? <p style={{ padding: '1rem' }}>Caricamento...</p> : checklist.map((c) => (
+                <div
+                  key={c.item}
+                  className={`check-item ${c.status}`}
+                  onClick={() => toggleStatus(c.item)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span className="icon">{c.status === 'done' ? '✅' : '⭕'}</span>
+                  <span className="label">{c.item}</span>
+                  <span className="status-badge">{c.status === 'done' ? 'Prenotato' : 'Da fare'}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="map-section">
+            <StatsDashboard checklist={checklist} totalBudget={totalBookable} />
+          </div>
+        </div>
+
+        <style jsx>{`
         .checklist {
           background: white;
           border: 1px solid var(--border);
@@ -112,6 +133,7 @@ export default function ReservationsPage() {
           color: #888;
         }
       `}</style>
+      </div>
     </div>
   );
 }
