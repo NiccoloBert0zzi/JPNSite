@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { budget, currentTrip } from "@/data";
+import { useAdmin } from "@/context/AdminContext";
 import Link from 'next/link';
 import BudgetChart from "@/components/BudgetChart";
+import { Trash2, Plus } from "lucide-react";
 
 // Helper for debounced updates could be useful, but for now simple onBlur or aggressive save is okay
 // We'll stick to the existing pattern: update local state immediately, then optimistic save (or debounced).
@@ -28,6 +30,7 @@ const CATEGORY_ICONS = {
 };
 
 export default function BudgetPage() {
+  const { isEditMode } = useAdmin();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSinglePerson, setIsSinglePerson] = useState(false);
@@ -294,57 +297,78 @@ export default function BudgetPage() {
                               { minimumFractionDigits: 2, maximumFractionDigits: 2 }
                             )}
                           </span>
-                          <button
-                            className="add-btn"
-                            onClick={() => handleAddItem(group.category)}
-                            title="Aggiungi voce"
-                          >
-                            +
-                          </button>
+                          {/* ONLY SHOW ADD BUTTON IN EDIT MODE */}
+                          {isEditMode && (
+                            <button
+                              className="add-btn"
+                              onClick={() => handleAddItem(group.category)}
+                              title="Aggiungi voce"
+                            >
+                              <Plus size={16} />
+                            </button>
+                          )}
                         </div>
                       </div>
 
                       <div className="card-body">
                         {group.items.map((item, index) => {
                           const safeKey = item.id || item._tempId || `idx-${index}`;
+                          const displayCost = item.cost === 0 ? "—" : (isSinglePerson ? item.cost / 2 : item.cost);
+
                           return (
                             <div key={safeKey} className="budget-row">
-                              {/* Item Name Input */}
-                              <input
-                                className="row-label-input"
-                                value={item.item}
-                                onChange={(e) => updateItem(safeKey, 'item', e.target.value)}
-                                onBlur={persistChanges}
-                              />
+                              {/* Item Name: Input in Edit Mode, Text in Read Mode */}
+                              <div className="flex-1">
+                                {isEditMode ? (
+                                  <input
+                                    className="row-label-input"
+                                    value={item.item}
+                                    onChange={(e) => updateItem(safeKey, 'item', e.target.value)}
+                                    onBlur={persistChanges}
+                                  />
+                                ) : (
+                                  <span className="font-medium text-gray-700 block py-1">{item.item}</span>
+                                )}
+                              </div>
 
                               <div className="row-right">
-                                <div className="input-group">
+                                <div className={`input-group ${!isEditMode ? 'readonly-group' : ''}`}>
                                   <span className="currency">€</span>
-                                  <input
-                                    type="number"
-                                    step="0.01"
-                                    // Use raw value or empty string. DO NOT use toFixed here to avoid input jumping.
-                                    value={
-                                      item.cost === 0 ? "" : (
-                                        isSinglePerson ? item.cost / 2 : item.cost
-                                      )
-                                    }
-                                    onChange={(e) => {
-                                      const newVal = parseFloat(e.target.value);
-                                      const realCost = isNaN(newVal) ? 0 : (isSinglePerson ? newVal * 2 : newVal);
-                                      updateItem(safeKey, 'cost', realCost);
-                                    }}
-                                    onBlur={persistChanges}
-                                    placeholder="0"
-                                  />
+                                  {/* Cost: Input in Edit Mode, Text in Read Mode */}
+                                  {isEditMode ? (
+                                    <input
+                                      type="number"
+                                      step="0.01"
+                                      value={
+                                        item.cost === 0 ? "" : (
+                                          isSinglePerson ? item.cost / 2 : item.cost
+                                        )
+                                      }
+                                      onChange={(e) => {
+                                        const newVal = parseFloat(e.target.value);
+                                        const realCost = isNaN(newVal) ? 0 : (isSinglePerson ? newVal * 2 : newVal);
+                                        updateItem(safeKey, 'cost', realCost);
+                                      }}
+                                      onBlur={persistChanges}
+                                      placeholder="0"
+                                    />
+                                  ) : (
+                                    <span className="readonly-value">
+                                      {typeof displayCost === 'number' ? displayCost.toFixed(2) : displayCost}
+                                    </span>
+                                  )}
                                 </div>
-                                <button
-                                  className="delete-btn"
-                                  onClick={() => handleDeleteItem(safeKey)}
-                                  title="Elimina"
-                                >
-                                  🗑️
-                                </button>
+
+                                {/* DELETE BUTTON: Only in Edit Mode */}
+                                {isEditMode && (
+                                  <button
+                                    className="delete-btn"
+                                    onClick={() => handleDeleteItem(safeKey)}
+                                    title="Elimina"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                )}
                               </div>
                             </div>
                           );
@@ -624,6 +648,13 @@ export default function BudgetPage() {
           border-color: #ddd;
           box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.03);
         }
+        
+        .input-group.readonly-group {
+            background: transparent;
+            width: auto;
+            padding: 0;
+        }
+        
         .currency {
           color: #9ca3af;
           font-size: 0.9rem;
@@ -640,6 +671,12 @@ export default function BudgetPage() {
           font-size: 1rem;
           outline: none;
         }
+        
+        .readonly-value {
+             font-weight: 700;
+             color: #374151;
+             font-size: 1rem;
+        }
 
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -651,7 +688,8 @@ export default function BudgetPage() {
             background: transparent;
             border: none;
             cursor: pointer;
-            opacity: 0.3;
+            color: #ef4444;
+            opacity: 0.6;
             transition: opacity 0.2s;
             font-size: 1rem;
             padding: 4px;

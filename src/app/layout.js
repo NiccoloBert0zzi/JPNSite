@@ -2,6 +2,8 @@ import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import ThemeRegistry from "@/components/ThemeRegistry";
 import "./globals.css";
+import { AdminProvider } from "@/context/AdminContext";
+import AdminControls from "@/components/AdminControls";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-base" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-display" });
@@ -21,8 +23,11 @@ export default function RootLayout({ children }) {
         <html lang="it" suppressHydrationWarning>
             <body className={`${inter.variable} ${playfair.variable}`}>
                 <ThemeRegistry>
-                    <Navbar />
-                    <main>{children}</main>
+                    <AdminProvider>
+                        <Navbar />
+                        <main>{children}</main>
+                        <AdminControls />
+                    </AdminProvider>
                 </ThemeRegistry>
             </body>
         </html>

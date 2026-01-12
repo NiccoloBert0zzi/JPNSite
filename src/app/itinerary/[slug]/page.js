@@ -1,33 +1,21 @@
-"use client";
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { itinerary } from "@/data";
+import { currentTrip } from "@/data";
+import { fetchData } from "@/app/actions";
 import { notFound } from "next/navigation";
 
-// Dynamically import the Map component to avoid SSR issues with Leaflet
-const RouteMap = dynamic(() => import("@/components/RouteMap"), {
-    ssr: false,
-    loading: () => (
-        <div
-            style={{
-                height: "450px",
-                background: "#111",
-                borderRadius: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#555",
-            }}
-        >
-            Caricamento Mappa...
-        </div>
-    ),
-});
+import RouteMapWrapper from "@/components/RouteMapWrapper";
 
-export default function ItineraryDetail({ params }) {
-    const resolvedParams = use(params);
+export const dynamicParams = true; // Ensure dynamic routing
+export const revalidate = 0; // No cache for fresh edits
+
+export default async function ItineraryDetail({ params }) {
+    const resolvedParams = await params; // Next.js 15 requires awaiting params
     const { slug } = resolvedParams;
+
+    const tripId = currentTrip.title.includes('Budapest') ? 'budapest' : 'japan';
+    const itinerary = await fetchData(tripId, 'itinerary');
 
     const day = itinerary.find((i) => i.slug === slug);
 
@@ -152,7 +140,7 @@ export default function ItineraryDetail({ params }) {
                         <h2>Mappa del Percorso</h2>
                         <div className="map-frame">
                             {day.coordinates ? (
-                                <RouteMap coordinates={day.coordinates} />
+                                <RouteMapWrapper coordinates={day.coordinates} />
                             ) : (
                                 <iframe
                                     src={day.mapUrl}
@@ -169,7 +157,7 @@ export default function ItineraryDetail({ params }) {
                 </section>
             )}
 
-            <style jsx>{`
+            <style>{`
         .detail-page {
           background-color: #fafafa;
           min-height: 100vh;
