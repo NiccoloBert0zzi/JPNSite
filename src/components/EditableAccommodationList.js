@@ -94,23 +94,7 @@ export default function EditableAccommodationList({ initialData, tripId }) {
                 </div>
             )}
 
-            {/* STATS HEADER */}
-            <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-8 -mt-20 relative z-20 px-6 container mx-auto text-white">
-                <div className="hidden md:block">
-                    {/* This space is for the Title which is outside of this component usually, but values are here */}
-                </div>
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 flex gap-10 border border-white/20 shadow-xl ml-auto">
-                    <div className="text-center md:text-left">
-                        <p className="text-gray-300 text-xs uppercase tracking-wider font-bold mb-1">Totale Notti</p>
-                        <p className="text-3xl font-bold text-white">{totalNights}</p>
-                    </div>
-                    <div className="w-px bg-white/20 h-auto"></div>
-                    <div className="text-center md:text-left">
-                        <p className="text-gray-300 text-xs uppercase tracking-wider font-bold mb-1">Budget Totale</p>
-                        <p className="text-3xl font-bold text-[var(--primary)] text-shadow-sm">€ {totalCost.toFixed(2)}</p>
-                    </div>
-                </div>
-            </div>
+
 
 
             {/* LIST */}

@@ -13,7 +13,7 @@ export default async function TransportPage() {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* HERO SECTION */}
       <div
-        className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
+        className="relative bg-gray-900 text-white pt-32 pb-44 px-6"
         style={{
           backgroundImage: `url('${currentTrip.heroImage}')`,
           backgroundSize: 'cover',
@@ -31,17 +31,19 @@ export default async function TransportPage() {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-5xl px-6 relative z-10 -mt-10">
+      <div className="relative z-10 mt-20">
+        <div className="container mx-auto max-w-5xl px-6">
 
-        <EditableTransportList initialData={data} tripId={tripId} />
+          <EditableTransportList initialData={data} tripId={tripId} />
 
-        <div className="info-box mt-16">
-          <h3>📌 Note Importanti</h3>
-          <ul>
-            <li><strong>IC Card (Suica/Pasmo):</strong> Indispensabile per tratti brevi non coperti. Ricaricare su iPhone (Wallet).</li>
-            <li><strong>Taxi:</strong> Usare solo quando strettamente necessario (es. Katsuoji). In città preferire metro e piedi.</li>
-            <li><strong>Shinkansen:</strong> Prenotare posto riservato (incluso nel pass Kansai-Hiroshima per le tratte ovest).</li>
-          </ul>
+          <div className="info-box mt-16">
+            <h3>📌 Note Importanti</h3>
+            <ul>
+              <li><strong>IC Card (Suica/Pasmo):</strong> Indispensabile per tratti brevi non coperti. Ricaricare su iPhone (Wallet).</li>
+              <li><strong>Taxi:</strong> Usare solo quando strettamente necessario (es. Katsuoji). In città preferire metro e piedi.</li>
+              <li><strong>Shinkansen:</strong> Prenotare posto riservato (incluso nel pass Kansai-Hiroshima per le tratte ovest).</li>
+            </ul>
+          </div>
         </div>
       </div>
 

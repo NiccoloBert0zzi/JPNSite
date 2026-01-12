@@ -32,6 +32,21 @@ export default async function AccommodationsPage() {
                             <h1 className="text-gray-200 text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-lg font-display">Alloggi & Hotel</h1>
                             <p className="text-gray-200 text-xl font-light max-w-xl text-shadow-sm">Le nostre basi operative. Selezionate per posizione strategica e comfort.</p>
                         </div>
+
+                        {/* Totals Box */}
+                        <div className="hidden md:block bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-xl min-w-[200px]">
+                            <div className="text-right">
+                                <span className="block text-gray-400 text-xs uppercase tracking-widest font-bold mb-1">Budget Totale</span>
+                                <span className="block text-3xl font-bold text-white mb-4">
+                                    €{data.reduce((acc, curr) => acc + Number(curr.price || 0), 0).toLocaleString('it-IT')}
+                                </span>
+
+                                <span className="block text-gray-400 text-xs uppercase tracking-widest font-bold mb-1">Notti Totali</span>
+                                <span className="block text-xl font-bold text-white">
+                                    {data.reduce((acc, curr) => acc + Number(curr.nights || 0), 0)}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
