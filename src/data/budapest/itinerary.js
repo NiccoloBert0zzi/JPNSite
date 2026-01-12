@@ -7,11 +7,11 @@ export const itinerary = [
         title: 'Arrivo a Budapest',
         image: '/images/budapest-hostel.png',
         highlights: ['Volo Serale', 'Check-in'],
-        description: "Arrivo in tarda serata e sistemazione in ostello.",
+        description: "Arrivo in tarda serata e sistemazione in alloggio.",
         coordinates: [
             { title: "Aeroporto BUD", lat: 47.4336, lng: 19.2556 },
             { title: "Deák Ferenc tér (Bus 100E)", lat: 47.4984, lng: 19.0552 },
-            { title: "a&o Budapest City", lat: 47.5024, lng: 19.0665 }
+            { title: "Economy Rooms and Apartments", lat: 47.4981, lng: 19.0667 }
         ],
         curiosities: [
             "Il Bus 100E è l'unico mezzo diretto per il centro e richiede un biglietto speciale.",
@@ -26,7 +26,7 @@ export const itinerary = [
             { time: '21:30', activity: '✈️ Partenza da Bologna', type: 'transport' },
             { time: '22:55', activity: '🛬 Atterraggio a Budapest', type: 'transport' },
             { time: '23:30', activity: '🚌 Bus 100E per Deák Ferenc tér (€5.70)', type: 'transport' },
-            { time: '00:00', activity: '🏨 Check-in a&o Budapest City', type: 'activity' }
+            { time: '00:00', activity: '🏨 Check-in Economy Rooms and Apartments', type: 'activity' }
         ]
     },
     {

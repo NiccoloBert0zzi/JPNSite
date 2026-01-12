@@ -18,8 +18,8 @@ const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
 const trips = {
     japan: {
         title: "Giappone 2026",
-        dates: "03 Ottobre — 16 Ottobre",
-        startDate: "2026-10-03",
+        dates: "02 Ottobre — 17 Ottobre",
+        startDate: "2026-10-02",
         emoji: "🇯🇵",
         heroImage: "/images/hero.png",
         heroFilter: "brightness(0.7)",

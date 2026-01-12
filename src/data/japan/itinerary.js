@@ -1,5 +1,27 @@
 export const itinerary = [
   {
+    slug: 'departure-milan',
+    date: '2026-10-02',
+    day: 'Venerdì',
+    location: 'Milano -> Volo',
+    title: 'Partenza per il Giappone',
+    highlights: ['Volo Eva Air', 'Scalo a Taipei'],
+    image: '/images/malpensa.png',
+    description: "Inizia l'avventura! Partenza da Milano Malpensa verso l'oriente.",
+    coordinates: [
+      { lat: 45.630063, lng: 8.725531, title: "Milano Malpensa T1" },
+      { lat: 25.079651, lng: 121.234217, title: "Taipei Taoyuan T2" }
+    ],
+    curiosities: [],
+    info: [
+      "Presentati in aeroporto 3 ore prima del volo.",
+      "Scalo a Taipei della mattina successiva."
+    ],
+    details: [
+      { time: '11:15', activity: '✈️ Partenza da Milano Malpensa (T1).', type: 'transport' }
+    ]
+  },
+  {
     slug: 'osaka-arrival',
     date: '2026-10-03',
     day: 'Sabato',
@@ -24,7 +46,9 @@ export const itinerary = [
       "🟡 PIANO B (Dopo le 15:30): Goditi passeggiata Zen nell'area esterna gratuita e suggestiva al tramonto."
     ],
     details: [
-      { time: '12:10', activity: '🛬 Arrivo KIX, Immigrazione e Bagagli.', type: 'transport' },
+      { time: '05:55', activity: '🛬 Arrivo a Taipei (Scalo).', type: 'transport' },
+      { time: '08:20', activity: '✈️ Partenza per Osaka (Kansai).', type: 'transport' },
+      { time: '12:10', activity: '🛬 Arrivo Osaka KIX (T1).', type: 'transport' },
       { time: '13:15', activity: '🎫 Ritiro JR Kansai–Hiroshima Pass.', type: 'ticket' },
       { time: '13:45', activity: '🚄 Treno KIX → Osaka / Umeda.', type: 'transport' },
       { time: '15:00', activity: '🏨 Arrivo Hotel / Deposito bagagli veloce.', type: 'hotel' },
@@ -408,11 +432,30 @@ export const itinerary = [
       "🛫 Aeroporto: Arrivare 3 ore prima. I controlli sicurezza possono essere lenti."
     ],
     details: [
-      { time: '09:00', activity: '🌳 Ueno Park: Passeggiata rilassata [STANDARD].', type: 'activity' },
-      { time: '10:30', activity: '🛍️ Ultimo shopping veloce (Ameyoko/Stazione).', type: 'activity' },
-      { time: '12:00', activity: '🚄 Keisei Access/Skyliner per Narita.', type: 'transport' },
-      { time: '13:00', activity: '🛂 Check-in e Controlli in Aeroporto.', type: 'logistics' },
-      { time: '16:00', activity: '✈️ Volo di Rientro. Sayonara!', type: 'transport' }
+      { time: '09:00', activity: '🌳 Ueno Park (Breve).', type: 'activity' },
+      { time: '10:30', activity: '🚄 Keisei Skyliner per Narita.', type: 'transport' },
+      { time: '11:25', activity: '🛂 Arrivo a Narita (T1) e Check-in.', type: 'logistics' },
+      { time: '14:25', activity: '✈️ Partenza volo per Taipei.', type: 'transport' },
+      { time: '17:05', activity: '🛬 Scalo a Taipei (T2).', type: 'transport' },
+      { time: '23:15', activity: '✈️ Partenza per Milano.', type: 'transport' }
+    ]
+  },
+  {
+    slug: 'home-arrival',
+    date: '2026-10-17',
+    day: 'Sabato',
+    location: 'Italia',
+    title: 'Bentornati a Casa',
+    highlights: ['Arrivo MXP'],
+    image: '/images/malpensa.png',
+    description: "Fine del viaggio. Benvenuti a casa!",
+    coordinates: [
+      { lat: 45.630063, lng: 8.725531, title: "Milano Malpensa T1" }
+    ],
+    curiosities: [],
+    info: [],
+    details: [
+      { time: '07:35', activity: '🛬 Arrivo a Milano Malpensa (T1).', type: 'transport' }
     ]
   }
 ];

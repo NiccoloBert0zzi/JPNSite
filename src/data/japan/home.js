@@ -38,7 +38,7 @@ export const home = {
         { title: "Esperienze", img: "/images/modern.png", icon: Zap },
     ],
     stats: [
-        { label: "Giorni", value: "14" },
+        { label: "Giorni", value: "16" },
         { label: "Città Principali", value: "3" },
         { label: "Budget Stimato", value: "€" + budget.totalSafe.toLocaleString('it-IT') }
     ],
