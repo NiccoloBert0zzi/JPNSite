@@ -41,6 +41,10 @@ export async function createTable() {
     }
 }
 
+/**
+ * @param {string} tripId
+ * @param {string} key
+ */
 export async function getTripData(tripId, key) {
     try {
         // 1. Try fetching from DB
@@ -55,19 +59,26 @@ export async function getTripData(tripId, key) {
 
         // 2. Fallback to static file (Seed)
         console.log(`No DB data for ${tripId}.${key}, using static fallback.`);
-        const staticValue = STATIC_DATA[tripId]?.[key];
+        const tripData = STATIC_DATA[/** @type {keyof typeof STATIC_DATA} */ (tripId)];
+        const staticValue = tripData?.[/** @type {keyof typeof tripData} */ (key)];
 
-        // Optional: Auto-seed on first read? 
+        // Optional: Auto-seed on first read?
         // For now, just return static so the site works immediately.
         return staticValue || [];
 
     } catch (error) {
         console.error('Database Error:', error);
         // Fallback on error (e.g. missing env vars locally)
-        return STATIC_DATA[tripId]?.[key] || [];
+        const tripData = STATIC_DATA[/** @type {keyof typeof STATIC_DATA} */ (tripId)];
+        return tripData?.[/** @type {keyof typeof tripData} */ (key)] || [];
     }
 }
 
+/**
+ * @param {string} tripId
+ * @param {string} key
+ * @param {unknown} newData
+ */
 export async function saveTripData(tripId, key, newData) {
     try {
         await createTable(); // Ensure table exists
@@ -83,6 +94,6 @@ export async function saveTripData(tripId, key, newData) {
         return { success: true };
     } catch (error) {
         console.error('Save Error:', error);
-        return { success: false, error: error.message };
+        return { success: false, error: error instanceof Error ? error.message : String(error) };
     }
 }

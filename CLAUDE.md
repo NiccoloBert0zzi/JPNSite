@@ -5,76 +5,64 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Development
+# Development (cross-platform)
 npm run dev            # Dev server (uses current .env.local)
-npm run dev:japan      # Dev with Japan trip  (Windows: copies .env.japan → .env.local)
-npm run dev:budapest   # Dev with Budapest trip
+npm run dev:japan      # Set active trip to Japan and start dev server
+npm run dev:budapest   # Set active trip to Budapest and start dev server
 
-# Testing
-npm test               # Run all tests (non-interactive)
+# Unit tests (Jest)
+npm test               # Run all unit tests (non-interactive)
 npm run test:watch     # Watch mode
-npm run test:coverage  # Coverage report
+npm run test:coverage  # Coverage report (threshold: 70%)
+
+# E2E tests (Playwright — requires running dev server or uses webServer config)
+npm run test:e2e       # Run all Playwright smoke tests
+npm run test:e2e:ui    # Open Playwright UI mode
 
 # Quality
+npm run typecheck      # tsc --noEmit (checks src/app/actions.js, src/lib/db.js, src/data/**, src/app/api/**)
 npm run lint           # ESLint
-npm run build          # Production build (type-checks via next build)
+npm run build          # Production build
 ```
-
-> **Note (Windows):** `dev:japan` / `dev:budapest` use the Windows `copy` command. On Unix run `cp .env.japan .env.local && next dev` manually.
 
 ---
 
 ## Git Workflow
 
-This is a solo project. The workflow is: **feature branch → commit → fast-forward merge to main → push**.
-
-### Every change follows these steps
+Solo project. Workflow: **feature branch → commit → fast-forward merge to main → push**.
 
 ```bash
 # 1. Start from an up-to-date main
 git checkout main && git pull
 
 # 2. Create a branch with a conventional prefix
-git checkout -b feat/short-description   # or fix/ chore/ refactor/ docs/
+git checkout -b feat/short-description   # or fix/ chore/ refactor/ docs/ test/
 
-# 3. Make changes, then run tests before committing
+# 3. Make changes, run tests
 npm test
 
-# 4. Commit with Conventional Commits format
+# 4. Commit with Conventional Commits
 git add <files>
 git commit -m "feat: add thing" \
   -m "Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
 
-# 5. Push the branch
+# 5. Push branch, merge, push main, delete branch
 git push -u origin feat/short-description
-
-# 6. Fast-forward merge to main (no merge commit)
 git checkout main
 git merge --ff-only feat/short-description
 git push origin main
-
-# 7. Clean up
 git branch -d feat/short-description
 git push origin --delete feat/short-description
 ```
 
-### Commit message conventions
-
-```
-feat:     new feature
-fix:      bug fix
-refactor: code change that is not a feature or fix
-test:     adding or fixing tests
-chore:    build, deps, config
-docs:     documentation only
-```
+### Commit conventions
+`feat:` `fix:` `refactor:` `test:` `chore:` `docs:`
 
 ### Git hooks (Husky)
-
 - **pre-commit** → `lint-staged` (ESLint auto-fix on staged `.js/.ts` files)
-- **pre-push** → `npm test` (all tests must pass before push)
+- **pre-push** → `npm test` (all unit tests must pass)
 
-If a hook blocks you, investigate the root cause — never use `--no-verify`.
+Never use `--no-verify`. If a hook blocks, fix the root cause.
 
 ---
 
@@ -82,7 +70,9 @@ If a hook blocks you, investigate the root cause — never use `--no-verify`.
 
 ### Multi-Trip System
 
-Trip selection is driven by `NEXT_PUBLIC_TRIP_ID` (`japan` | `budapest`). This env var is read **at module load time** in `src/data/index.js`, which re-exports all data from either `src/data/japan/` or `src/data/budapest/`. Tests that depend on this must use `jest.resetModules()` before re-requiring the module.
+Trip selection is driven by `NEXT_PUBLIC_TRIP_ID` (`japan` | `budapest`), read **at module load time** in `src/data/index.js`, which re-exports all data from either `src/data/japan/` or `src/data/budapest/`. Trip config is done via `.env.japan` / `.env.budapest`; `scripts/use-trip.js` copies the right file to `.env.local`.
+
+Tests that depend on this must use `jest.resetModules()` before re-requiring the module.
 
 ### Data Flow
 
@@ -93,7 +83,7 @@ src/lib/db.js                     ← getTripData / saveTripData (Vercel Postgre
         ↓                         ← auto-seeds from static on first read; falls back on error
 src/app/actions.js                ← server actions; updateData() guards with checkAuth()
         ↓
-src/app/api/reservations/         ← REST route for budget line items
+src/app/api/reservations/         ← REST route for budget line items (POST/DELETE require auth)
         ↓
 React pages / components
 ```
@@ -101,8 +91,8 @@ React pages / components
 ### Admin/Edit Mode
 
 - `src/context/AdminContext.js` — React context; tracks `isAdmin` + `isEditMode`
-- Auth: cookie-based (`jpn_admin_session`); password from `ADMIN_PASSWORD` env var (default: `admin123`)
-- Editable components (`EditableTransportList`, `EditableAccommodationList`, `EditableItineraryList`) only render edit UI when `isEditMode === true`
+- Auth: HMAC-SHA256 cookie (`jpn_admin_session`); token = `HMAC(ADMIN_PASSWORD, 'jpn_session_v1')`; password from `ADMIN_PASSWORD` env var (default: `admin123`)
+- Editable components render edit UI only when `isEditMode === true`
 
 ### Database Schema
 
@@ -143,14 +133,17 @@ reservations (id SERIAL, item TEXT, status TEXT, cost NUMERIC, category TEXT, tr
 
 ## Testing
 
-Tests live co-located in `__tests__/` directories next to the source files.
+### Unit tests (Jest)
 
-### Test environments
+Tests live in `__tests__/` directories co-located with source files.
 
+**Test environments:**
 - Most tests: `jest-environment-jsdom` (default)
-- API route tests (`src/app/api/**/route.test.js`): use `/** @jest-environment node */` docblock — required because Next.js `Request`/`Response` are not available in jsdom
+- API route tests: `/** @jest-environment node */` docblock — Next.js `Request`/`Response` not available in jsdom
 
-### Mocking conventions
+**Coverage:** pages and complex UI components are excluded (covered by E2E). Threshold: 70% on branches/functions/lines for the core logic files.
+
+**Mocking conventions:**
 
 | Dependency | Mock strategy |
 |---|---|
@@ -159,21 +152,19 @@ Tests live co-located in `__tests__/` directories next to the source files.
 | Server actions | `jest.mock('@/app/actions', ...)` in context/component tests |
 | Static data | `jest.mock('@/data/japan/budget', ...)` in db tests |
 
-### `saveTripData` SQL call order
-
-`saveTripData` calls `sql` **twice**: once inside `createTable()` (which catches its own errors) and once for the actual upsert. Mock accordingly:
+**`saveTripData` SQL call order** — calls `sql` twice: once in `createTable()` (catches its own errors) then once for the upsert. Mock accordingly:
 
 ```js
 sql.mockResolvedValueOnce({}); // createTable
-sql.mockRejectedValueOnce(new Error('fail')); // upsert → triggers catch in saveTripData
+sql.mockRejectedValueOnce(new Error('fail')); // upsert → triggers catch
 ```
 
-### Trip-switching tests
+**API route tests** use `jest.resetModules()` in `beforeEach` to clear the `setupDone` flag. Re-require mocks after reset via a helper function, not a module-level `const`.
 
-`src/data/index.js` reads `NEXT_PUBLIC_TRIP_ID` at module load. To test different trips:
+### E2E tests (Playwright)
 
-```js
-beforeEach(() => jest.resetModules());
-process.env.NEXT_PUBLIC_TRIP_ID = 'budapest';
-const { currentTrip } = await import('@/data/index');
-```
+Smoke tests live in `e2e/smoke.test.ts`. They cover: home loads, navigation, budget page, admin login modal, wrong password error. Playwright starts the dev server automatically via `webServer` in `playwright.config.ts`.
+
+### TypeScript / checkJs
+
+`tsconfig.json` has `checkJs: true` scoped to: `src/app/actions.js`, `src/app/api/**`, `src/lib/db.js`, `src/data/**`, `scripts/**`. Test files and component/page files are excluded. Run `npm run typecheck` to verify. Use JSDoc annotations (`@param`, `@type`) in checked files — not `// @ts-nocheck`.

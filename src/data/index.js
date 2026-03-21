@@ -46,7 +46,7 @@ const trips = {
     }
 };
 
-export const currentTrip = trips[TRIP_ID];
+export const currentTrip = trips[/** @type {keyof typeof trips} */ (TRIP_ID)];
 
 export const itinerary = TRIP_ID === 'budapest' ? budapestItinerary : japanItinerary;
 export const budget = TRIP_ID === 'budapest' ? budapestBudget : japanBudget;

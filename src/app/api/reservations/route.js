@@ -9,6 +9,7 @@ const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
 
 // Run DB setup once per server instance, not on every request.
 let setupDone = false;
+/** @type {Promise<void> | null} */
 let setupPromise = null;
 
 async function runSetup() {
@@ -62,6 +63,7 @@ export async function GET() {
     }
 }
 
+/** @param {Request} request */
 export async function POST(request) {
     if (!await checkAuth()) {
         return NextResponse.json({ error: 'Non autorizzato' }, { status: 401 });
@@ -100,6 +102,7 @@ export async function POST(request) {
     }
 }
 
+/** @param {Request} request */
 export async function DELETE(request) {
     if (!await checkAuth()) {
         return NextResponse.json({ error: 'Non autorizzato' }, { status: 401 });

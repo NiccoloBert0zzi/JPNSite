@@ -10,6 +10,7 @@ const COOKIE_NAME = 'jpn_admin_session';
 // Derive a deterministic token from the password so the cookie value can never
 // be guessed or forged by setting it to a static string like 'true'.
 // If the password changes all existing sessions are automatically invalidated.
+/** @param {string} password */
 function getExpectedToken(password) {
     return crypto
         .createHmac('sha256', password)
@@ -23,6 +24,7 @@ export async function checkAuth() {
     return !!token && token === getExpectedToken(ADMIN_PASSWORD);
 }
 
+/** @param {string} password */
 export async function loginAdmin(password) {
     if (password === ADMIN_PASSWORD) {
         const cookieStore = await cookies();
@@ -42,10 +44,19 @@ export async function logoutAdmin() {
     return { success: true };
 }
 
+/**
+ * @param {string} tripId
+ * @param {string} key
+ */
 export async function fetchData(tripId, key) {
     return await getTripData(tripId, key);
 }
 
+/**
+ * @param {string} tripId
+ * @param {string} key
+ * @param {unknown} newData
+ */
 export async function updateData(tripId, key, newData) {
     const isAuth = await checkAuth();
     if (!isAuth) {

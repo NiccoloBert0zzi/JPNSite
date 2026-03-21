@@ -59,6 +59,6 @@ describe('Japan Budget Data', () => {
         const hotelBreakdown = budget.breakdown.find((b) => b.category === 'Hotel');
         const hotelTotal = budget.hotels.reduce((acc, h) => acc + h.cost, 0);
         expect(hotelBreakdown).toBeDefined();
-        expect(hotelTotal).toBeCloseTo(hotelBreakdown.amount, 0);
+        expect(hotelTotal).toBeCloseTo(/** @type {NonNullable<typeof hotelBreakdown>} */ (hotelBreakdown).amount, 0);
     });
 });
