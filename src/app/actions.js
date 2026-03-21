@@ -1,21 +1,32 @@
 'use server'
 
+import crypto from 'crypto';
 import { cookies } from 'next/headers';
 import { getTripData, saveTripData } from '@/lib/db';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'; // Default for dev if not set
 const COOKIE_NAME = 'jpn_admin_session';
 
+// Derive a deterministic token from the password so the cookie value can never
+// be guessed or forged by setting it to a static string like 'true'.
+// If the password changes all existing sessions are automatically invalidated.
+function getExpectedToken(password) {
+    return crypto
+        .createHmac('sha256', password)
+        .update('jpn_session_v1')
+        .digest('hex');
+}
+
 export async function checkAuth() {
     const cookieStore = await cookies();
-    return cookieStore.get(COOKIE_NAME)?.value === 'true';
+    const token = cookieStore.get(COOKIE_NAME)?.value;
+    return !!token && token === getExpectedToken(ADMIN_PASSWORD);
 }
 
 export async function loginAdmin(password) {
     if (password === ADMIN_PASSWORD) {
         const cookieStore = await cookies();
-        // Set cookie for 30 days
-        cookieStore.set(COOKIE_NAME, 'true', {
+        cookieStore.set(COOKIE_NAME, getExpectedToken(password), {
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 30

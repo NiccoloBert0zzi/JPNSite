@@ -20,11 +20,16 @@ jest.mock('@/lib/db', () => ({
 
 const { getTripData, saveTripData } = require('@/lib/db');
 
+// Recompute the expected HMAC token the same way actions.js does,
+// using the default dev password so tests don't depend on env vars.
+const crypto = require('crypto');
+const VALID_TOKEN = crypto.createHmac('sha256', 'admin123').update('jpn_session_v1').digest('hex');
+
 describe('checkAuth', () => {
     beforeEach(() => jest.clearAllMocks());
 
-    it('returns true when cookie is set to "true"', async () => {
-        mockGet.mockReturnValue({ value: 'true' });
+    it('returns true when cookie contains the valid HMAC token', async () => {
+        mockGet.mockReturnValue({ value: VALID_TOKEN });
         const { checkAuth } = require('@/app/actions');
         expect(await checkAuth()).toBe(true);
     });
@@ -35,8 +40,15 @@ describe('checkAuth', () => {
         expect(await checkAuth()).toBe(false);
     });
 
-    it('returns false when cookie has wrong value', async () => {
-        mockGet.mockReturnValue({ value: 'false' });
+    it('returns false for an arbitrary string (e.g. the old "true" value)', async () => {
+        mockGet.mockReturnValue({ value: 'true' });
+        const { checkAuth } = require('@/app/actions');
+        expect(await checkAuth()).toBe(false);
+    });
+
+    it('returns false for a forged hex string that is not the correct token', async () => {
+        const fakeToken = 'a'.repeat(64);
+        mockGet.mockReturnValue({ value: fakeToken });
         const { checkAuth } = require('@/app/actions');
         expect(await checkAuth()).toBe(false);
     });
@@ -45,15 +57,16 @@ describe('checkAuth', () => {
 describe('loginAdmin', () => {
     beforeEach(() => jest.clearAllMocks());
 
-    // actions.js defaults ADMIN_PASSWORD to 'admin123' when env var is not set
-    it('returns success and sets cookie with the default dev password', async () => {
+    it('sets an HMAC token (64-char hex) on successful login', async () => {
         const { loginAdmin } = require('@/app/actions');
         const result = await loginAdmin('admin123');
         expect(result.success).toBe(true);
-        expect(mockSet).toHaveBeenCalledWith('jpn_admin_session', 'true', expect.any(Object));
+        const [, tokenArg] = mockSet.mock.calls[0];
+        expect(tokenArg).toBe(VALID_TOKEN);
+        expect(tokenArg).toMatch(/^[a-f0-9]{64}$/);
     });
 
-    it('returns error with wrong password', async () => {
+    it('returns error and does not set cookie with wrong password', async () => {
         const { loginAdmin } = require('@/app/actions');
         const result = await loginAdmin('wrongpassword');
         expect(result.success).toBe(false);
@@ -86,7 +99,7 @@ describe('updateData', () => {
     });
 
     it('saves data when authenticated', async () => {
-        mockGet.mockReturnValue({ value: 'true' });
+        mockGet.mockReturnValue({ value: VALID_TOKEN });
         saveTripData.mockResolvedValue({ success: true });
         const { updateData } = require('@/app/actions');
         const result = await updateData('japan', 'itinerary', [{ slug: 'test' }]);
