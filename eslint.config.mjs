@@ -13,6 +13,13 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // Test files and Jest config use require() for module mocking — this is intentional.
+  {
+    files: ["**/__tests__/**/*.{js,ts}", "**/*.test.{js,ts}", "jest.config.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
