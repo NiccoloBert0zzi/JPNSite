@@ -37,6 +37,7 @@ export default function Navbar() {
         { name: 'Alloggi', path: '/accommodations' },
         { name: 'Trasporti', path: '/transport' },
         { name: 'Prenotazioni', path: '/reservations' },
+        { name: 'Cultura', path: '/cultura' },
     ];
 
     return (
