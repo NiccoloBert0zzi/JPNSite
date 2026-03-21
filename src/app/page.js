@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { currentTrip, homeData } from '@/data';
+import Countdown from '@/components/Countdown';
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -51,13 +52,16 @@ export default function Home() {
               {currentTrip.dates}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/itinerary" className="btn bg-white text-black hover:bg-[var(--primary)] hover:text-white border-none transition-colors duration-300">
-                Esplora Itinerario
-              </Link>
-              <Link href="/budget" className="btn glass text-white hover:bg-white/20">
-                Vedi Budget
-              </Link>
+            <div className="flex flex-col items-center gap-6">
+              <Countdown startDate={currentTrip.startDate} />
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link href="/itinerary" className="btn bg-white text-black hover:bg-[var(--primary)] hover:text-white border-none transition-colors duration-300">
+                  Esplora Itinerario
+                </Link>
+                <Link href="/budget" className="btn glass text-white hover:bg-white/20">
+                  Vedi Budget
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>

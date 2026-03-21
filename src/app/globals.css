@@ -193,3 +193,77 @@ p {
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
 }
+/* ============================================================
+   PRINT STYLES — itinerary PDF export
+   ============================================================ */
+@media print {
+  /* Hide everything except the itinerary content */
+  nav,
+  .print\:hidden,
+  [class*="AdminControls"],
+  [class*="BackToTop"] {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+  }
+
+  /* Remove hero parallax / background images */
+  .relative.bg-gray-900 {
+    background: white !important;
+    padding: 0 !important;
+    margin-bottom: 1.5rem;
+  }
+  .relative.bg-gray-900 .absolute {
+    display: none !important;
+  }
+  .relative.bg-gray-900 h1 {
+    color: black !important;
+    font-size: 22pt !important;
+    text-shadow: none !important;
+  }
+  .relative.bg-gray-900 p {
+    color: #444 !important;
+    font-size: 11pt !important;
+  }
+  .relative.bg-gray-900 a {
+    display: none !important;
+  }
+
+  /* Timeline cards */
+  .day-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    margin-bottom: 1rem;
+    page-break-inside: avoid;
+  }
+
+  .day-card-link {
+    display: block !important;
+    transform: none !important;
+  }
+
+  .highlight-pill {
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd;
+  }
+
+  .time {
+    color: #333 !important;
+  }
+
+  /* Remove shadows/blurs that don't print well */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  @page {
+    margin: 1.5cm 2cm;
+    size: A4;
+  }
+}

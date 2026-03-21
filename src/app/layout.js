@@ -5,6 +5,7 @@ import "./globals.css";
 import { AdminProvider } from "@/context/AdminContext";
 import AdminControls from "@/components/AdminControls";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import BackToTop from "@/components/BackToTop";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-base" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-display" });
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
                         <Navbar />
                         <main>{children}</main>
                         <AdminControls />
+                        <BackToTop />
                         <ServiceWorkerRegistration />
                     </AdminProvider>
                 </ThemeRegistry>

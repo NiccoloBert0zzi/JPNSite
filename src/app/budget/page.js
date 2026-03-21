@@ -4,6 +4,7 @@ import { budget, currentTrip } from "@/data";
 import { useAdmin } from "@/context/AdminContext";
 import Link from 'next/link';
 import BudgetChart from "@/components/BudgetChart";
+import BudgetSkeleton from "@/components/BudgetSkeleton";
 import { Trash2, Plus } from "lucide-react";
 
 // Helper for debounced updates could be useful, but for now simple onBlur or aggressive save is okay
@@ -39,11 +40,8 @@ export default function BudgetPage() {
   // However, managing input state for many rows is tricky.
   // We'll trust that removing .toFixed(2) fixes the jumpiness.
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  const fetchItems = () => {
+  // Declared before useEffect to satisfy react-hooks/immutability ordering rule
+  function fetchItems() {
     fetch("/api/reservations")
       .then((res) => res.json())
       .then((data) => {
@@ -51,7 +49,11 @@ export default function BudgetPage() {
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  };
+  }
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   const saveItems = async (updatedItems) => {
     try {
@@ -119,6 +121,7 @@ export default function BudgetPage() {
       cost: 0,
       category: category,
       status: "todo",
+      // eslint-disable-next-line react-hooks/purity
       _tempId: `temp-${Date.now()}-${Math.random()}`
     };
 
@@ -272,7 +275,7 @@ export default function BudgetPage() {
 
           <div className="planner-section">
             {loading ? (
-              <div className="loading">Caricamento budget...</div>
+              <BudgetSkeleton />
             ) : (
               <div className="planner-grid">
                 {groupedItems.map((group) => {

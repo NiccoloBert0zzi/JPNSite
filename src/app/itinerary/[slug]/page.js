@@ -55,7 +55,7 @@ export default async function ItineraryDetail({ params }) {
                                 >
                                     <path d="M19 12H5M12 19l-7-7 7-7" />
                                 </svg>
-                                <span>TORNA ALL'ITINERARIO</span>
+                                <span>TORNA ALL&apos;ITINERARIO</span>
                             </Link>
 
                             <div className="location-badge">{day.location}</div>

@@ -1,6 +1,7 @@
 import { currentTrip } from '@/data';
 import { fetchData } from '@/app/actions';
 import EditableItineraryList from '@/components/EditableItineraryList';
+import PrintButton from '@/components/PrintButton';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -28,6 +29,9 @@ export default async function ItineraryPage() {
           </Link>
           <h1 className="text-gray-200 text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-lg font-display">Itinerario di Viaggio</h1>
           <p className="text-gray-200 text-xl font-light max-w-xl mx-auto text-shadow-sm">{currentTrip.dates}</p>
+          <div className="mt-6">
+            <PrintButton />
+          </div>
         </div>
       </div>
 
