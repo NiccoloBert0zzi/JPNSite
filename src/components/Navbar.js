@@ -38,6 +38,7 @@ export default function Navbar() {
         { name: 'Trasporti', path: '/transport' },
         { name: 'Prenotazioni', path: '/reservations' },
         { name: 'Cultura', path: '/cultura' },
+        { name: 'Cibo', path: '/cibo' },
     ];
 
     return (
