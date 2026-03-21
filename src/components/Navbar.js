@@ -39,6 +39,8 @@ export default function Navbar() {
         { name: 'Prenotazioni', path: '/reservations' },
         { name: 'Cultura', path: '/cultura' },
         { name: 'Cibo', path: '/cibo' },
+        { name: 'Info', path: '/info' },
+        { name: 'Frasi', path: '/frasi' },
     ];
 
     return (
@@ -53,7 +55,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex gap-8 items-center">
+                <div className="hidden md:flex gap-5 items-center">
                     {navItems.map((item) => (
                         <Link
                             key={item.path}

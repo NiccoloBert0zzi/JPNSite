@@ -6,6 +6,8 @@ import { reservations as japanReservations } from './japan/reservations';
 import { home as japanHome } from './japan/home';
 import { cultura as japanCultura } from './japan/cultura';
 import { cibo as japanCibo } from './japan/cibo';
+import { info as japanInfo } from './japan/info';
+import { frasi as japanFrasi } from './japan/frasi';
 
 import { itinerary as budapestItinerary } from './budapest/itinerary';
 import { budget as budapestBudget } from './budapest/budget';
@@ -15,6 +17,8 @@ import { reservations as budapestReservations } from './budapest/reservations';
 import { home as budapestHome } from './budapest/home';
 import { cultura as budapestCultura } from './budapest/cultura';
 import { cibo as budapestCibo } from './budapest/cibo';
+import { info as budapestInfo } from './budapest/info';
+import { frasi as budapestFrasi } from './budapest/frasi';
 
 const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
 
@@ -60,3 +64,5 @@ export const reservations = TRIP_ID === 'budapest' ? budapestReservations : japa
 export const homeData = TRIP_ID === 'budapest' ? budapestHome : japanHome;
 export const cultura = TRIP_ID === 'budapest' ? budapestCultura : japanCultura;
 export const cibo = TRIP_ID === 'budapest' ? budapestCibo : japanCibo;
+export const info = TRIP_ID === 'budapest' ? budapestInfo : japanInfo;
+export const frasi = TRIP_ID === 'budapest' ? budapestFrasi : japanFrasi;

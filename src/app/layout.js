@@ -4,6 +4,7 @@ import ThemeRegistry from "@/components/ThemeRegistry";
 import "./globals.css";
 import { AdminProvider } from "@/context/AdminContext";
 import AdminControls from "@/components/AdminControls";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-base" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-display" });
@@ -13,9 +14,16 @@ import { currentTrip } from "@/data";
 export const metadata = {
     title: `${currentTrip.title} | Planner`,
     description: `Itinerario di viaggio, budget e logistica per ${currentTrip.title}.`,
+    manifest: '/manifest.json',
     icons: {
-        icon: `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${currentTrip.emoji}</text></svg>`
-    }
+        icon: `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${currentTrip.emoji}</text></svg>`,
+        apple: `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${currentTrip.emoji}</text></svg>`,
+    },
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'black-translucent',
+        title: currentTrip.title,
+    },
 };
 
 export default function RootLayout({ children }) {
@@ -27,6 +35,7 @@ export default function RootLayout({ children }) {
                         <Navbar />
                         <main>{children}</main>
                         <AdminControls />
+                        <ServiceWorkerRegistration />
                     </AdminProvider>
                 </ThemeRegistry>
             </body>
