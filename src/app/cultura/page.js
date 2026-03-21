@@ -3,8 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cultura } from '@/data/japan/cultura';
-import { currentTrip } from '@/data';
+import { cultura, currentTrip } from '@/data';
 
 export default function CulturaPage() {
     const [activeCity, setActiveCity] = useState(cultura[0].id);

@@ -4,6 +4,7 @@ import { transport as japanTransport } from './japan/transport';
 import { accommodations as japanAccommodations } from './japan/accommodations';
 import { reservations as japanReservations } from './japan/reservations';
 import { home as japanHome } from './japan/home';
+import { cultura as japanCultura } from './japan/cultura';
 
 import { itinerary as budapestItinerary } from './budapest/itinerary';
 import { budget as budapestBudget } from './budapest/budget';
@@ -11,6 +12,7 @@ import { transport as budapestTransport } from './budapest/transport';
 import { accommodations as budapestAccommodations } from './budapest/accommodations';
 import { reservations as budapestReservations } from './budapest/reservations';
 import { home as budapestHome } from './budapest/home';
+import { cultura as budapestCultura } from './budapest/cultura';
 
 const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
 
@@ -54,3 +56,4 @@ export const transport = TRIP_ID === 'budapest' ? budapestTransport : japanTrans
 export const accommodations = TRIP_ID === 'budapest' ? budapestAccommodations : japanAccommodations;
 export const reservations = TRIP_ID === 'budapest' ? budapestReservations : japanReservations;
 export const homeData = TRIP_ID === 'budapest' ? budapestHome : japanHome;
+export const cultura = TRIP_ID === 'budapest' ? budapestCultura : japanCultura;
