@@ -41,12 +41,12 @@ export default function CurrencyCalculator({ currencies }) {
     const symbols = { JPY: '¥', HUF: 'Ft', EUR: '€' };
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden mb-8">
-            <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+        <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden mb-8">
+            <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
                 <span className="text-xl">💱</span>
-                <h2 className="font-bold text-gray-900 dark:text-white text-base">Calcolatrice Valuta</h2>
+                <h2 className="font-bold text-gray-900 text-base">Calcolatrice Valuta</h2>
                 {lastUpdated && !error && (
-                    <span className="ml-auto text-xs text-gray-400 dark:text-gray-500">
+                    <span className="ml-auto text-xs text-gray-400">
                         Tasso live · {lastUpdated}
                     </span>
                 )}
@@ -54,24 +54,24 @@ export default function CurrencyCalculator({ currencies }) {
 
             <div className="p-6">
                 {error ? (
-                    <p className="text-sm text-gray-400 dark:text-gray-500 italic">Impossibile caricare i tassi. Verifica la connessione.</p>
+                    <p className="text-sm text-gray-400 italic">Impossibile caricare i tassi. Verifica la connessione.</p>
                 ) : (
                     <div className="flex flex-wrap items-center gap-4">
                         {/* EUR input */}
-                        <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 flex-1 min-w-[140px]">
+                        <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex-1 min-w-[140px]">
                             <span className="text-lg font-bold text-gray-400">€</span>
                             <input
                                 type="number"
                                 min="0"
                                 value={eur}
                                 onChange={(e) => setEur(e.target.value)}
-                                className="bg-transparent outline-none w-full text-xl font-bold text-gray-900 dark:text-white tabular-nums"
+                                className="bg-transparent outline-none w-full text-xl font-bold text-gray-900 tabular-nums"
                                 placeholder="100"
                             />
                             <span className="text-xs text-gray-400 font-semibold uppercase tracking-wide">EUR</span>
                         </div>
 
-                        <span className="text-gray-300 dark:text-gray-600 text-2xl font-light">=</span>
+                        <span className="text-gray-300 text-2xl font-light">=</span>
 
                         {/* Converted amounts */}
                         <div className="flex flex-wrap gap-3 flex-1">
@@ -89,7 +89,7 @@ export default function CurrencyCalculator({ currencies }) {
                                     </div>
                                 </div>
                             )) : (
-                                <div className="flex-1 min-w-[140px] rounded-xl px-4 py-3 bg-gray-100 dark:bg-gray-700 animate-pulse h-14" />
+                                <div className="flex-1 min-w-[140px] rounded-xl px-4 py-3 bg-gray-100 animate-pulse h-14" />
                             )}
                         </div>
                     </div>

@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { currentTrip } from '@/data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import DarkModeToggle from './DarkModeToggle';
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -21,8 +20,6 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Enable transparent effect on all pages that have a hero banner (which is now all of them)
-    // const isHome = pathname === '/';
     const isTransparent = !scrolled && !isOpen;
 
     // Text color classes based on state
@@ -68,12 +65,6 @@ export default function Navbar() {
                             {item.name}
                         </Link>
                     ))}
-
-                </div>
-
-                {/* Dark mode toggle — desktop */}
-                <div className="hidden md:block">
-                    <DarkModeToggle transparent={isTransparent} />
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -92,22 +83,19 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute top-0 left-0 w-full h-screen bg-white md:hidden flex flex-col pt-24 px-6 gap-6"
+                            className="absolute top-0 left-0 w-full h-screen bg-white md:hidden flex flex-col pt-24 px-6 gap-6 overflow-y-auto"
                         >
                             {navItems.map((item) => (
                                 <Link
                                     key={item.path}
                                     href={item.path}
                                     onClick={() => setIsOpen(false)}
-                                    className={`text-2xl font-display font-bold ${pathname === item.path ? 'text-[var(--primary)]' : 'text-gray-800 dark:text-gray-100'
+                                    className={`text-2xl font-display font-bold ${pathname === item.path ? 'text-[var(--primary)]' : 'text-gray-800'
                                         }`}
                                 >
                                     {item.name}
                                 </Link>
                             ))}
-                            <div className="mt-2">
-                                <DarkModeToggle transparent={false} />
-                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>

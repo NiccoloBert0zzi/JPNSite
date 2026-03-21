@@ -15,7 +15,7 @@ export default function GalleryPage() {
     const isEmpty = totalPhotos === 0;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
+        <div className="min-h-screen bg-gray-50 pb-20">
             {/* HERO */}
             <div
                 className="relative bg-gray-900 text-white pt-32 pb-24 px-6"
@@ -46,7 +46,7 @@ export default function GalleryPage() {
             </div>
 
             {/* ALBUM TABS */}
-            <div className="sticky top-20 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 shadow-sm">
+            <div className="sticky top-20 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
                 <div className="container mx-auto max-w-5xl px-6">
                     <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
                         {gallery.map((a) => (
@@ -89,12 +89,12 @@ export default function GalleryPage() {
                                 >
                                     {album.emoji}
                                 </div>
-                                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 font-display mb-2">
+                                <h2 className="text-2xl font-bold text-gray-800 font-display mb-2">
                                     Nessuna foto ancora
                                 </h2>
-                                <p className="text-gray-400 dark:text-gray-500 max-w-sm leading-relaxed">
+                                <p className="text-gray-400 max-w-sm leading-relaxed">
                                     Le foto di <strong>{album.name}</strong> appariranno qui dopo il viaggio.
-                                    Aggiungi le immagini nel file <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">src/data/*/gallery.js</code>.
+                                    Aggiungi le immagini nel file <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">src/data/*/gallery.js</code>.
                                 </p>
 
                                 {/* Placeholder grid */}
@@ -128,7 +128,7 @@ export default function GalleryPage() {
                                             className="w-full h-auto object-cover"
                                         />
                                         {photo.caption && (
-                                            <p className="px-3 py-2 text-xs text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 text-left">
+                                            <p className="px-3 py-2 text-xs text-gray-500 bg-white text-left">
                                                 {photo.caption}
                                             </p>
                                         )}
