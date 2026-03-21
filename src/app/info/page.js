@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { info, currentTrip } from '@/data';
+import CurrencyCalculator from '@/components/CurrencyCalculator';
 
 export default function InfoPage() {
     const [activeSection, setActiveSection] = useState(null);
@@ -78,6 +79,9 @@ export default function InfoPage() {
             </div>
 
             <div className="container mx-auto max-w-5xl px-6 mt-10">
+                <CurrencyCalculator
+                    currencies={currentTrip.title.toLowerCase().includes('budapest') ? ['HUF'] : ['JPY']}
+                />
                 <div className="grid gap-6 md:grid-cols-2">
                     <AnimatePresence mode="popLayout">
                         {displayed.map((section, i) => (

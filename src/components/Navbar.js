@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { currentTrip } from '@/data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import DarkModeToggle from './DarkModeToggle';
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -41,6 +42,7 @@ export default function Navbar() {
         { name: 'Cibo', path: '/cibo' },
         { name: 'Info', path: '/info' },
         { name: 'Frasi', path: '/frasi' },
+        { name: 'Galleria', path: '/gallery' },
     ];
 
     return (
@@ -69,6 +71,11 @@ export default function Navbar() {
 
                 </div>
 
+                {/* Dark mode toggle — desktop */}
+                <div className="hidden md:block">
+                    <DarkModeToggle transparent={isTransparent} />
+                </div>
+
                 {/* Mobile Menu Button */}
                 <button
                     className={`md:hidden z-50 p-2 transition-colors ${burgerColor}`}
@@ -92,12 +99,15 @@ export default function Navbar() {
                                     key={item.path}
                                     href={item.path}
                                     onClick={() => setIsOpen(false)}
-                                    className={`text-2xl font-display font-bold ${pathname === item.path ? 'text-[var(--primary)]' : 'text-gray-800'
+                                    className={`text-2xl font-display font-bold ${pathname === item.path ? 'text-[var(--primary)]' : 'text-gray-800 dark:text-gray-100'
                                         }`}
                                 >
                                     {item.name}
                                 </Link>
                             ))}
+                            <div className="mt-2">
+                                <DarkModeToggle transparent={false} />
+                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
