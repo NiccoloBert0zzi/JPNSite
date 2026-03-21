@@ -42,13 +42,13 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium tracking-wider mb-6">
+            <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium tracking-wider mb-4 md:mb-6">
               {currentTrip.label}
             </span>
-            <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 text-white drop-shadow-lg">
+            <h1 className="text-4xl md:text-8xl font-display font-bold mb-4 md:mb-6 text-white drop-shadow-lg">
               {currentTrip.title}
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 font-light tracking-wide">
+            <p className="text-lg md:text-2xl text-white/90 mb-5 md:mb-8 font-light tracking-wide">
               {currentTrip.dates}
             </p>
 
