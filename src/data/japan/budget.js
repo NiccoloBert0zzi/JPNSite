@@ -1,5 +1,5 @@
 export const budget = {
-    totalNoFood: 4260.30,
+    totalNoFood: 4206.90,
     totalSafe: 5000.00,
     breakdown: [
         { category: 'Voli', amount: 1803.00, note: 'Andata/Ritorno x2 + selezione posti Eva Air' },
