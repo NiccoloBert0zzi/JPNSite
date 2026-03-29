@@ -190,30 +190,35 @@ export const itinerary = [
     slug: 'nara-inari',
     date: '2026-10-08',
     day: 'Giovedì',
-    location: 'Kyoto / Nara',
-    title: 'Tour Nara, Inari & Arashiyama',
-    highlights: ['Nara Park', 'Fushimi Inari', 'Arashiyama'],
-    description: "La giornata dei giganti. Un tour intenso per vedere i tre luoghi più famosi di Kyoto e Nara in un colpo solo.",
+    location: 'Nara / Kyoto',
+    title: 'Nara & Fushimi Inari al Tramonto',
+    highlights: ['Nara Park', 'Todaiji', 'Fushimi Inari'],
+    description: "Mattina tra i cervi sacri di Nara e il Grande Buddha di Tōdaiji, poi nel pomeriggio i mille torii rossi di Fushimi Inari al tramonto. Due icone del Giappone in un'unica giornata logistica: entrambe a sud di Kyoto sulla stessa linea.",
     coordinates: [
       { lat: 34.685087, lng: 135.843012, title: "Nara Park" },
-      { lat: 34.967140, lng: 135.772671, title: "Fushimi Inari Taisha" },
-      { lat: 35.009440, lng: 135.677598, title: "Arashiyama Bamboo Grove" }
+      { lat: 34.688801, lng: 135.839840, title: "Tōdaiji" },
+      { lat: 34.967140, lng: 135.772671, title: "Fushimi Inari Taisha" }
     ],
     curiosities: [
-      "I cervi di Nara inchinano la testa per chiedere biscotti (ma attenzione, mordono anche!).",
-      "Fushimi Inari ha migliaia di Torii donati da aziende giapponesi in cerca di prosperità."
+      "I cervi di Nara sono considerati sacri secondo la leggenda shintoista — inchinano la testa per chiedere i biscotti (shika senbei), ma attenzione: mordono davvero!",
+      "Fushimi Inari conta oltre 10.000 torii donati da aziende e privati in cerca di prosperità — la salita completa fino alla cima (Yotsugi) richiede 2-3 ore."
     ],
     info: [
-      "⚠️ GIORNO BLOCCATO: Il tour 8:00-18:00 è stancante, non aggiungere altro di giorno.",
-      "🍱 Cena: Hai camminato tanto, scegli qualcosa di sostanzioso!"
+      "🚃 Kintetsu Express Kyoto → Nara: ¥760/pers (IC Card), ~44 min. Parti da Kyoto Station lato Kintetsu.",
+      "⛩️ Fushimi Inari al tramonto (16:00–18:00): luce calda sui torii rossi e metà della folla rispetto al mattino — il momento migliore.",
+      "🦌 Tōdaiji: solo contanti — porta yen spiccioli. Biglietto ¥800/pers."
     ],
     details: [
-      { time: '08:00', activity: '🚌 Partenza Tour Organizzato (Nara, Inari, Arashiyama).', type: 'activity' },
-      { time: 'Mattina', activity: '🦌 Nara Park — cervi sacri e Tōdai-ji (il più grande tempio in legno).', type: 'activity' },
-      { time: 'Pranzo', activity: '⛩️ Fushimi Inari — migliaia di torii rossi (parte bassa).', type: 'activity' },
-      { time: 'Pomeriggio', activity: '🎋 Arashiyama — bamboo grove, tempio Tenryuji.', type: 'activity' },
-      { time: '18:00', activity: '🏁 Rientro a Kyoto centro.', type: 'transport' },
-      { time: '19:30', activity: '🍱 Cena — hai camminato tanto, scegli qualcosa di sostanzioso!', type: 'food' }
+      { time: '07:15', activity: '🚃 Kyoto Station → Nara — Kintetsu Express (¥760/pers · IC Card · ~44 min).', type: 'transport' },
+      { time: '08:00', activity: '🦌 Nara Park — cervi sacri liberi, foto e interazione.', type: 'activity' },
+      { time: '09:00', activity: '🏯 Tōdaiji — Grande Buddha, l\'edificio in legno più grande del mondo (¥800/pers).', type: 'activity' },
+      { time: '10:30', activity: '🍱 Pranzo veloce a Nara — inari-zushi tipico o konbini (~¥500/pers).', type: 'food' },
+      { time: '11:30', activity: '🚃 Nara → Kyoto Station (Kintetsu, ~44 min).', type: 'transport' },
+      { time: '12:30', activity: '🚃 JR Nara Line → Inari Station (IC Card · ¥150/pers · 5 min).', type: 'transport' },
+      { time: '13:00', activity: '⛩️ Fushimi Inari Taisha — torii rossi, salita fino a Yotsutsuji (~1h30 A/R) o completa.', type: 'activity' },
+      { time: '16:30', activity: '🌅 Ora d\'oro sui torii — il momento magico prima del tramonto.', type: 'activity' },
+      { time: '17:00', activity: '🚃 Inari → Kyoto Station (JR Nara Line · 5 min · ¥150/pers).', type: 'transport' },
+      { time: '18:30', activity: '🍜 Cena in zona Kyoto — meritata dopo tanta strada!', type: 'food' }
     ]
   },
   {
@@ -221,29 +226,38 @@ export const itinerary = [
     date: '2026-10-09',
     day: 'Venerdì',
     location: 'Kyoto',
-    title: 'Kyoto Autentica — Higashiyama',
-    highlights: ['Otagi Nenbutsu-ji', 'Kiyomizu-dera', 'Nishiki Market'],
-    description: "Dalle statue di muschio di Otagi alla vivacità del mercato di Nishiki. Una giornata che mixa spiritualità e cibo.",
+    title: 'Arashiyama, Otagi & Higashiyama',
+    highlights: ['Otagi Nenbutsu-ji', 'Bamboo Grove', 'Kiyomizu-dera'],
+    description: "Il grande giro di Kyoto: da ovest a est. Mattina ad Arashiyama con le 1200 statuette di Otagi, la foresta di bambù e il giardino zen di Tenryuji. Pomeriggio nei vicoli storici di Higashiyama fino a Kiyomizudera. Ultima cena a Pontocho.",
     coordinates: [
       { lat: 35.026365, lng: 135.660995, title: "Otagi Nenbutsu-ji" },
-      { lat: 34.994856, lng: 135.785046, title: "Kiyomizu-dera" },
-      { lat: 35.005008, lng: 135.764906, title: "Nishiki Market" }
+      { lat: 35.017097, lng: 135.671720, title: "Arashiyama Bamboo Grove" },
+      { lat: 35.009440, lng: 135.677598, title: "Tenryuji" },
+      { lat: 34.994856, lng: 135.785046, title: "Kiyomizu-dera" }
     ],
     curiosities: [
-      "Otagi Nenbutsu-ji ha 1200 statue Rakan scolpite da amatori, ognuna con espressioni buffe.",
-      "Nishiki Market è soprannominato 'la cucina di Kyoto'."
+      "Otagi Nenbutsu-ji ha 1200 statue Rakan scolpite da volontari amatori tra il 1981 e il 1991 — ognuna con un'espressione unica e spesso buffa. È chiuso il mercoledì.",
+      "La discesa da Otagi verso Arashiyama percorre la via Saga-Toriimoto, una delle strade più autentiche di Kyoto con case tradizionali e torii — quasi nessun turista la conosce."
     ],
     info: [
-      "🚕 Taxi per Otagi Nenbutsu-ji: consigliato — difficile coi mezzi.",
-      "🍵 Tea Ceremony: Optional intelligente alle 15:30, solo se non siete stanchi — prenota in anticipo."
+      "✅ Otagi aperto: l'8 Ott era giovedì (chiuso mer). Il 9 Ott è venerdì — aperto. Chiude alle 16:15.",
+      "🚕 Taxi Saga-Arashiyama → Otagi: ~5 min, ¥1.500 (taxi condiviso). Difficile coi mezzi pubblici.",
+      "🛕 Kiyomizudera: solo contanti, no carte — porta yen spiccioli. Ingresso ¥500/pers.",
+      "🍵 Cerimonia del Tè (opzionale): prenota in anticipo su Urasenke o En tea ceremony — ~¥2.000/pers."
     ],
     details: [
-      { time: '08:30', activity: '🚕 Taxi per Otagi Nenbutsu-ji (consigliato — difficile coi mezzi).', type: 'activity' },
-      { time: '10:30', activity: '🏘️ Higashiyama Sud — vicoletti Ninnen-zaka e Sannen-zaka.', type: 'activity' },
-      { time: '11:30', activity: '🛕 Kiyomizu-dera — terrazza panoramica su Kyoto.', type: 'activity' },
-      { time: '13:00', activity: '🍣 Nishiki Market — pranzo street food.', type: 'food' },
-      { time: '15:30', activity: '🍵 Cerimonia del Tè (opzionale — prenota in anticipo).', type: 'activity' },
-      { time: '19:00', activity: '🌃 Serata libera — Kamogawa o ultima passeggiata a Kyoto.', type: 'activity' }
+      { time: '09:00', activity: '🚃 JR Sagano → Saga-Arashiyama Station (IC Card · ¥240/pers · ~15 min da Kyoto Station).', type: 'transport' },
+      { time: '09:15', activity: '🚕 Taxi Saga-Arashiyama → Otagi Nenbutsuji (~5 min · ¥1.500 condiviso).', type: 'transport' },
+      { time: '09:30', activity: '🗿 Otagi Nenbutsuji — 1.200 statuette di pietra ognuna diversa (¥400/pers · chiude 16:15).', type: 'activity' },
+      { time: '10:30', activity: '🚶 Discesa a piedi verso Arashiyama via Saga-Toriimoto (~30 min · gratis · strada storica autentica).', type: 'activity' },
+      { time: '11:00', activity: '🎋 Bamboo Grove — foresta di bambù di Arashiyama (gratis).', type: 'activity' },
+      { time: '11:30', activity: '🏯 Tenryuji — giardino zen UNESCO patrimonio dell\'umanità (¥500/pers · solo giardino).', type: 'activity' },
+      { time: '13:00', activity: '🍱 Pranzo ad Arashiyama — ristorantini lungo il fiume o konbini.', type: 'food' },
+      { time: '14:30', activity: '🚃 JR Sagano → Kyoto Station + bus verso Higashiyama (IC Card · ¥230/pers bus).', type: 'transport' },
+      { time: '15:00', activity: '🏘️ Higashiyama Sud senza fretta — vicoletti Ninnen-zaka e Sannen-zaka.', type: 'activity' },
+      { time: '16:00', activity: '🛕 Kiyomizu-dera — terrazza panoramica su Kyoto (¥500/pers · solo contanti).', type: 'activity' },
+      { time: '17:30', activity: '🍣 Nishiki Market — street food tra i banchi della "cucina di Kyoto" (chiude ~18:00).', type: 'food' },
+      { time: '19:00', activity: '🌃 Cena a Pontocho Alley — ultima sera a Kyoto, goditi il posto!', type: 'food' }
     ]
   },
   {

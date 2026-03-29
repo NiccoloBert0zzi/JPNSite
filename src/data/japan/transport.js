@@ -32,11 +32,19 @@ export const transport = [
         image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=800&auto=format&fit=crop'
     },
     {
-        name: 'Taxi & IC Cards',
-        dates: 'Vari',
-        duration: 'Al bisogno',
-        cost: '~€85',
-        coverage: ['Taxi per Katsuoji', 'Spostamenti extra non coperti'],
+        name: 'IC Card Suica / Pasmo',
+        dates: 'Tutto il viaggio',
+        duration: 'Ricaricabile',
+        cost: '€50 (2 pax)',
+        coverage: ['Kintetsu Kyoto ↔ Nara (Giorno 8)', 'JR Nara Line → Fushimi Inari', 'JR Sagano Arashiyama (Giorno 9)', 'Bus Kyoto', 'Yurikamome Odaiba', 'Keisei Skyliner ritorno', 'Tratti brevi e convenience store'],
         image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop'
+    },
+    {
+        name: 'Taxi',
+        dates: 'Giorno 9 + emergenze',
+        duration: 'Al bisogno',
+        cost: '€9 (2 pax)',
+        coverage: ['Saga-Arashiyama → Otagi Nenbutsuji (Giorno 9, ~5 min, ¥1.500 condiviso)', 'Situazioni di emergenza'],
+        image: 'https://images.unsplash.com/photo-1617191499396-5e1e56e44e1c?q=80&w=800&auto=format&fit=crop'
     }
 ];

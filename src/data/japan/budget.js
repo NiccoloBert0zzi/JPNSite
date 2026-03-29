@@ -1,17 +1,17 @@
 export const budget = {
-    totalNoFood: 4175.61,
+    totalNoFood: 4260.30,
     totalSafe: 5000.00,
     breakdown: [
-        { category: 'Voli', amount: 1632.00, note: 'Andata/Ritorno x2' },
-        { category: 'Hotel', amount: 986.31, note: 'Osaka, Kyoto, Tokyo' },
-        { category: 'Trasporti', amount: 481.30, note: 'Pass, Shinkansen, Metro, Taxi' },
-        { category: 'Attrazioni', amount: 950.00, note: 'USJ, Disney, Tour, Ingressi' },
-        { category: 'Assicurazione', amount: 126.00, note: '63€ a persona' },
-        { category: 'Cibo (Stimato)', amount: 650.00, note: 'Circa 45-50€ al giorno' }
+        { category: 'Voli', amount: 1803.00, note: 'Andata/Ritorno x2 + selezione posti Eva Air' },
+        { category: 'Hotel', amount: 985.32, note: 'Osaka 4n, Kyoto 3n, Tokyo 6n' },
+        { category: 'Trasporti', amount: 457.58, note: 'JR Pass, Shinkansen, Metro, IC Card, Taxi' },
+        { category: 'Attrazioni', amount: 801.00, note: 'USJ, Disney x2, Tour Fuji, TeamLab, ingressi' },
+        { category: 'Assicurazione & WiFi', amount: 160.00, note: '€126 assicurazione + €34 SIM/eSIM' },
+        { category: 'Cibo (Stimato)', amount: 525.00, note: '~€35/gg × 2 pax × 15 giorni' }
     ],
     hotels: [
-        { city: 'Osaka', name: 'The Rise Osaka Kitashinchi', nights: 4, cost: 264.60 },
-        { city: 'Kyoto', name: 'Struttura Centrale', nights: 3, cost: 224.19 },
-        { city: 'Tokyo', name: 'Hotel Tavinos Asakusa', nights: 6, cost: 497.52 }
+        { city: 'Osaka', name: 'Ark Hotel Osaka Shinsaibashi', nights: 4, cost: 264.32 },
+        { city: 'Kyoto', name: 'Hotel Tavinos Kyoto', nights: 3, cost: 223.96 },
+        { city: 'Tokyo', name: 'Hotel Tavinos Asakusa', nights: 6, cost: 497.02 }
     ]
 };
