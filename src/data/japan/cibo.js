@@ -75,6 +75,7 @@ export const cibo = [
                 facts: [
                     'Kaiseki (懐石): il menu degustazione più importante della cultura gastronomica giapponese. 8-12 portate microscopiche, ognuna in ceramica artigianale, con abbinamenti stagionali precisi. Può costare €80-300 a persona',
                     'Yudofu (湯豆腐): il piatto più semplice di Kyoto — tofu di seta cotto in acqua di kelp (kombu), intinto in salsa ponzu. Servito al Nanzen-ji da 300 anni. Insegna cosa significa "umami"',
+                    'Nishin Soba (にしんそば): soba (grano saraceno) con aringa dolce-salata — piatto tipicamente kyotese che non trovi altrove. Economico, sostanzioso, perfetto dopo una giornata di templi',
                     'Obanzai (おばんざい): la cucina casalinga di Kyoto. Piccoli piatti di verdure in salamoia (tsukemono), tofu, pesce essiccato. Si trovano nei bar con bancone (kappo) — prendine 5-6 diversi',
                     'Shojin Ryori (精進料理): la cucina vegetariana dei monaci Zen — nessun ingrediente animale, nessun aglio o cipolla. Servita nei templi di Daitoku-ji e Tenryu-ji. Un\'esperienza spirituale oltre che gastronomica',
                     'Kyo-zuke (京漬物): le verdure in salamoia di Kyoto sono famose in tutto il Giappone. Cavolfiore, melanzane, daikon, cetrioli — fermentati con sale, aceto di riso o crusca. In vendita al Nishiki Market',
@@ -269,6 +270,39 @@ export const cibo = [
                     'Anago-meshi da Ueno vicino al pontile di Miyajima: la scatola da asporto €12 è perfetta sul traghetto di ritorno guardando l\'isola allontanarsi',
                     'Da Kyoto con lo Shinkansen: pianifica Hiroshima come gita di un giorno — parti la mattina, visit il Peace Park, pranza da Okonomimura, visita Miyajima nel pomeriggio, cena di ostriche, rientra la sera',
                     'I Momiji Manju caldi appena sfornati: comprali dai negozi sul vialetto principale di Miyajima (non quelli confezionati in sacchetto) — la differenza è abissale',
+                ]
+            }
+        ]
+    },
+    {
+        id: 'miyajima',
+        name: 'Miyajima',
+        kanji: '宮島',
+        tagline: 'Momiji Manju e ostriche con vista sul Torii',
+        image: '/images/hero.png',
+        accent: '#F97316',
+        sections: [
+            {
+                id: 'iconici',
+                title: 'Specialità dell\'Isola',
+                icon: '🍁',
+                summary: 'Miyajima ha due specialità gastronomiche iconiche che si mangiano camminando lungo la via principale dell\'isola: i Momiji Manju (dolcetti a forma di foglia d\'acero) e le ostriche fresche grigliate al momento.',
+                facts: [
+                    'Momiji Manju (もみじ饅頭): dolcetti a forma di foglia d\'acero — il souvenir gastronomico simbolo di Miyajima dal 1906. Ripieni classici: pasta di fagioli azuki, crema, matcha. Comprarli caldi appena sfornati cambia tutto',
+                    'Ostriche fresche (カキ): le migliori della baia di Hiroshima — grigliate su mezzo guscio, crude con ponzu o fritte in panko (kaki-furai). Le bancarelle lungo la via principale le preparano al momento per €3-4 a 2-3 ostriche',
+                    'Anago-meshi (穴子飯): anguilla di mare grigliata su riso — specialità esclusiva di Miyajima. Il negozio Ueno vicino al pontile del traghetto fa la versione in scatola da asporto (€12) perfetta da mangiare sul traghetto di ritorno',
+                    'Shirayu-ki: sake locale dell\'isola, leggero e delicato — venduto nei negozietti tradizionali tra un torii e l\'altro',
+                ]
+            },
+            {
+                id: 'consigli',
+                title: 'Dove Mangiare',
+                icon: '💡',
+                facts: [
+                    'Ostriche al volo: le bancarelle lungo la via principale le grigliano sul momento — mangiale con vista sul torii. È il pranzo perfetto dell\'isola',
+                    'Momiji Manju caldi: distingui i negozi che cuociono sul posto (senti l\'odore e vedi la macchina) da quelli che vendono confezionati. I primi sono incomparabili',
+                    'Anago-meshi da Ueno: la scatola da asporto si mangia sul traghetto di ritorno guardando l\'isola allontanarsi — uno dei momenti più belli del viaggio',
+                    'Orario migliore: pranza sull\'isola intorno alle 13:00 — prima che la folla turistica di giornata arrivi a Hiroshima',
                 ]
             }
         ]

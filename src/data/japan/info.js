@@ -35,7 +35,7 @@ export const info = [
         items: [
             {
                 label: 'Cambio medio',
-                text: '1€ ≈ 160-165¥ (verificare prima della partenza). Con 10.000¥ stai sereno per un giorno medio senza spese grandi.',
+                text: '1€ ≈ 160-165¥ — monitora EUR/JPY nelle settimane prima della partenza. Obiettivo: sotto 165¥/€ è buono. Ogni variazione di 10¥ può influire di €50-100 sul totale del viaggio.',
             },
             {
                 label: 'Migliori ATM',
@@ -51,7 +51,7 @@ export const info = [
             },
             {
                 label: 'Cash necessario',
-                text: 'Porta sempre almeno ¥5.000-10.000 in contanti. I distributori automatici, i templi, i ristoranti ramen di nicchia, le macchinette dei biglietti del treno: tutto richiede cash. Pagarsi il ramen con la carta è considerato strano.',
+                text: 'Porta almeno ¥50.000–80.000 (~€300–500) per il viaggio — molti posti accettano solo contanti. Giornalmente tieni in tasca ¥5.000-10.000. Templi, ristoranti di nicchia, macchinette biglietti: tutto cash. Pagarsi il ramen con la carta è considerato strano.',
             },
         ],
     },
@@ -148,14 +148,86 @@ export const info = [
         ],
     },
     {
+        id: 'adattatore',
+        title: 'Adattatore Elettrico',
+        icon: '🔌',
+        summary: 'Il Giappone usa prese Type A (due spinotti piatti orizzontali) a 100V. La spina italiana (Type L, tre spinotti) è diversa — serve un adattatore.',
+        items: [
+            {
+                label: 'Tipo di presa',
+                text: 'Type A — due spinotti piatti paralleli, 100V. La spina italiana Type L (tre spinotti) NON è compatibile: serve un adattatore Type L → Type A.',
+            },
+            {
+                label: 'Adattatore consigliato',
+                text: 'Porta un adattatore multipresa Type L → Type A per caricare più dispositivi contemporaneamente. Ne trovi nei negozi di elettronica o online prima di partire.',
+            },
+            {
+                label: 'Voltaggio',
+                text: 'Il Giappone usa 100V (l\'Europa usa 230V). Controlla che i tuoi caricatori supportino 100V — di solito è indicato sull\'alimentatore come "100-240V". La maggior parte dei caricatori moderni è universale.',
+            },
+        ],
+    },
+    {
+        id: 'abbigliamento',
+        title: 'Abbigliamento — Ottobre',
+        icon: '🧥',
+        summary: 'Ottobre è la stagione ideale: temperature gradevoli di giorno, fresche la mattina. È anche l\'inizio del koyo (colori autunnali) — scenari spettacolari.',
+        items: [
+            {
+                label: 'Temperature',
+                text: '15–24°C a Osaka e Kyoto, 13–22°C a Tokyo. Mattine fresche, pomeriggi gradevoli. Sbalzi termici tra giorno e notte.',
+            },
+            {
+                label: 'Koyo',
+                text: 'Ottobre è l\'inizio del koyo (紅葉, colori autunnali) — gli aceri rossi iniziano a Kyoto e Tokyo a metà ottobre. La Chureito Pagoda con il Monte Fuji è uno spettacolo.',
+            },
+            {
+                label: 'Scarpe comode',
+                text: 'Fondamentale. Camminerai 15–20km al giorno — nessuno scherzo. Evita le scarpe nuove o con tacco. Le scarpe si tolgono spesso nei templi: allacciatura semplice è meglio.',
+            },
+            {
+                label: 'Strati',
+                text: 'Felpa o maglione leggero, giacca leggera, impermeabile sottile in borsa. Non serve piumino. Un kway occupa poco e salva in caso di pioggia improvvisa.',
+            },
+            {
+                label: 'Calze pulite',
+                text: 'Portane tante — si tolgono le scarpe nei templi e ryokan. Calzini integri e puliti sono un\'etichetta fondamentale in Giappone.',
+            },
+        ],
+    },
+    {
+        id: 'takuhaibin',
+        title: 'Takuhaibin — Baggage Forwarding',
+        icon: '📦',
+        summary: 'Servizio di spedizione valigie tra città (~€15–20 a valigia). Disponibile in aeroporti, hotel e convenience store. Ti libera le mani su treni e trasferimenti.',
+        items: [
+            {
+                label: 'Come funziona',
+                text: 'Consegni la valigia all\'hotel o al convenience store la mattina — arriva all\'hotel successivo entro il giorno dopo. Costo: ¥2.000–3.000 a valigia (€13–20). Servizio affidabilissimo.',
+            },
+            {
+                label: 'Quando usarlo',
+                text: 'Consigliato il giorno 7 (check-out da Osaka verso Kyoto) — spedisci le valigie direttamente all\'hotel di Tokyo e viaggi leggero su Shinkansen e visite. Arrivano entro il 10 Ottobre.',
+            },
+            {
+                label: 'Dove mandare',
+                text: 'Hotel Tavinos Asakusa, 2-18-8 Asakusa, Taito City, Tokyo. Verifica con la reception dell\'hotel di Osaka per il modulo di spedizione.',
+            },
+            {
+                label: 'Dove prenotare',
+                text: 'Chiedi alla reception dell\'hotel — la maggior parte gestisce il servizio direttamente. In alternativa, i convenience store (7-Eleven, FamilyMart) hanno i moduli. Porta la valigia il giorno prima o la mattina presto.',
+            },
+        ],
+    },
+    {
         id: 'emergenze',
         title: 'Emergenze & Salute',
         icon: '🆘',
-        summary: 'Il Giappone è uno dei paesi più sicuri al mondo — criminalità quasi zero. I rischi principali sono sanitari (caldo estivo, jet lag) e naturali (terremoti minori sono normali).',
+        summary: 'Il Giappone è uno dei paesi più sicuri al mondo — criminalità quasi zero. I rischi principali sono sanitari (jet lag, piedi a pezzi) e naturali (terremoti minori sono normali).',
         items: [
             {
                 label: 'Numeri di emergenza',
-                text: '110 = Polizia | 119 = Ambulanza e Pompieri | 03-3501-3327 = Ambasciata Italiana a Tokyo (ore lavorative) | 03-3501-3461 = Guardia consolare (emergenze 24h)',
+                text: '110 = Polizia | 119 = Ambulanza e Pompieri | Ambasciata Italiana in Giappone: 2-5-4 Mita, Minato-ku, Tokyo — +81-3-3453-5291',
             },
             {
                 label: 'Farmaci',
