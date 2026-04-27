@@ -1,15 +1,38 @@
 'use server'
 
 import crypto from 'crypto';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { getTripData, saveTripData } from '@/lib/db';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'; // Default for dev if not set
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (
+    process.env.NODE_ENV === 'production'
+        ? null // guarded per-call below
+        : 'admin123'
+);
 const COOKIE_NAME = 'jpn_admin_session';
 
-// Derive a deterministic token from the password so the cookie value can never
-// be guessed or forged by setting it to a static string like 'true'.
-// If the password changes all existing sessions are automatically invalidated.
+const VALID_TRIP_IDS = ['japan', 'budapest'];
+const VALID_KEYS = ['itinerary', 'accommodations', 'transport', 'budget'];
+
+// Per-instance rate limiter (best-effort on serverless — limits bursts within one instance)
+/** @type {Map<string, { count: number, resetAt: number }>} */
+const loginAttempts = new Map();
+const MAX_ATTEMPTS = 5;
+const WINDOW_MS = 15 * 60 * 1000;
+
+/** @param {string} ip */
+function isRateLimited(ip) {
+    const now = Date.now();
+    const entry = loginAttempts.get(ip) ?? { count: 0, resetAt: now + WINDOW_MS };
+    if (now > entry.resetAt) {
+        entry.count = 0;
+        entry.resetAt = now + WINDOW_MS;
+    }
+    entry.count++;
+    loginAttempts.set(ip, entry);
+    return entry.count > MAX_ATTEMPTS;
+}
+
 /** @param {string} password */
 function getExpectedToken(password) {
     return crypto
@@ -19,6 +42,7 @@ function getExpectedToken(password) {
 }
 
 export async function checkAuth() {
+    if (!ADMIN_PASSWORD) return false;
     const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
     return !!token && token === getExpectedToken(ADMIN_PASSWORD);
@@ -26,12 +50,23 @@ export async function checkAuth() {
 
 /** @param {string} password */
 export async function loginAdmin(password) {
+    if (!ADMIN_PASSWORD) {
+        return { success: false, error: 'Server non configurato correttamente' };
+    }
+
+    const headerStore = await headers();
+    const ip = headerStore.get('x-forwarded-for') ?? headerStore.get('x-real-ip') ?? 'unknown';
+    if (isRateLimited(ip)) {
+        return { success: false, error: 'Troppi tentativi. Riprova tra 15 minuti.' };
+    }
+
     if (password === ADMIN_PASSWORD) {
         const cookieStore = await cookies();
         cookieStore.set(COOKIE_NAME, getExpectedToken(password), {
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
-            maxAge: 60 * 60 * 24 * 30
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 24,
         });
         return { success: true };
     }
@@ -61,6 +96,10 @@ export async function updateData(tripId, key, newData) {
     const isAuth = await checkAuth();
     if (!isAuth) {
         return { success: false, error: 'Non autorizzato' };
+    }
+
+    if (!VALID_TRIP_IDS.includes(tripId) || !VALID_KEYS.includes(key)) {
+        return { success: false, error: 'Parametri non validi' };
     }
 
     return await saveTripData(tripId, key, newData);

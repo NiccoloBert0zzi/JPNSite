@@ -2,6 +2,7 @@
 const mockGet = jest.fn();
 const mockSet = jest.fn();
 const mockDelete = jest.fn();
+const mockHeaderGet = jest.fn().mockReturnValue(null);
 
 jest.mock('next/headers', () => ({
     cookies: jest.fn(() =>
@@ -9,6 +10,11 @@ jest.mock('next/headers', () => ({
             get: mockGet,
             set: mockSet,
             delete: mockDelete,
+        })
+    ),
+    headers: jest.fn(() =>
+        Promise.resolve({
+            get: mockHeaderGet,
         })
     ),
 }));

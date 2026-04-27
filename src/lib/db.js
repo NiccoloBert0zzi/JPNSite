@@ -94,6 +94,6 @@ export async function saveTripData(tripId, key, newData) {
         return { success: true };
     } catch (error) {
         console.error('Save Error:', error);
-        return { success: false, error: error instanceof Error ? error.message : String(error) };
+        return { success: false, error: 'Errore nel salvataggio dei dati' };
     }
 }

@@ -71,7 +71,7 @@ describe('saveTripData', () => {
         const { saveTripData } = require('@/lib/db');
         const result = await saveTripData('japan', 'itinerary', []);
         expect(result.success).toBe(false);
-        expect(result.error).toBe('Write failed');
+        expect(result.error).toBe('Errore nel salvataggio dei dati');
     });
 
     it('still returns error when createTable also fails (graceful degradation)', async () => {

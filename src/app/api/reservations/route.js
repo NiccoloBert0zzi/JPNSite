@@ -116,7 +116,7 @@ export async function DELETE(request) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 });
         }
 
-        await sql`DELETE FROM reservations WHERE id = ${id}`;
+        await sql`DELETE FROM reservations WHERE id = ${id} AND trip_id = ${TRIP_ID}`;
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error("Error deleting reservation:", error);
