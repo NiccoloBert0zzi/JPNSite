@@ -1,5 +1,5 @@
 
-# 🏯 Japan Trip Planner
+# 🏯 Trip Planner — Giappone 🇯🇵 & Budapest 🇭🇺
 
 <div align="center">
 
@@ -10,12 +10,25 @@
 
 <br />
 
-**Un compagno di viaggio digitale per gestire l'avventura in Giappone.**  
-Pianificazione itinerario, gestione budget e logistica in un'unica app moderna.
+**Un compagno di viaggio digitale multi-trip.**  
+Pianificazione itinerario, gestione budget e logistica in un'unica app moderna, condivisa tra più viaggi.
 
 [🚀 Demo Live](https://jpn-indol.vercel.app) · [🐛 Segnala Bug](https://github.com/NiccoloBert0zzi/JPNSite/issues)
 
 </div>
+
+---
+
+## 🗺️ Multi-Trip
+
+La stessa app serve due viaggi distinti, selezionati tramite la variabile d'ambiente `NEXT_PUBLIC_TRIP_ID` (`japan` | `budapest`), letta a build/module-load time in `src/data/index.js`. Ogni trip ha i propri dati statici (itinerario, budget, trasporti, alloggi, cultura, cibo, frasi, gallery) sotto `src/data/<trip>/`, oltre a un tema colore e branding dedicati (rosso `#A40024` per il Giappone, verde `#008751` per Budapest).
+
+```bash
+npm run dev:japan      # imposta il trip attivo su Giappone e avvia il dev server
+npm run dev:budapest   # imposta il trip attivo su Budapest e avvia il dev server
+```
+
+Lo script `scripts/use-trip.js` copia il relativo `.env.japan` / `.env.budapest` su `.env.local` prima di avviare Next.js.
 
 ---
 
@@ -95,6 +108,6 @@ Apri [http://localhost:3000](http://localhost:3000) per vedere l'app in azione.
 
 <div align="center">
 
-Made with ❤️ by Niccolo Bertozzi for the Japan 2026 Trip 🇯🇵
+Made with ❤️ by Niccolo Bertozzi — Japan 2026 🇯🇵 & Budapest 2026 🇭🇺
 
 </div>
