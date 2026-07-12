@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { currentTrip } from '@/data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { HUB_ROUTES } from '@/components/landing/hubRoutes';
 
 const mainItems = [
     { name: 'Home', path: '/' },
@@ -55,9 +56,9 @@ export default function Navbar() {
 
     const isScopriActive = scopriItems.some((i) => i.path === pathname);
 
-    // The globe landing is a full-bleed immersive scene with its own
-    // in-scene navigation (trip pins/pills) — no chrome on top of it.
-    if (pathname === '/') return null;
+    // Travel-hub routes (globe landing + its satellite pages) use the dark
+    // LandingNavbar instead of this light site chrome.
+    if (HUB_ROUTES.includes(pathname)) return null;
 
     return (
         <nav

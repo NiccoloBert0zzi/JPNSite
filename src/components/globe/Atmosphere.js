@@ -4,12 +4,12 @@ import { useMemo } from "react";
 import { AdditiveBlending, BackSide, Color } from "three";
 import { atmosphereVertexShader, atmosphereFragmentShader } from "./shaders/atmosphereShader";
 
-const ATMOSPHERE_SCALE = 1.035;
+const ATMOSPHERE_SCALE = 1.05;
 
 export default function Atmosphere() {
     const uniforms = useMemo(
         () => ({
-            uAtmosphereColor: { value: new Color(0.35, 0.55, 1.0) },
+            uAtmosphereColor: { value: new Color(0.4, 0.65, 1.0) },
         }),
         []
     );

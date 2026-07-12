@@ -1,4 +1,4 @@
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Caveat } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import ThemeRegistry from "@/components/ThemeRegistry";
 import "./globals.css";
@@ -9,6 +9,7 @@ import BackToTop from "@/components/BackToTop";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-base" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-display" });
+const caveat = Caveat({ subsets: ["latin"], variable: "--font-hand" });
 
 import { currentTrip } from "@/data";
 
@@ -30,7 +31,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="it" suppressHydrationWarning>
-            <body className={`${inter.variable} ${playfair.variable}`}>
+            <body className={`${inter.variable} ${playfair.variable} ${caveat.variable}`}>
                 <ThemeRegistry>
                     <AdminProvider>
                         <Navbar />

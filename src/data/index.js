@@ -31,6 +31,7 @@ const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
  * @property {string} startDate - ISO date, e.g. "2026-10-02"
  * @property {string} endDate - ISO date, e.g. "2026-10-17"
  * @property {string} emoji
+ * @property {string} country - country name in Italian, e.g. "Giappone"
  * @property {string} heroImage
  * @property {string} heroFilter
  * @property {string} label
@@ -51,6 +52,7 @@ const trips = {
         startDate: "2026-10-02",
         endDate: "2026-10-17",
         emoji: "🇯🇵",
+        country: "Giappone",
         heroImage: "/images/hero.png",
         heroFilter: "brightness(0.7)",
         label: "VIAGGIO DI COPPIA",
@@ -70,6 +72,7 @@ const trips = {
         startDate: "2026-02-08",
         endDate: "2026-02-10",
         emoji: "🇭🇺",
+        country: "Ungheria",
         heroImage: "/images/budapest-hero.png",
         heroFilter: "brightness(0.6)",
         label: "WEEKEND FUORI",
@@ -101,6 +104,16 @@ export function tripDurationDays(trip) {
     const start = new Date(trip.startDate);
     const end = new Date(trip.endDate);
     return Math.round((end.getTime() - start.getTime()) / 86400000) + 1;
+}
+
+/**
+ * Aggregate landing-page stats across every trip.
+ * @param {Date} [now] - reference date, injectable for tests
+ */
+export function landingStats(now = new Date()) {
+    const countriesVisited = new Set(allTrips.map((t) => t.country)).size;
+    const tripsCompleted = allTrips.filter((t) => new Date(t.endDate) < now).length;
+    return { countriesVisited, tripsCompleted };
 }
 
 export const itinerary = TRIP_ID === 'budapest' ? budapestItinerary : japanItinerary;

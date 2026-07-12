@@ -22,6 +22,10 @@
   --success: #10B981;
   --warning: #F59E0B;
 
+  /* Travel-hub (dark landing) accent — independent from the trip theme */
+  --hub-accent: #34d399;
+  --hub-accent-strong: #10b981;
+
   /* Shadows & Effects */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);

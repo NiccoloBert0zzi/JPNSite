@@ -1,8 +1,11 @@
 "use client";
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { HUB_ROUTES } from '@/components/landing/hubRoutes';
 
 export default function BackToTop() {
+    const pathname = usePathname();
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -12,6 +15,10 @@ export default function BackToTop() {
     }, []);
 
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // The dark hub pages keep their bottom-right corner clear (admin lock)
+    // and barely scroll — the light-themed button would clash there anyway.
+    if (HUB_ROUTES.includes(pathname)) return null;
 
     return (
         <AnimatePresence>

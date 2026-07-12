@@ -20,7 +20,7 @@ uniform vec3 uAtmosphereColor;
 varying vec3 vNormal;
 
 void main() {
-    float intensity = pow(max(0.65 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0), 4.0);
+    float intensity = pow(max(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0), 3.5);
     gl_FragColor = vec4(uAtmosphereColor, 1.0) * intensity;
 }
 `;

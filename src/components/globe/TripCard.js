@@ -70,7 +70,7 @@ export default function TripCard({ trip, onClose }) {
                     className={
                         isMobile
                             ? "fixed inset-0 z-30 flex items-end justify-center pointer-events-none"
-                            : "fixed inset-0 z-30 flex items-center justify-end pr-6 md:pr-16 pointer-events-none"
+                            : "fixed inset-0 z-30 flex items-center justify-end pr-6 xl:pr-12 pointer-events-none"
                     }
                 >
                     <motion.div

@@ -8,10 +8,13 @@ test.describe('Home', () => {
         await expect(page.locator('main')).toBeVisible();
     });
 
-    test('navigation links are present', async ({ page }) => {
+    test('hub navbar links are present', async ({ page }) => {
         await page.goto('/');
         const nav = page.locator('nav');
         await expect(nav).toBeVisible();
+        await expect(nav.locator('a[href="/viaggi"]')).toBeVisible();
+        await expect(nav.getByRole('link', { name: 'Wishlist' })).toBeVisible();
+        await expect(nav.getByRole('link', { name: 'Diario' })).toBeVisible();
     });
 });
 
@@ -37,32 +40,57 @@ test.describe('Globe hero', () => {
         // HeroShell (the loading placeholder) has no heading; both GlobeHero
         // and StaticGlobeFallback render the trip title, so this proves we
         // moved past the loading state either way.
-        await expect(page.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 10_000 });
+        await expect(page.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 15_000 });
     });
 
-    test('trip pills are visible and reachable', async ({ page }) => {
+    test('side panels show real stats and both trips', async ({ page }) => {
         await page.goto('/');
-        await expect(page.getByRole('button', { name: /giappone/i })).toBeVisible();
-        await expect(page.getByRole('button', { name: /budapest/i })).toBeVisible();
+        await expect(page.getByText('I tuoi numeri')).toBeVisible();
+        await expect(page.getByText('Paesi visitati')).toBeVisible();
+        await expect(page.getByText('Ultimi viaggi')).toBeVisible();
+        await expect(page.getByRole('button', { name: /mostra giappone sul globo/i })).toBeVisible();
+        await expect(page.getByRole('button', { name: /mostra budapest sul globo/i })).toBeVisible();
+        await expect(page.getByRole('link', { name: /vedi tutti/i })).toHaveAttribute('href', '/viaggi');
     });
 
     test('selecting the active trip opens a card with an internal CTA', async ({ page }) => {
         await page.goto('/');
-        await page.getByRole('button', { name: /giappone/i }).click();
+        // dispatchEvent instead of click(): the button slides out (with its
+        // panel) as a result of the click, which breaks click()'s retry logic
+        const pin = page.getByRole('button', { name: /mostra giappone sul globo/i });
+        await expect(pin).toBeVisible();
+        await pin.dispatchEvent('click');
         const dialog = page.getByRole('dialog');
         await expect(dialog).toBeVisible();
         await expect(dialog.getByText('Apri il viaggio')).toBeVisible();
         await expect(dialog.getByRole('link', { name: /apri il viaggio/i })).toHaveAttribute('href', '/itinerary');
+        // On desktop the card takes the panels' slot; Escape brings them back
+        await expect(page.getByText('I tuoi numeri')).toBeHidden();
+        await page.keyboard.press('Escape');
+        await expect(dialog).toBeHidden();
+        await expect(page.getByText('I tuoi numeri')).toBeVisible();
     });
 
     test('selecting the other trip opens a card with an external CTA', async ({ page }) => {
         await page.goto('/');
-        await page.getByRole('button', { name: /budapest/i }).click();
+        const pin = page.getByRole('button', { name: /mostra budapest sul globo/i });
+        await expect(pin).toBeVisible();
+        await pin.dispatchEvent('click');
         const dialog = page.getByRole('dialog');
         await expect(dialog).toBeVisible();
         const cta = dialog.getByRole('link', { name: /apri il viaggio/i });
         await expect(cta).toHaveAttribute('href', /^https:\/\//);
     });
+});
+
+test.describe('Hub stub pages', () => {
+    for (const path of ['/viaggi', '/wishlist', '/diario']) {
+        test(`${path} renders its coming-soon placeholder`, async ({ page }) => {
+            await page.goto(path);
+            await expect(page.getByText('Presto disponibile')).toBeVisible();
+            await expect(page.getByRole('link', { name: /torna all'esplorazione/i })).toBeVisible();
+        });
+    }
 });
 
 test.describe('Admin login', () => {

@@ -35,6 +35,8 @@ describe('Data index – trips registry (globe landing)', () => {
             expect(trip.markerLabel.length).toBeGreaterThan(0);
             expect(typeof trip.shortDescription).toBe('string');
             expect(trip.shortDescription.length).toBeGreaterThan(0);
+            expect(typeof trip.country).toBe('string');
+            expect(trip.country.length).toBeGreaterThan(0);
             expect(new Date(trip.endDate).getTime()).toBeGreaterThanOrEqual(new Date(trip.startDate).getTime());
         }
     });
@@ -45,5 +47,14 @@ describe('Data index – trips registry (globe landing)', () => {
         const budapest = allTrips.find((t) => t.id === 'budapest');
         expect(tripDurationDays(japan)).toBe(16);
         expect(tripDurationDays(budapest)).toBe(3);
+    });
+
+    it('landingStats counts distinct countries and completed trips at a given date', async () => {
+        const { landingStats } = await import('@/data/index');
+        expect(landingStats(new Date('2026-07-12'))).toEqual({
+            countriesVisited: 2,
+            tripsCompleted: 1, // only Budapest (2026-02-10) is over
+        });
+        expect(landingStats(new Date('2027-01-01')).tripsCompleted).toBe(2);
     });
 });
