@@ -15,7 +15,7 @@ import TripCardBody from "./TripCardBody";
 export default function StaticGlobeFallback() {
     return (
         <section
-            className="relative min-h-screen flex flex-col items-center overflow-hidden pt-28 pb-16 px-5"
+            className="relative min-h-screen lg:h-full lg:overflow-y-auto flex flex-col items-center pt-28 pb-16 px-5"
             style={{
                 background: "radial-gradient(ellipse at 50% 35%, #0b1226 0%, #060913 55%, #03050c 100%)",
             }}

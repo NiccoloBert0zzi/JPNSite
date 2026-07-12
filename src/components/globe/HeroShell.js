@@ -3,7 +3,7 @@
 export default function HeroShell() {
     return (
         <section
-            className="relative h-screen flex items-center justify-center overflow-hidden"
+            className="relative h-screen lg:h-full flex items-center justify-center overflow-hidden"
             style={{
                 background: "radial-gradient(ellipse at 50% 35%, #0b1226 0%, #060913 55%, #03050c 100%)",
             }}

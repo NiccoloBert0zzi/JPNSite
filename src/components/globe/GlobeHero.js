@@ -27,7 +27,7 @@ export default function GlobeHero() {
 
     return (
         <section
-            className="relative flex flex-col lg:block lg:h-screen overflow-hidden"
+            className="relative flex flex-col lg:block lg:h-full overflow-hidden"
             style={{
                 background: "radial-gradient(ellipse at 50% 35%, #0b1226 0%, #060913 55%, #03050c 100%)",
             }}

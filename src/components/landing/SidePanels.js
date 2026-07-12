@@ -39,7 +39,7 @@ export default function SidePanels({ hidden, trips, onShowOnGlobe, wishlistCount
     const reducedMotion = useReducedMotion();
 
     return (
-        <div className="lg:absolute lg:right-6 xl:right-12 lg:top-24 lg:bottom-24 lg:w-[300px] xl:w-[330px] lg:z-20 px-5 lg:px-0 lg:pointer-events-none">
+        <div className="lg:absolute lg:right-6 xl:right-12 lg:top-20 lg:bottom-4 lg:w-[300px] xl:w-[330px] lg:z-20 px-5 lg:px-0 lg:pointer-events-none">
             <AnimatePresence>
                 {(!hidden || !isDesktop) && (
                     <motion.div
