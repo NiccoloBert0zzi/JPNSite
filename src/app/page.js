@@ -6,7 +6,7 @@ import QuoteSection from '@/components/landing/QuoteSection';
 
 export default function Home() {
   return (
-    <div className="bg-[#03050c] text-white lg:h-screen lg:overflow-hidden lg:flex lg:flex-col">
+    <div className="hub-starfield text-white lg:h-screen lg:overflow-hidden lg:flex lg:flex-col">
       <LandingNavbar />
       <div className="lg:flex-1 lg:min-h-0">
         <GlobeHeroWrapper />

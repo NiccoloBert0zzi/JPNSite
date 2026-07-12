@@ -64,6 +64,25 @@ a {
   text-decoration: none;
 }
 
+/* Travel-hub starfield: tileable CSS backdrop for the areas of the dark
+   landing (feature cards, quote) that sit outside the WebGL globe canvas,
+   so the "space" background continues seamlessly behind them. */
+.hub-starfield {
+  background-color: #03050c;
+  background-image:
+    radial-gradient(1.6px 1.6px at 20px 40px, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1.2px 1.2px at 90px 120px, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1.8px 1.8px at 160px 30px, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1px 1px at 230px 90px, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1.4px 1.4px at 60px 200px, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1px 1px at 130px 250px, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1.6px 1.6px at 260px 180px, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1px 1px at 20px 270px, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(1.3px 1.3px at 280px 260px, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 60%);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}
+
 /* Layout Utilities */
 .container {
   max-width: 1280px;
