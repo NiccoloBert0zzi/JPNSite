@@ -106,6 +106,12 @@ Apri [http://localhost:3000](http://localhost:3000) per vedere l'app in azione.
 
 ---
 
+## 🌍 Crediti texture
+
+Le texture del globo 3D in home page (`public/textures/`) sono cortesia di [Solar System Scope](https://www.solarsystemscope.com/textures/) (day map + night map, elaborate da NASA Blue Marble / Black Marble), rilasciate sotto licenza [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+---
+
 <div align="center">
 
 Made with ❤️ by Niccolo Bertozzi — Japan 2026 🇯🇵 & Budapest 2026 🇭🇺

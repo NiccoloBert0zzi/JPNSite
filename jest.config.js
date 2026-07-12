@@ -21,6 +21,7 @@ const config = {
         '!src/components/RouteMap*.js',
         '!src/components/StatsDashboard.js',
         '!src/components/ThemeRegistry.js',
+        '!src/components/globe/**',
     ],
     coverageThreshold: {
         global: {

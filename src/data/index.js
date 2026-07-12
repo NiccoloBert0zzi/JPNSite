@@ -24,12 +24,32 @@ import { gallery as budapestGallery } from './budapest/gallery';
 
 const TRIP_ID = process.env.NEXT_PUBLIC_TRIP_ID || 'japan';
 
+/**
+ * @typedef {Object} TripMeta
+ * @property {string} title
+ * @property {string} dates
+ * @property {string} startDate - ISO date, e.g. "2026-10-02"
+ * @property {string} endDate - ISO date, e.g. "2026-10-17"
+ * @property {string} emoji
+ * @property {string} heroImage
+ * @property {string} heroFilter
+ * @property {string} label
+ * @property {string} color
+ * @property {{primary: string, primaryLight: string}} theme
+ * @property {string} url - production deployment URL for this trip
+ * @property {string} shortDescription - 1-2 sentence Italian blurb for the globe card
+ * @property {{lat: number, lng: number}} marker - globe anchor coordinates
+ * @property {string} markerLabel - short name shown next to the globe marker
+ */
+
 // Trip Meta Configuration
+/** @type {Record<string, TripMeta>} */
 const trips = {
     japan: {
         title: "Giappone 2026",
         dates: "02 Ottobre — 17 Ottobre",
         startDate: "2026-10-02",
+        endDate: "2026-10-17",
         emoji: "🇯🇵",
         heroImage: "/images/hero.png",
         heroFilter: "brightness(0.7)",
@@ -38,12 +58,17 @@ const trips = {
         theme: {
             primary: "#A40024",
             primaryLight: "#D62F4D"
-        }
+        },
+        url: "https://jpn-indol.vercel.app",
+        shortDescription: "Sedici giorni tra Tokyo, Kyoto e Osaka: templi millenari, luci al neon e cucina tradizionale, vissuti in coppia.",
+        marker: { lat: 35.35, lng: 137.2 },
+        markerLabel: "Giappone"
     },
     budapest: {
         title: "Budapest 2026",
         dates: "08 Febbraio — 10 Febbraio",
         startDate: "2026-02-08",
+        endDate: "2026-02-10",
         emoji: "🇭🇺",
         heroImage: "/images/budapest-hero.png",
         heroFilter: "brightness(0.6)",
@@ -52,11 +77,31 @@ const trips = {
         theme: {
             primary: "#008751", // Hungarian Green
             primaryLight: "#00A663"
-        }
+        },
+        url: "https://budapest-site.vercel.app",
+        shortDescription: "Un weekend fuori porta tra terme termali, il Parlamento illuminato sul Danubio e i celebri ruin bar.",
+        marker: { lat: 47.4979, lng: 19.0402 },
+        markerLabel: "Budapest"
     }
 };
 
 export const currentTrip = trips[/** @type {keyof typeof trips} */ (TRIP_ID)];
+
+/** The trip id resolved from NEXT_PUBLIC_TRIP_ID at module load time. */
+export const activeTripId = TRIP_ID;
+
+/** Every trip's metadata, regardless of which one is active in this deployment. */
+export const allTrips = Object.entries(trips).map(([id, t]) => ({ id, ...t }));
+
+/**
+ * Inclusive day count between a trip's startDate and endDate.
+ * @param {TripMeta} trip
+ */
+export function tripDurationDays(trip) {
+    const start = new Date(trip.startDate);
+    const end = new Date(trip.endDate);
+    return Math.round((end.getTime() - start.getTime()) / 86400000) + 1;
+}
 
 export const itinerary = TRIP_ID === 'budapest' ? budapestItinerary : japanItinerary;
 export const budget = TRIP_ID === 'budapest' ? budapestBudget : japanBudget;

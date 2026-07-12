@@ -55,6 +55,10 @@ export default function Navbar() {
 
     const isScopriActive = scopriItems.some((i) => i.path === pathname);
 
+    // The globe landing is a full-bleed immersive scene with its own
+    // in-scene navigation (trip pins/pills) — no chrome on top of it.
+    if (pathname === '/') return null;
+
     return (
         <nav
             className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${

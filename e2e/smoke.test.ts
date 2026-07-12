@@ -31,6 +31,40 @@ test.describe('Budget', () => {
     });
 });
 
+test.describe('Globe hero', () => {
+    test('resolves past the loading shell within 10s (globe or static fallback)', async ({ page }) => {
+        await page.goto('/');
+        // HeroShell (the loading placeholder) has no heading; both GlobeHero
+        // and StaticGlobeFallback render the trip title, so this proves we
+        // moved past the loading state either way.
+        await expect(page.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 10_000 });
+    });
+
+    test('trip pills are visible and reachable', async ({ page }) => {
+        await page.goto('/');
+        await expect(page.getByRole('button', { name: /giappone/i })).toBeVisible();
+        await expect(page.getByRole('button', { name: /budapest/i })).toBeVisible();
+    });
+
+    test('selecting the active trip opens a card with an internal CTA', async ({ page }) => {
+        await page.goto('/');
+        await page.getByRole('button', { name: /giappone/i }).click();
+        const dialog = page.getByRole('dialog');
+        await expect(dialog).toBeVisible();
+        await expect(dialog.getByText('Apri il viaggio')).toBeVisible();
+        await expect(dialog.getByRole('link', { name: /apri il viaggio/i })).toHaveAttribute('href', '/itinerary');
+    });
+
+    test('selecting the other trip opens a card with an external CTA', async ({ page }) => {
+        await page.goto('/');
+        await page.getByRole('button', { name: /budapest/i }).click();
+        const dialog = page.getByRole('dialog');
+        await expect(dialog).toBeVisible();
+        const cta = dialog.getByRole('link', { name: /apri il viaggio/i });
+        await expect(cta).toHaveAttribute('href', /^https:\/\//);
+    });
+});
+
 test.describe('Admin login', () => {
     test('lock icon triggers login modal', async ({ page }) => {
         await page.goto('/');
